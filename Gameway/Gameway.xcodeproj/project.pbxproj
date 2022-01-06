@@ -16,6 +16,7 @@
 		E1D3A338278732FA00B03B55 /* GamewayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A337278732FA00B03B55 /* GamewayTests.swift */; };
 		E1D3A342278732FA00B03B55 /* GamewayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A341278732FA00B03B55 /* GamewayUITests.swift */; };
 		E1D3A344278732FA00B03B55 /* GamewayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A343278732FA00B03B55 /* GamewayUITestsLaunchTests.swift */; };
+		E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		E1D3A33D278732FA00B03B55 /* GamewayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GamewayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D3A341278732FA00B03B55 /* GamewayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamewayUITests.swift; sourceTree = "<group>"; };
 		E1D3A343278732FA00B03B55 /* GamewayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamewayUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +101,7 @@
 		E1D3A31C278732F800B03B55 /* Gameway */ = {
 			isa = PBXGroup;
 			children = (
+				E1D3A35327873DA400B03B55 /* Navigation */,
 				E1D3A31D278732F800B03B55 /* AppDelegate.swift */,
 				E1D3A31F278732F800B03B55 /* SceneDelegate.swift */,
 				E1D3A321278732F800B03B55 /* ViewController.swift */,
@@ -125,6 +128,30 @@
 				E1D3A343278732FA00B03B55 /* GamewayUITestsLaunchTests.swift */,
 			);
 			path = GamewayUITests;
+			sourceTree = "<group>";
+		};
+		E1D3A35327873DA400B03B55 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				E1D3A35427873DAB00B03B55 /* View */,
+				E1D3A35527873DBB00B03B55 /* Router */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		E1D3A35427873DAB00B03B55 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E1D3A35527873DBB00B03B55 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Router;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -260,6 +287,7 @@
 				E1D3A322278732F800B03B55 /* ViewController.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
+				E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */,
 				E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
