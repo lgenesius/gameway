@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A31D278732F800B03B55 /* AppDelegate.swift */; };
 		E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A31F278732F800B03B55 /* SceneDelegate.swift */; };
-		E1D3A322278732F800B03B55 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A321278732F800B03B55 /* ViewController.swift */; };
 		E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A326278732F800B03B55 /* Gameway.xcdatamodeld */; };
 		E1D3A32A278732FA00B03B55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1D3A329278732FA00B03B55 /* Assets.xcassets */; };
 		E1D3A32D278732FA00B03B55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1D3A32B278732FA00B03B55 /* LaunchScreen.storyboard */; };
@@ -17,7 +16,7 @@
 		E1D3A342278732FA00B03B55 /* GamewayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A341278732FA00B03B55 /* GamewayUITests.swift */; };
 		E1D3A344278732FA00B03B55 /* GamewayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A343278732FA00B03B55 /* GamewayUITestsLaunchTests.swift */; };
 		E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */; };
-		E1D3A35A27873E8200B03B55 /* MainRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35927873E8200B03B55 /* MainRouter.swift */; };
+		E1D3A35F27873FB400B03B55 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35E27873FB400B03B55 /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +40,6 @@
 		E1D3A31A278732F800B03B55 /* Gameway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gameway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D3A31D278732F800B03B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1D3A31F278732F800B03B55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E1D3A321278732F800B03B55 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E1D3A327278732F800B03B55 /* Gameway.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gameway.xcdatamodel; sourceTree = "<group>"; };
 		E1D3A329278732FA00B03B55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1D3A32C278732FA00B03B55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -52,7 +50,7 @@
 		E1D3A341278732FA00B03B55 /* GamewayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamewayUITests.swift; sourceTree = "<group>"; };
 		E1D3A343278732FA00B03B55 /* GamewayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamewayUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		E1D3A35927873E8200B03B55 /* MainRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRouter.swift; sourceTree = "<group>"; };
+		E1D3A35E27873FB400B03B55 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +102,9 @@
 			isa = PBXGroup;
 			children = (
 				E1D3A35827873DF000B03B55 /* App */,
+				E1D3A35C27873F9700B03B55 /* Home */,
 				E1D3A35327873DA400B03B55 /* Navigation */,
-				E1D3A321278732F800B03B55 /* ViewController.swift */,
-				E1D3A329278732FA00B03B55 /* Assets.xcassets */,
-				E1D3A32B278732FA00B03B55 /* LaunchScreen.storyboard */,
+				E1D3A35B27873E9100B03B55 /* Resources */,
 				E1D3A32E278732FA00B03B55 /* Info.plist */,
 			);
 			path = Gameway;
@@ -134,7 +131,6 @@
 			isa = PBXGroup;
 			children = (
 				E1D3A35427873DAB00B03B55 /* View */,
-				E1D3A35527873DBB00B03B55 /* Router */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -147,22 +143,39 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		E1D3A35527873DBB00B03B55 /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				E1D3A35927873E8200B03B55 /* MainRouter.swift */,
-			);
-			path = Router;
-			sourceTree = "<group>";
-		};
 		E1D3A35827873DF000B03B55 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				E1D3A31D278732F800B03B55 /* AppDelegate.swift */,
 				E1D3A31F278732F800B03B55 /* SceneDelegate.swift */,
+				E1D3A32B278732FA00B03B55 /* LaunchScreen.storyboard */,
 				E1D3A326278732F800B03B55 /* Gameway.xcdatamodeld */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		E1D3A35B27873E9100B03B55 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E1D3A329278732FA00B03B55 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E1D3A35C27873F9700B03B55 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				E1D3A35D27873FA000B03B55 /* View */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		E1D3A35D27873FA000B03B55 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E1D3A35E27873FB400B03B55 /* HomeViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,12 +308,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E1D3A322278732F800B03B55 /* ViewController.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
 				E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */,
 				E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */,
-				E1D3A35A27873E8200B03B55 /* MainRouter.swift in Sources */,
+				E1D3A35F27873FB400B03B55 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
