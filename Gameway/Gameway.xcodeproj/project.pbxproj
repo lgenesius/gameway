@@ -101,14 +101,12 @@
 		E1D3A31C278732F800B03B55 /* Gameway */ = {
 			isa = PBXGroup;
 			children = (
+				E1D3A35827873DF000B03B55 /* App */,
 				E1D3A35327873DA400B03B55 /* Navigation */,
-				E1D3A31D278732F800B03B55 /* AppDelegate.swift */,
-				E1D3A31F278732F800B03B55 /* SceneDelegate.swift */,
 				E1D3A321278732F800B03B55 /* ViewController.swift */,
 				E1D3A329278732FA00B03B55 /* Assets.xcassets */,
 				E1D3A32B278732FA00B03B55 /* LaunchScreen.storyboard */,
 				E1D3A32E278732FA00B03B55 /* Info.plist */,
-				E1D3A326278732F800B03B55 /* Gameway.xcdatamodeld */,
 			);
 			path = Gameway;
 			sourceTree = "<group>";
@@ -152,6 +150,16 @@
 			children = (
 			);
 			path = Router;
+			sourceTree = "<group>";
+		};
+		E1D3A35827873DF000B03B55 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				E1D3A31D278732F800B03B55 /* AppDelegate.swift */,
+				E1D3A31F278732F800B03B55 /* SceneDelegate.swift */,
+				E1D3A326278732F800B03B55 /* Gameway.xcdatamodeld */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
