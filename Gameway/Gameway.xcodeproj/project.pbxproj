@@ -18,6 +18,7 @@
 		E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */; };
 		E1D3A35F27873FB400B03B55 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35E27873FB400B03B55 /* HomeViewController.swift */; };
 		E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */; };
+		E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E1D3A35E27873FB400B03B55 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewController.swift; sourceTree = "<group>"; };
+		E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				E1D3A35827873DF000B03B55 /* App */,
 				E1D3A35C27873F9700B03B55 /* Home */,
 				E1F5EC162789D0A700084BC5 /* Giveaway */,
+				E1F5EC1A2789D10200084BC5 /* Status */,
 				E1D3A35327873DA400B03B55 /* Navigation */,
 				E1D3A35B27873E9100B03B55 /* Resources */,
 				E1D3A32E278732FA00B03B55 /* Info.plist */,
@@ -193,6 +196,22 @@
 			isa = PBXGroup;
 			children = (
 				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E1F5EC1A2789D10200084BC5 /* Status */ = {
+			isa = PBXGroup;
+			children = (
+				E1F5EC1B2789D10B00084BC5 /* View */,
+			);
+			path = Status;
+			sourceTree = "<group>";
+		};
+		E1F5EC1B2789D10B00084BC5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -327,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
 				E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
