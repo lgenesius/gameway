@@ -8,10 +8,25 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    private let sectionVM = SectionViewModel()
+    private var collectionView: UICollectionView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        sectionVM.fetchSections()
+        setCurrentViewInterface()
+        setCollectionViewSettings()
+    }
+    
+    private func setCurrentViewInterface() {
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.vividYellow]
         view.backgroundColor = .darkKnight
+    }
+    
+    private func setCollectionViewSettings() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .darkKnight
+        view.addSubview(collectionView)
     }
 }
