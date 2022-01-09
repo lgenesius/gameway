@@ -12,12 +12,14 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBar.tintColor = .vividYellow
+        
         let homeVC = HomeViewController()
         let giveawayVC = GiveawayViewController()
         let statusVC = StatusViewController()
         
         homeVC.title = "Home"
-        giveawayVC.title = "Giveaway Games"
+        giveawayVC.title = "Giveaway"
         statusVC.title = "Status"
         
         homeVC.navigationItem.largeTitleDisplayMode = .always
@@ -42,6 +44,4 @@ class TabBarViewController: UITabBarController {
         
         setViewControllers([homeNC, giveawayNC, statusNC], animated: false)
     }
-    
-    
 }
