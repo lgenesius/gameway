@@ -71,7 +71,7 @@ final class NetworkManager {
             
             self.urlSession.dataTaskPublisher(for: finalURL)
                 .retry(1)
-                .mapError { _ in APIError.apiError }
+                .mapError { $0 }
                 .tryMap { element -> Data in
                     guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                         throw URLError(.badServerResponse)

@@ -34,7 +34,7 @@ struct Giveaway: Decodable {
         case publishedDate = "published_date"
         case type
         case platforms
-        case endDate
+        case endDate = "end_date"
         case status
     }
 }
