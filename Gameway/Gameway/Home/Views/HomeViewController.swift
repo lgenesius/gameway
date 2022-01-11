@@ -10,6 +10,8 @@ import UIKit
 class HomeViewController: UIViewController {
     private let sectionVM = SectionViewModel()
     private var collectionView: UICollectionView!
+    
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Giveaway>?
 
     override func viewDidLoad() {
         super.viewDidLoad()

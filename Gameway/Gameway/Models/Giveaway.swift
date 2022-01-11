@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Giveaway: Decodable {
+struct Giveaway: Decodable, Hashable {
     let id: Int
     let title: String
     let worth: String
@@ -20,6 +20,7 @@ struct Giveaway: Decodable {
     let type: String
     let platforms: String
     let endDate: String
+    let users: Int
     let status: String
     
     enum CodingKeys: String, CodingKey {
@@ -35,6 +36,7 @@ struct Giveaway: Decodable {
         case type
         case platforms
         case endDate = "end_date"
+        case users
         case status
     }
 }
