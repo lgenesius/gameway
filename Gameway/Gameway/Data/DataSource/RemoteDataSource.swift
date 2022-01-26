@@ -35,19 +35,31 @@ enum APIError: Error, CustomNSError {
     }
 }
 
-final class NetworkManager {
-    static let shared = NetworkManager()
+fileprivate struct GameAPI {
+    static let baseURL = "https://www.gamerpower.com/api"
     
-    private let baseAPIURL = "https://www.gamerpower.com/api"
+    enum Endpoint {
+        case giveaways
+        
+        var urlString: String {
+            switch self {
+            case .giveaways:
+                return "\(GameAPI.baseURL)/giveaways"
+            }
+        }
+    }
+}
+
+final class RemoteDataSource: RemoteDataSourceProtocol {
     private let urlSession = URLSession.shared
     
     private var anyCancelable = Set<AnyCancellable>()
     
-    func fetchGiveaways(params: [String: String]? = nil) -> AnyPublisher<[Giveaway], Error> {
+    func fetchGiveaways(params: [String: String]?) -> AnyPublisher<[Giveaway], Error> {
         return Future<[Giveaway], Error> { [weak self] promise in
             guard let self = self else { return }
             
-            guard let url = URL(string: self.baseAPIURL + "/giveaways") else {
+            guard let url = URL(string: GameAPI.Endpoint.giveaways.urlString) else {
                 promise(.failure(APIError.invalidURL))
                 return
             }
