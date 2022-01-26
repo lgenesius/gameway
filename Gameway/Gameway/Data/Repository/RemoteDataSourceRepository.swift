@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class RemoteDataSourceRepository {
+final class RemoteDataSourceRepository: RemoteDataSourceRepositoryProtocol {
     var remoteDataSource: RemoteDataSourceProtocol
     
     init(dataSource remoteDataSource: RemoteDataSource) {
