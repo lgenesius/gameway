@@ -11,7 +11,7 @@ import Combine
 final class RemoteDataSourceRepository: RemoteDataSourceRepositoryProtocol {
     var remoteDataSource: RemoteDataSourceProtocol
     
-    init(dataSource remoteDataSource: RemoteDataSource) {
+    init(dataSource remoteDataSource: RemoteDataSourceProtocol) {
         self.remoteDataSource = remoteDataSource
     }
     

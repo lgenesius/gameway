@@ -44,7 +44,7 @@ final class SectionViewModel {
                 let newRecentSection = Section(id: 2, type: "Recent Giveaways", title: "Most Recent Giveaways", subtitle: "", giveaways: giveaways)
                 self?.sections.append(newRecentSection)
 
-                let valuableGiveaways = giveaways.sorted(by: { Double($0.worth.dropFirst())! > Double($1.worth.dropFirst())! })
+                let valuableGiveaways = giveaways.sorted(by: { Double($0.worth.dropFirst()) ?? 0.0 > Double($1.worth.dropFirst()) ?? 0.0 })
                 let newValuableSection = Section(id: 3, type: "Valuable Giveaways", title: "Most Valuable Giveaways", subtitle: "", giveaways: valuableGiveaways)
                 self?.sections.append(newValuableSection)
             }
