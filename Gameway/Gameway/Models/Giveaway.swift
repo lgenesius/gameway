@@ -8,7 +8,8 @@
 import Foundation
 
 struct Giveaway: Decodable, Hashable {
-    let id: Int
+    var id: String = UUID().uuidString
+    let giveawayId: Int
     let title: String
     let worth: String
     let thumbnail: String
@@ -24,7 +25,7 @@ struct Giveaway: Decodable, Hashable {
     let status: String
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case giveawayId = "id"
         case title
         case worth
         case thumbnail

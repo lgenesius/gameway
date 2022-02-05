@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
     
     private var collectionView: UICollectionView!
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Giveaway>?
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     
     init(viewModel sectionVM: SectionViewModel) {
         self.sectionVM = sectionVM
@@ -25,10 +25,11 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        sectionVM.fetchSections()
+        sectionVM.fetchSections { [weak self] in
+            self?.reloadData()
+        }
         setCurrentViewInterface()
         setCollectionViewSettings()
-        
         createDataSource()
         reloadData()
     }
@@ -39,7 +40,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setCollectionViewSettings() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .darkKnight
         view.addSubview(collectionView)
@@ -53,26 +54,26 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     
     private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Giveaway>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, giveaway in
-            return self?.configure(HomeGiveawayCell.self, with: giveaway, for: indexPath)
+        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
+            return self?.configure(HomeGiveawayCell.self, with: item, for: indexPath)
         })
     }
     
-    private func configure<T: ConfigCell>(_ cellType: T.Type, with giveaway: Giveaway, for indexPath: IndexPath) -> T {
+    private func configure<T: ConfigCell>(_ cellType: T.Type, with item: Item, for indexPath: IndexPath) -> T {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.identifier, for: indexPath) as? T else {
             fatalError()
         }
         
-        cell.configure(with: giveaway)
+        cell.configure(with: item)
         return cell
     }
     
     private func reloadData() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Giveaway>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
         snapshot.appendSections(sectionVM.sections)
         
         for section in sectionVM.sections {
-            snapshot.appendItems(section.giveaways, toSection: section)
+            snapshot.appendItems(Array(section.items[...5]), toSection: section)
         }
         
         dataSource?.apply(snapshot)
@@ -100,8 +101,9 @@ extension HomeViewController {
     private func createHomeGiveawaySection(using section: Section) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
         
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(350))
+        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalHeight(1/3))
         let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)

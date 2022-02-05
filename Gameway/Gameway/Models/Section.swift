@@ -12,5 +12,5 @@ struct Section: Decodable, Hashable {
     let type: String
     let title: String
     let subtitle: String
-    let giveaways: [Giveaway]
+    let items: [Item]
 }

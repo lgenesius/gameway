@@ -24,6 +24,7 @@
 		E1D3A344278732FA00B03B55 /* GamewayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A343278732FA00B03B55 /* GamewayUITestsLaunchTests.swift */; };
 		E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */; };
 		E1D3A35F27873FB400B03B55 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35E27873FB400B03B55 /* HomeViewController.swift */; };
+		E1D43B3E27AD2F75004E294D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D43B3D27AD2F75004E294D /* Item.swift */; };
 		E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC3278ADB3A00A8EDB6 /* Section.swift */; };
 		E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */; };
 		E1E20ECB278B0F1900A8EDB6 /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */; };
@@ -73,6 +74,7 @@
 		E1D3A343278732FA00B03B55 /* GamewayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamewayUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E1D3A35E27873FB400B03B55 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		E1D43B3D27AD2F75004E294D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E1E20EC3278ADB3A00A8EDB6 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 			children = (
 				E1E20EC3278ADB3A00A8EDB6 /* Section.swift */,
 				E1F5EC1F2789D51500084BC5 /* Giveaway.swift */,
+				E1D43B3D27AD2F75004E294D /* Item.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				E1F5EC242789D55300084BC5 /* DetailViewController.swift in Sources */,
 				E1E20ECE278B0F3300A8EDB6 /* SectionViewModel.swift in Sources */,
 				E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */,
+				E1D43B3E27AD2F75004E294D /* Item.swift in Sources */,
 				E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */,
 				E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */,
 				E198F7D427A1885C00B70F24 /* HomeViewControllerFactory.swift in Sources */,

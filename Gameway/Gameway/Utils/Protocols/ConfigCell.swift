@@ -9,5 +9,5 @@ import Foundation
 
 protocol ConfigCell {
     static var identifier: String { get }
-    func configure(with giveaway: Giveaway)
+    func configure(with item: Item)
 }
