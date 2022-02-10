@@ -45,7 +45,8 @@ class HomeViewController: UIViewController {
         collectionView.backgroundColor = .darkKnight
         view.addSubview(collectionView)
         
-        collectionView.register(HomeGiveawayCell.self, forCellWithReuseIdentifier: HomeGiveawayCell.identifier)
+        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
+        collectionView.register(PopularGiveawayCell.self, forCellWithReuseIdentifier: PopularGiveawayCell.identifier)
     }
 }
 
@@ -55,8 +56,20 @@ extension HomeViewController {
     
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
-            return self?.configure(HomeGiveawayCell.self, with: item, for: indexPath)
+            return self?.configure(PopularGiveawayCell.self, with: item, for: indexPath)
         })
+        
+        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexPath) as? SectionHeader else {
+                return nil
+            }
+            
+            guard let firstItem = self?.dataSource?.itemIdentifier(for: indexPath) else { return nil }
+            guard let section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
+            
+            sectionHeader.setTitleText(title: section.title, subtitle: section.subtitle)
+            return sectionHeader
+        }
     }
     
     private func configure<T: ConfigCell>(_ cellType: T.Type, with item: Item, for indexPath: IndexPath) -> T {
@@ -73,7 +86,14 @@ extension HomeViewController {
         snapshot.appendSections(sectionVM.sections)
         
         for section in sectionVM.sections {
-            snapshot.appendItems(Array(section.items[...5]), toSection: section)
+            switch section.type {
+            case .popular:
+                snapshot.appendItems(Array(section.items.prefix(8)), toSection: section)
+            case .recent:
+                snapshot.appendItems(Array(section.items.prefix(16)), toSection: section)
+            case .valuable:
+                snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
+            }
         }
         
         dataSource?.apply(snapshot)
@@ -93,7 +113,7 @@ extension HomeViewController {
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 20
+        config.interSectionSpacing = 40
         layout.configuration = config
         return layout
     }
@@ -108,6 +128,16 @@ extension HomeViewController {
         
         let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
+        
+        let layoutSectionHeader = createSectionHeader()
+        layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
+        
         return layoutSection
+    }
+    
+    private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(50))
+        let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        return layoutSectionHeader
     }
 }

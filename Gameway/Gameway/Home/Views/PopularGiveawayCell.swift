@@ -7,12 +7,12 @@
 
 import UIKit
 
-class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
-    static var identifier: String = "HomeGiveawayCell"
+class PopularGiveawayCell: UICollectionViewCell, ConfigCell {
+    static var identifier: String = "PopularGiveawayCell"
     
-    let imageView = UIImageView()
-    let title = UILabel()
-    let worth = UILabel()
+    private let imageView = UIImageView()
+    private let title = UILabel()
+    private let worth = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

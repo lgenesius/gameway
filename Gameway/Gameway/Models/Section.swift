@@ -7,9 +7,15 @@
 
 import Foundation
 
+enum SectionType: Decodable {
+    case popular
+    case recent
+    case valuable
+}
+
 struct Section: Decodable, Hashable {
     let id: Int
-    let type: String
+    let type: SectionType
     let title: String
     let subtitle: String
     let items: [Item]

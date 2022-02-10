@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E1129EB527AE6B4800CBEE7F /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */; };
+		E1129EB727AE927F00CBEE7F /* RecentGiveawayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */; };
 		E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7C727A1819300B70F24 /* RemoteDataSourceRepository.swift */; };
 		E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7CD27A1843600B70F24 /* RemoteDataSourceProtocol.swift */; };
 		E198F7D127A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D027A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift */; };
 		E198F7D427A1885C00B70F24 /* HomeViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */; };
 		E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */; };
 		E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */; };
-		E1B940C3278DCAC100D5A5C3 /* HomeGiveawayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */; };
+		E1B940C3278DCAC100D5A5C3 /* PopularGiveawayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* PopularGiveawayCell.swift */; };
 		E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A31D278732F800B03B55 /* AppDelegate.swift */; };
 		E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A31F278732F800B03B55 /* SceneDelegate.swift */; };
 		E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A326278732F800B03B55 /* Gameway.xcdatamodeld */; };
@@ -53,13 +55,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentGiveawayCell.swift; sourceTree = "<group>"; };
 		E198F7C727A1819300B70F24 /* RemoteDataSourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceRepository.swift; sourceTree = "<group>"; };
 		E198F7CD27A1843600B70F24 /* RemoteDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceProtocol.swift; sourceTree = "<group>"; };
 		E198F7D027A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceRepositoryProtocol.swift; sourceTree = "<group>"; };
 		E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerFactory.swift; sourceTree = "<group>"; };
 		E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryProtocol.swift; sourceTree = "<group>"; };
 		E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCell.swift; sourceTree = "<group>"; };
-		E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGiveawayCell.swift; sourceTree = "<group>"; };
+		E1B940C2278DCAC100D5A5C3 /* PopularGiveawayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularGiveawayCell.swift; sourceTree = "<group>"; };
 		E1D3A31A278732F800B03B55 /* Gameway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gameway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D3A31D278732F800B03B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1D3A31F278732F800B03B55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -274,7 +278,9 @@
 			isa = PBXGroup;
 			children = (
 				E1D3A35E27873FB400B03B55 /* HomeViewController.swift */,
-				E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */,
+				E1B940C2278DCAC100D5A5C3 /* PopularGiveawayCell.swift */,
+				E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */,
+				E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -507,13 +513,15 @@
 				E1D43B3E27AD2F75004E294D /* Item.swift in Sources */,
 				E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */,
 				E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */,
+				E1129EB727AE927F00CBEE7F /* RecentGiveawayCell.swift in Sources */,
 				E198F7D427A1885C00B70F24 /* HomeViewControllerFactory.swift in Sources */,
+				E1129EB527AE6B4800CBEE7F /* SectionHeader.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
 				E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */,
 				E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */,
 				E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
-				E1B940C3278DCAC100D5A5C3 /* HomeGiveawayCell.swift in Sources */,
+				E1B940C3278DCAC100D5A5C3 /* PopularGiveawayCell.swift in Sources */,
 				E198F7D127A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift in Sources */,
 				E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */,
 				E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */,
