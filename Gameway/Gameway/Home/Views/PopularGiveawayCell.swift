@@ -8,6 +8,7 @@
 import UIKit
 
 class PopularGiveawayCell: UICollectionViewCell, ConfigCell {
+    typealias Request = Item
     static var identifier: String = "PopularGiveawayCell"
     
     private let imageView = UIImageView()
@@ -63,7 +64,9 @@ class PopularGiveawayCell: UICollectionViewCell, ConfigCell {
         fatalError()
     }
     
-    func configure(with item: Item) {
+    func configure(with item: Item?) {
+        guard let item = item else { return }
+        
         imageView.image = UIImage(systemName: "house")
         title.text = item.giveaway.title
         

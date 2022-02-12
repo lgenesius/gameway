@@ -11,6 +11,7 @@ class HomeViewController: UIViewController {
     var sectionVM: SectionViewModel
     
     private var collectionView: UICollectionView!
+    private var skeletonLoaderTableView: UITableView!
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     
@@ -26,12 +27,27 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sectionVM.fetchSections { [weak self] in
+            self?.skeletonLoaderTableView.removeFromSuperview()
+            
+            self?.setCurrentViewInterface()
+            self?.setCollectionViewSettings()
+            self?.createDataSource()
             self?.reloadData()
         }
-        setCurrentViewInterface()
-        setCollectionViewSettings()
-        createDataSource()
-        reloadData()
+        
+        setTableViewSettings()
+    }
+    
+    private func setTableViewSettings() {
+        skeletonLoaderTableView = UITableView(frame: view.bounds)
+        skeletonLoaderTableView.backgroundColor = .darkKnight
+        skeletonLoaderTableView.alwaysBounceVertical = false
+        
+        view.addSubview(skeletonLoaderTableView)
+        
+        skeletonLoaderTableView.register(SkeletonHomeCell.self, forCellReuseIdentifier: SkeletonHomeCell.identifier)
+        skeletonLoaderTableView.delegate = self
+        skeletonLoaderTableView.dataSource = self
     }
     
     private func setCurrentViewInterface() {
@@ -77,7 +93,7 @@ extension HomeViewController {
             fatalError()
         }
         
-        cell.configure(with: item)
+        cell.configure(with: item as? T.Request)
         return cell
     }
     
@@ -139,5 +155,23 @@ extension HomeViewController {
         let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(50))
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return layoutSectionHeader
+    }
+}
+
+// MARK: - UITableView Protocol
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        2
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SkeletonHomeCell.identifier, for: indexPath) as! SkeletonHomeCell
+        cell.configure(with: nil)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        tableView.bounds.height / 3 + 50
     }
 }

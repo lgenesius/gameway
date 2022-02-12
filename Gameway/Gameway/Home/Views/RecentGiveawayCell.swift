@@ -8,6 +8,7 @@
 import UIKit
 
 class RecentGiveawayCell: UICollectionViewCell, ConfigCell {
+    typealias Request = Item
     static var identifier: String = "RecentGiveawayCell"
     
     override init(frame: CGRect) {
@@ -20,7 +21,7 @@ class RecentGiveawayCell: UICollectionViewCell, ConfigCell {
         fatalError()
     }
     
-    func configure(with item: Item) {
+    func configure(with item: Item?) {
         
     }
 }
