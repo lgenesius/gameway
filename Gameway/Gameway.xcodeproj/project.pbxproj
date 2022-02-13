@@ -15,7 +15,7 @@
 		E198F7D427A1885C00B70F24 /* HomeViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */; };
 		E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */; };
 		E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */; };
-		E1B940C3278DCAC100D5A5C3 /* PopularGiveawayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* PopularGiveawayCell.swift */; };
+		E1B940C3278DCAC100D5A5C3 /* HomeGiveawayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */; };
 		E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A31D278732F800B03B55 /* AppDelegate.swift */; };
 		E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A31F278732F800B03B55 /* SceneDelegate.swift */; };
 		E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A326278732F800B03B55 /* Gameway.xcdatamodeld */; };
@@ -27,12 +27,14 @@
 		E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */; };
 		E1D3A35F27873FB400B03B55 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35E27873FB400B03B55 /* HomeViewController.swift */; };
 		E1D43B3E27AD2F75004E294D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D43B3D27AD2F75004E294D /* Item.swift */; };
+		E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */; };
 		E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC3278ADB3A00A8EDB6 /* Section.swift */; };
 		E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */; };
 		E1E20ECB278B0F1900A8EDB6 /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */; };
 		E1E20ECE278B0F3300A8EDB6 /* SectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20ECD278B0F3300A8EDB6 /* SectionViewModel.swift */; };
 		E1E9839027B514570048ED94 /* SkeletonHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E9838F27B514570048ED94 /* SkeletonHomeCell.swift */; };
 		E1E9839227B51A7D0048ED94 /* SkeletonLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E9839127B51A7D0048ED94 /* SkeletonLoader.swift */; };
+		E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898727B8E7070078A47C /* GiveawayImageView.swift */; };
 		E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */; };
 		E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */; };
 		E1F5EC202789D51500084BC5 /* Giveaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1F2789D51500084BC5 /* Giveaway.swift */; };
@@ -65,7 +67,7 @@
 		E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerFactory.swift; sourceTree = "<group>"; };
 		E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryProtocol.swift; sourceTree = "<group>"; };
 		E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCell.swift; sourceTree = "<group>"; };
-		E1B940C2278DCAC100D5A5C3 /* PopularGiveawayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularGiveawayCell.swift; sourceTree = "<group>"; };
+		E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGiveawayCell.swift; sourceTree = "<group>"; };
 		E1D3A31A278732F800B03B55 /* Gameway.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gameway.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D3A31D278732F800B03B55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1D3A31F278732F800B03B55 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,12 +83,14 @@
 		E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E1D3A35E27873FB400B03B55 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E1D43B3D27AD2F75004E294D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		E1E20EC3278ADB3A00A8EDB6 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
 		E1E20ECD278B0F3300A8EDB6 /* SectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewModel.swift; sourceTree = "<group>"; };
 		E1E9838F27B514570048ED94 /* SkeletonHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonHomeCell.swift; sourceTree = "<group>"; };
 		E1E9839127B51A7D0048ED94 /* SkeletonLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoader.swift; sourceTree = "<group>"; };
+		E1ED898727B8E7070078A47C /* GiveawayImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayImageView.swift; sourceTree = "<group>"; };
 		E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1F2789D51500084BC5 /* Giveaway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Giveaway.swift; sourceTree = "<group>"; };
@@ -204,6 +208,7 @@
 				E1D3A35827873DF000B03B55 /* App */,
 				E198F7D227A1883F00B70F24 /* Factory */,
 				E198F7CA27A181E000B70F24 /* Data */,
+				E1DA778D27B7A9C300BC60E6 /* Service */,
 				E1D3A35C27873F9700B03B55 /* Home */,
 				E1F5EC162789D0A700084BC5 /* Giveaway */,
 				E1F5EC212789D53B00084BC5 /* Detail */,
@@ -282,7 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				E1D3A35E27873FB400B03B55 /* HomeViewController.swift */,
-				E1B940C2278DCAC100D5A5C3 /* PopularGiveawayCell.swift */,
+				E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */,
 				E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */,
 				E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */,
 				E1E9838F27B514570048ED94 /* SkeletonHomeCell.swift */,
@@ -290,9 +295,18 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		E1DA778D27B7A9C300BC60E6 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		E1E20EC5278ADD8600A8EDB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E1ED898627B8E6700078A47C /* Components */,
 				E1E20ECF278B150100A8EDB6 /* Protocols */,
 				E1E20EC6278ADD9100A8EDB6 /* Extensions */,
 			);
@@ -322,6 +336,14 @@
 				E1E9839127B51A7D0048ED94 /* SkeletonLoader.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E1ED898627B8E6700078A47C /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E1ED898727B8E7070078A47C /* GiveawayImageView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		E1F5EC162789D0A700084BC5 /* Giveaway */ = {
@@ -524,15 +546,17 @@
 				E1129EB527AE6B4800CBEE7F /* SectionHeader.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
 				E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */,
+				E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */,
 				E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */,
 				E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
 				E1E9839027B514570048ED94 /* SkeletonHomeCell.swift in Sources */,
-				E1B940C3278DCAC100D5A5C3 /* PopularGiveawayCell.swift in Sources */,
+				E1B940C3278DCAC100D5A5C3 /* HomeGiveawayCell.swift in Sources */,
 				E198F7D127A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift in Sources */,
 				E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */,
 				E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */,
 				E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */,
+				E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */,
 				E1E9839227B51A7D0048ED94 /* SkeletonLoader.swift in Sources */,
 				E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */,
 				E1F5EC202789D51500084BC5 /* Giveaway.swift in Sources */,

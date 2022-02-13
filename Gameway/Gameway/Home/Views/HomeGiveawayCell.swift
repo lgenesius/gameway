@@ -7,38 +7,44 @@
 
 import UIKit
 
-class PopularGiveawayCell: UICollectionViewCell, ConfigCell {
+class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
     typealias Request = Item
-    static var identifier: String = "PopularGiveawayCell"
+    static var identifier: String = "HomeGiveawayCell"
     
-    private let imageView = UIImageView()
-    private let title = UILabel()
-    private let worth = UILabel()
+    private let imageView = GiveawayImageView()
+    
+    private let title: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .title3)
+        label.textColor = .vividYellow
+        return label
+    }()
+    
+    private let worth: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.textColor = .darkGray
+        return label
+    }()
+    
+    private let free: UILabel = {
+        let label = UILabel()
+        label.text = "FREE"
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.textColor = .vividYellow
+        return label
+    }()
+    
+    private let imageLoader = ImageLoader()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        imageView.layer.cornerRadius = 5
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .red
-        
-        title.font = UIFont.preferredFont(forTextStyle: .title3)
-        title.textColor = .vividYellow
-        
-        let freeLabel = UILabel()
-        freeLabel.text = "FREE"
-        freeLabel.font = UIFont.preferredFont(forTextStyle: .headline)
-        freeLabel.textColor = .vividYellow
-        
-        worth.font = UIFont.preferredFont(forTextStyle: .subheadline)
-        worth.textColor = .darkGray
         
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: " ")
         attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
         worth.attributedText = attributeString
         
-        let horizontalStackView = UIStackView(arrangedSubviews: [freeLabel, worth])
+        let horizontalStackView = UIStackView(arrangedSubviews: [free, worth])
         horizontalStackView.axis = .horizontal
         horizontalStackView.distribution = .fill
         horizontalStackView.spacing = 10
@@ -67,7 +73,18 @@ class PopularGiveawayCell: UICollectionViewCell, ConfigCell {
     func configure(with item: Item?) {
         guard let item = item else { return }
         
-        imageView.image = UIImage(systemName: "house")
+        imageView.startActivityIndicator()
+        
+        if let url = URL(string: item.giveaway.thumbnail) {
+            imageLoader.loadImage(with: url) { [weak self] image in
+                guard let self = self else { return }
+                guard let image = image else { return }
+                
+                self.imageView.image = image
+                self.imageView.stopActivityIndicator()
+            }
+        }
+        
         title.text = item.giveaway.title
         
         if item.giveaway.worth != "N/A" {

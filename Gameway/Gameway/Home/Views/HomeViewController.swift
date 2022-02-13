@@ -62,7 +62,7 @@ class HomeViewController: UIViewController {
         view.addSubview(collectionView)
         
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
-        collectionView.register(PopularGiveawayCell.self, forCellWithReuseIdentifier: PopularGiveawayCell.identifier)
+        collectionView.register(HomeGiveawayCell.self, forCellWithReuseIdentifier: HomeGiveawayCell.identifier)
     }
 }
 
@@ -72,7 +72,7 @@ extension HomeViewController {
     
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
-            return self?.configure(PopularGiveawayCell.self, with: item, for: indexPath)
+            return self?.configure(HomeGiveawayCell.self, with: item, for: indexPath)
         })
         
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in

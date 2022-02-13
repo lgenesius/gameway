@@ -13,12 +13,6 @@ class SkeletonHomeCell: UITableViewCell, ConfigCell {
     static var identifier: String = "SkeletonHomeCell"
     private let paddingLeading: CGFloat = 10
     
-    private let sectionTitle = UILabel()
-    private let sectionSubtitle = UILabel()
-    private let itemImageView = UIImageView()
-    private let title = UILabel()
-    private let worth = UILabel()
-    
     private let sectionTitleGradient = CAGradientLayer()
     private let sectionSubtitleGradient = CAGradientLayer()
     private let itemImageViewGradient = CAGradientLayer()
