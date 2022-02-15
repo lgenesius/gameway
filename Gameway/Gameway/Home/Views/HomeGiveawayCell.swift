@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
     typealias Request = Item
@@ -35,7 +36,14 @@ class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
         return label
     }()
     
-    private let imageLoader = ImageLoader()
+    private let expire: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.textColor = .red
+        return label
+    }()
+    
+    private var cancellable: AnyCancellable?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,10 +52,14 @@ class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
         attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
         worth.attributedText = attributeString
         
-        let horizontalStackView = UIStackView(arrangedSubviews: [free, worth])
+        let priceHorizontalStackView = UIStackView(arrangedSubviews: [free, worth])
+        priceHorizontalStackView.axis = .horizontal
+        priceHorizontalStackView.distribution = .fill
+        priceHorizontalStackView.spacing = 10
+        
+        let horizontalStackView = UIStackView(arrangedSubviews: [priceHorizontalStackView, expire])
         horizontalStackView.axis = .horizontal
-        horizontalStackView.distribution = .fill
-        horizontalStackView.spacing = 10
+        horizontalStackView.distribution = .equalSpacing
         
         let verticalStackView = UIStackView(arrangedSubviews: [imageView, title, horizontalStackView])
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,6 +69,8 @@ class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
         contentView.addSubview(verticalStackView)
         
         NSLayoutConstraint.activate([
+            horizontalStackView.widthAnchor.constraint(equalToConstant: contentView.bounds.width),
+            
             imageView.widthAnchor.constraint(equalToConstant: contentView.frame.width),
             
             verticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -64,6 +78,8 @@ class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
             verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
+        
+        
     }
     
     required init?(coder: NSCoder) {
@@ -73,17 +89,7 @@ class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
     func configure(with item: Item?) {
         guard let item = item else { return }
         
-        imageView.startActivityIndicator()
-        
-        if let url = URL(string: item.giveaway.thumbnail) {
-            imageLoader.loadImage(with: url) { [weak self] image in
-                guard let self = self else { return }
-                guard let image = image else { return }
-                
-                self.imageView.image = image
-                self.imageView.stopActivityIndicator()
-            }
-        }
+        getImage(item.giveaway.thumbnail)
         
         title.text = item.giveaway.title
         
@@ -91,7 +97,48 @@ class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
             worth.text = item.giveaway.worth
         }
         
+        configureExpireText(endDate: item.giveaway.endDate)
+        
         let imageSize = contentView.frame.height - (20 + worth.intrinsicContentSize.height + title.intrinsicContentSize.height)
         imageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
     }
+    
+    private func configureExpireText(endDate giveawayEndDate: String) {
+        let endDate = convertStringToDate(giveawayEndDate)
+        guard let endDate = endDate else {
+            expire.text = ""
+            return
+        }
+        
+        let dayDiff = getDayDifference(from: Date(), to: endDate)
+        guard let dayDiff = dayDiff else {
+            expire.text = ""
+            return
+        }
+        
+        if dayDiff < 0 {
+            expire.text = "Has Expired"
+            expire.textColor = .gray
+        } else {
+            expire.text = dayDiff == 0 ? "Expire Today": "\(dayDiff) Days Left"
+        }
+    }
+    
+    private func getImage(_ urlString: String) {
+        imageView.startActivityIndicator()
+        
+        if let url = URL(string: urlString) {
+            cancellable = ImageLoader.shared.loadImage(from: url)
+                .sink(receiveValue: { [unowned self] image in
+                    self.imageView.stopActivityIndicator()
+                    guard let image = image else { return }
+                    
+                    self.imageView.image = image
+                })
+        } else {
+            self.imageView.stopActivityIndicator()
+        }
+    }
 }
+
+extension HomeGiveawayCell: DateService {}
