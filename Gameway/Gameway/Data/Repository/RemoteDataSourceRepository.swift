@@ -15,6 +15,10 @@ final class RemoteDataSourceRepository: RemoteDataSourceRepositoryProtocol {
         self.remoteDataSource = remoteDataSource
     }
     
+    func fetchGiveaways() -> AnyPublisher<[Giveaway], Error> {
+        return remoteDataSource.fetchGiveaways(params: nil)
+    }
+    
     func fetchRecentGiveaways() -> AnyPublisher<[Giveaway], Error> {
         return remoteDataSource.fetchGiveaways(params: ["sort-by": "date"])
     }

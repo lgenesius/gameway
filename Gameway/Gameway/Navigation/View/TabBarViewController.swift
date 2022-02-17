@@ -15,7 +15,7 @@ class TabBarViewController: UITabBarController {
         self.tabBar.tintColor = .vividYellow
         
         let homeVC = HomeViewControllerFactory().createViewController()
-        let giveawayVC = GiveawayViewController()
+        let giveawayVC = GiveawayViewControllerFactory().createViewController()
         let statusVC = StatusViewController()
         
         homeVC.title = "Home"

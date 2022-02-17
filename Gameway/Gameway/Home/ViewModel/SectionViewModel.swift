@@ -11,14 +11,14 @@ import Combine
 final class SectionViewModel {
     @Published var sections = [Section]()
     
-    var remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol
+    private var remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol
+    
+    private var anyCancellable = Set<AnyCancellable>()
+    private let gameType = "Full Game"
     
     init(repository remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol) {
         self.remoteDataSourceRepository = remoteDataSourceRepository
     }
-    
-    private var anyCancellable = Set<AnyCancellable>()
-    private let gameType = "Full Game"
     
     func fetchSections(completion: @escaping () -> Void) {
         fetchRecentGiveaways(completion: completion)

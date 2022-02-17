@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    var sectionVM: SectionViewModel
+    private var sectionVM: SectionViewModel
     
     private var collectionView: UICollectionView!
     private var skeletonLoaderTableView: UITableView!
@@ -26,16 +26,16 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setCurrentViewInterface()
+        setTableViewSettings()
+        
         sectionVM.fetchSections { [weak self] in
             self?.skeletonLoaderTableView.removeFromSuperview()
             
-            self?.setCurrentViewInterface()
             self?.setCollectionViewSettings()
             self?.createDataSource()
             self?.reloadData()
         }
-        
-        setTableViewSettings()
     }
     
     private func setTableViewSettings() {
@@ -63,7 +63,7 @@ class HomeViewController: UIViewController {
         view.addSubview(collectionView)
         
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
-        collectionView.register(HomeGiveawayCell.self, forCellWithReuseIdentifier: HomeGiveawayCell.identifier)
+        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
     }
 }
 
@@ -73,7 +73,7 @@ extension HomeViewController {
     
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
-            return self?.configure(HomeGiveawayCell.self, with: item, for: indexPath)
+            return self?.configure(HomeCollectionViewCell.self, with: item, for: indexPath)
         })
         
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in

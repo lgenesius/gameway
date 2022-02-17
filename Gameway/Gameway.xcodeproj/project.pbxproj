@@ -15,7 +15,7 @@
 		E198F7D427A1885C00B70F24 /* HomeViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */; };
 		E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */; };
 		E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */; };
-		E1B940C3278DCAC100D5A5C3 /* HomeGiveawayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */; };
+		E1B940C3278DCAC100D5A5C3 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */; };
 		E1CD438E27BA149F00DCD7BA /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD438D27BA149F00DCD7BA /* DateService.swift */; };
 		E1CD439227BA286000DCD7BA /* ImageCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD439127BA286000DCD7BA /* ImageCacheType.swift */; };
 		E1CD439627BA28F200DCD7BA /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD439527BA28F200DCD7BA /* ImageCache.swift */; };
@@ -31,6 +31,9 @@
 		E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */; };
 		E1D3A35F27873FB400B03B55 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D3A35E27873FB400B03B55 /* HomeViewController.swift */; };
 		E1D43B3E27AD2F75004E294D /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D43B3D27AD2F75004E294D /* Item.swift */; };
+		E1D83F3627BB85EF007077B2 /* GiveawayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D83F3527BB85EF007077B2 /* GiveawayViewModel.swift */; };
+		E1D83F3827BB88AA007077B2 /* GiveawayViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D83F3727BB88AA007077B2 /* GiveawayViewControllerFactory.swift */; };
+		E1D83F3A27BB9DEC007077B2 /* GiveawayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */; };
 		E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */; };
 		E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC3278ADB3A00A8EDB6 /* Section.swift */; };
 		E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */; };
@@ -39,7 +42,7 @@
 		E1E9839027B514570048ED94 /* SkeletonHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E9838F27B514570048ED94 /* SkeletonHomeCell.swift */; };
 		E1E9839227B51A7D0048ED94 /* SkeletonLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E9839127B51A7D0048ED94 /* SkeletonLoader.swift */; };
 		E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898727B8E7070078A47C /* GiveawayImageView.swift */; };
-		E1ED898A27B8FD200078A47C /* PlatformCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898927B8FD200078A47C /* PlatformCell.swift */; };
+		E1ED898A27B8FD200078A47C /* PlatformCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */; };
 		E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */; };
 		E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */; };
 		E1F5EC202789D51500084BC5 /* Giveaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1F2789D51500084BC5 /* Giveaway.swift */; };
@@ -72,7 +75,7 @@
 		E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerFactory.swift; sourceTree = "<group>"; };
 		E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryProtocol.swift; sourceTree = "<group>"; };
 		E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCell.swift; sourceTree = "<group>"; };
-		E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGiveawayCell.swift; sourceTree = "<group>"; };
+		E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1CD438D27BA149F00DCD7BA /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
 		E1CD439127BA286000DCD7BA /* ImageCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheType.swift; sourceTree = "<group>"; };
 		E1CD439527BA28F200DCD7BA /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
@@ -92,6 +95,9 @@
 		E1D3A35627873DDF00B03B55 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		E1D3A35E27873FB400B03B55 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E1D43B3D27AD2F75004E294D /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		E1D83F3527BB85EF007077B2 /* GiveawayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewModel.swift; sourceTree = "<group>"; };
+		E1D83F3727BB88AA007077B2 /* GiveawayViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewControllerFactory.swift; sourceTree = "<group>"; };
+		E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayTableViewCell.swift; sourceTree = "<group>"; };
 		E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		E1E20EC3278ADB3A00A8EDB6 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
@@ -100,7 +106,7 @@
 		E1E9838F27B514570048ED94 /* SkeletonHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonHomeCell.swift; sourceTree = "<group>"; };
 		E1E9839127B51A7D0048ED94 /* SkeletonLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoader.swift; sourceTree = "<group>"; };
 		E1ED898727B8E7070078A47C /* GiveawayImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayImageView.swift; sourceTree = "<group>"; };
-		E1ED898927B8FD200078A47C /* PlatformCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformCell.swift; sourceTree = "<group>"; };
+		E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1F2789D51500084BC5 /* Giveaway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Giveaway.swift; sourceTree = "<group>"; };
@@ -180,6 +186,7 @@
 			children = (
 				E198F7D527A189B000B70F24 /* Protocol */,
 				E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */,
+				E1D83F3727BB88AA007077B2 /* GiveawayViewControllerFactory.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -371,12 +378,20 @@
 			isa = PBXGroup;
 			children = (
 				E1D3A35E27873FB400B03B55 /* HomeViewController.swift */,
-				E1B940C2278DCAC100D5A5C3 /* HomeGiveawayCell.swift */,
+				E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */,
 				E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */,
 				E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */,
 				E1E9838F27B514570048ED94 /* SkeletonHomeCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E1D83F3427BB85DF007077B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E1D83F3527BB85EF007077B2 /* GiveawayViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E1DA778D27B7A9C300BC60E6 /* Helper */ = {
@@ -428,7 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				E1ED898727B8E7070078A47C /* GiveawayImageView.swift */,
-				E1ED898927B8FD200078A47C /* PlatformCell.swift */,
+				E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -436,6 +451,7 @@
 		E1F5EC162789D0A700084BC5 /* Giveaway */ = {
 			isa = PBXGroup;
 			children = (
+				E1D83F3427BB85DF007077B2 /* ViewModel */,
 				E1F5EC172789D0C400084BC5 /* View */,
 			);
 			path = Giveaway;
@@ -445,6 +461,7 @@
 			isa = PBXGroup;
 			children = (
 				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
+				E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -627,6 +644,7 @@
 				E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */,
 				E1D43B3E27AD2F75004E294D /* Item.swift in Sources */,
 				E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */,
+				E1D83F3A27BB9DEC007077B2 /* GiveawayTableViewCell.swift in Sources */,
 				E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */,
 				E1129EB727AE927F00CBEE7F /* RecentGiveawayCell.swift in Sources */,
 				E1CD439227BA286000DCD7BA /* ImageCacheType.swift in Sources */,
@@ -635,13 +653,15 @@
 				E1129EB527AE6B4800CBEE7F /* SectionHeader.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
 				E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */,
+				E1D83F3627BB85EF007077B2 /* GiveawayViewModel.swift in Sources */,
 				E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */,
 				E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */,
 				E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
 				E1E9839027B514570048ED94 /* SkeletonHomeCell.swift in Sources */,
+				E1D83F3827BB88AA007077B2 /* GiveawayViewControllerFactory.swift in Sources */,
 				E1CD438E27BA149F00DCD7BA /* DateService.swift in Sources */,
-				E1B940C3278DCAC100D5A5C3 /* HomeGiveawayCell.swift in Sources */,
+				E1B940C3278DCAC100D5A5C3 /* HomeCollectionViewCell.swift in Sources */,
 				E198F7D127A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift in Sources */,
 				E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */,
 				E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */,
@@ -651,7 +671,7 @@
 				E1E9839227B51A7D0048ED94 /* SkeletonLoader.swift in Sources */,
 				E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */,
 				E1F5EC202789D51500084BC5 /* Giveaway.swift in Sources */,
-				E1ED898A27B8FD200078A47C /* PlatformCell.swift in Sources */,
+				E1ED898A27B8FD200078A47C /* PlatformCollectionViewCell.swift in Sources */,
 				E1D3A35F27873FB400B03B55 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

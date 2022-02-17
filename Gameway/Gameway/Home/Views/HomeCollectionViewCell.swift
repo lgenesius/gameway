@@ -8,9 +8,9 @@
 import UIKit
 import Combine
 
-class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
+class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     typealias Request = Item
-    static var identifier: String = "HomeGiveawayCell"
+    static var identifier: String = "HomeCollectionViewCell"
     
     private let imageView = GiveawayImageView()
     
@@ -141,4 +141,4 @@ class HomeGiveawayCell: UICollectionViewCell, ConfigCell {
     }
 }
 
-extension HomeGiveawayCell: DateService {}
+extension HomeCollectionViewCell: DateService {}
