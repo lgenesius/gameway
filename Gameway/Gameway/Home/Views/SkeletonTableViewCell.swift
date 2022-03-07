@@ -7,10 +7,10 @@
 
 import UIKit
 
-class SkeletonHomeCell: UITableViewCell, ConfigCell {
+class SkeletonTableViewCell: UITableViewCell, ConfigCell {
     typealias Request = Any
     
-    static var identifier: String = "SkeletonHomeCell"
+    static var identifier: String = "SkeletonTableViewCell"
     private let paddingLeading: CGFloat = 10
     
     private let sectionTitleGradient = CAGradientLayer()
@@ -141,4 +141,4 @@ class SkeletonHomeCell: UITableViewCell, ConfigCell {
     }
 }
 
-extension SkeletonHomeCell: SkeletonLoader {}
+extension SkeletonTableViewCell: SkeletonLoader {}

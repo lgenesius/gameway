@@ -45,7 +45,7 @@ class HomeViewController: UIViewController {
         
         view.addSubview(skeletonLoaderTableView)
         
-        skeletonLoaderTableView.register(SkeletonHomeCell.self, forCellReuseIdentifier: SkeletonHomeCell.identifier)
+        skeletonLoaderTableView.register(SkeletonTableViewCell.self, forCellReuseIdentifier: SkeletonTableViewCell.identifier)
         skeletonLoaderTableView.delegate = self
         skeletonLoaderTableView.dataSource = self
     }
@@ -167,7 +167,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SkeletonHomeCell.identifier, for: indexPath) as! SkeletonHomeCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: SkeletonTableViewCell.identifier, for: indexPath) as! SkeletonTableViewCell
         cell.configure(with: nil)
         return cell
     }

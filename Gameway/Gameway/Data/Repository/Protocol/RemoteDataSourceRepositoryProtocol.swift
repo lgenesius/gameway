@@ -10,4 +10,5 @@ import Combine
 
 protocol RemoteDataSourceRepositoryProtocol {
     func fetchRecentGiveaways() -> AnyPublisher<[Giveaway], Error>
+    func fetchWorth() -> AnyPublisher<Worth, Error>
 }

@@ -68,6 +68,17 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         return label
     }()
     
+    private let typeLabel: PaddingLabel = {
+        let label = PaddingLabel(5, 5, 10, 10)
+        label.font = UIFont.preferredFont(forTextStyle: .headline)
+        label.backgroundColor = .darkKnight
+        label.textColor = .vividYellow
+        label.layer.cornerRadius = 8
+        label.clipsToBounds = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private var cancellable: AnyCancellable?
     
     override var frame: CGRect {
@@ -97,6 +108,8 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         horizontalStackView.axis = .horizontal
         horizontalStackView.distribution = .equalSpacing
         
+        giveawayImageView.addSubview(typeLabel)
+        
         let verticalStackView = UIStackView(arrangedSubviews: [
             giveawayImageView,
             platformCollectionView,
@@ -115,6 +128,9 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
             
             giveawayImageView.widthAnchor.constraint(equalToConstant: contentView.frame.width - 20),
             giveawayImageView.heightAnchor.constraint(equalToConstant: 250),
+            
+            typeLabel.trailingAnchor.constraint(equalTo: giveawayImageView.trailingAnchor, constant: -10),
+            typeLabel.topAnchor.constraint(equalTo: giveawayImageView.topAnchor, constant: 10),
             
             platformCollectionView.widthAnchor.constraint(equalToConstant: contentView.frame.width - 20),
             platformCollectionView.heightAnchor.constraint(equalToConstant: 30),
@@ -142,7 +158,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         getImage(giveaway.thumbnail)
         
         platforms = giveaway.platforms.components(separatedBy: ", ")
-        
+        typeLabel.text = giveaway.type
         titleLabel.text = giveaway.title
         descriptionLabel.text = giveaway.description
         
