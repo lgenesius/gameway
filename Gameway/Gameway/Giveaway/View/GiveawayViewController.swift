@@ -20,10 +20,15 @@ class GiveawayViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func loadView() {
+        super.loadView()
+        
+        setCurrentViewInterface()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCurrentViewInterface()
         setTableViewSettings()
         
         giveawayVM.fetchGiveaways { [weak self] in
@@ -40,6 +45,13 @@ class GiveawayViewController: UIViewController {
     private func setCurrentViewInterface() {
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.vividYellow]
         view.backgroundColor = .darkKnight
+        
+        let button = UIButton(type: UIButton.ButtonType.custom)
+        button.setImage(UIImage(systemName: "slider.vertical.3"), for: .normal)
+        button.tintColor = .vividYellow
+        button.addTarget(self, action: #selector(rightBarButtonTapped), for: .touchUpInside)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
     }
     
     private func setTableViewSettings() {
@@ -53,6 +65,14 @@ class GiveawayViewController: UIViewController {
         tableView.register(GiveawayTableViewCell.self, forCellReuseIdentifier: GiveawayTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
+    }
+}
+
+// MARK: - Button Function
+
+extension GiveawayViewController {
+    @objc private func rightBarButtonTapped() {
+        print("Right bar button tapped...")
     }
 }
 
