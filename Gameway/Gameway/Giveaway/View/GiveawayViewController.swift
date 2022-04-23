@@ -104,7 +104,9 @@ extension GiveawayViewController: UITableViewDelegate, UITableViewDataSource {
             let descLines = countDescLabelLines(giveawayVM.giveaways[indexPath.row].description) - 1
             let estimatedDescFrame = countEstimatedLabelFrame(giveawayVM.giveaways[indexPath.row].description, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)])
             let descHeight = (estimatedDescFrame.height / CGFloat(descLines)) * 2
-            let total: CGFloat = 40 + 50 + 20 // 40 from space between element, 50 come from platform collection view height, 20 come from estimated free horizontal stack view height and 70 for estimated height of description label
+            
+            // 40 from space between element, 50 come from platform collection view height, 20 come from estimated free horizontal stack view height and 70 for estimated height of description label
+            let total: CGFloat = 40 + 50 + 20
             return giveawayImageViewSize + total + estimatedTitleFrame.height + descHeight + 25
         } else {
             return view.bounds.height / 3 + 50
@@ -131,6 +133,10 @@ extension GiveawayViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return WorthSectionView(frame: CGRect(x: 0, y: 0, width: view.bounds.size.width, height: 50))
     }
 }
 

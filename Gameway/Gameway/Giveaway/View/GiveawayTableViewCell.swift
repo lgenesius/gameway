@@ -37,7 +37,6 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         label.numberOfLines = 0
         return label
     }()
-    
     private let freeLabel: UILabel = {
         let label = UILabel()
         label.text = "FREE"
@@ -45,21 +44,18 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         label.textColor = .vividYellow
         return label
     }()
-    
     private let worthLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .darkGray
         return label
     }()
-    
     private let endDateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .red
         return label
     }()
-    
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -67,7 +63,6 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         label.numberOfLines = 2
         return label
     }()
-    
     private let typeLabel: PaddingLabel = {
         let label = PaddingLabel(5, 5, 10, 10)
         label.font = UIFont.preferredFont(forTextStyle: .headline)
@@ -186,13 +181,13 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
     }
     
     private func configureExpireText(endDate giveawayEndDate: String) {
-        let endDate = convertStringToDate(giveawayEndDate)
+        let endDate = DateHelper.convertStringToDate(giveawayEndDate)
         guard let endDate = endDate else {
             endDateLabel.text = ""
             return
         }
         
-        let dayDiff = getDayDifference(from: Date(), to: endDate)
+        let dayDiff = DateHelper.getDayDifference(from: Date(), to: endDate)
         guard let dayDiff = dayDiff else {
             endDateLabel.text = ""
             return
@@ -229,7 +224,3 @@ extension GiveawayTableViewCell: UICollectionViewDelegateFlowLayout {
         return CGSize(width: itemSize.width + 20, height: platformCollectionView.bounds.height)
     }
 }
-
-// MARK: - Date Service
-
-extension GiveawayTableViewCell: DateService {}

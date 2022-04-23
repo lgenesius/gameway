@@ -104,13 +104,13 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     }
     
     private func configureExpireText(endDate giveawayEndDate: String) {
-        let endDate = convertStringToDate(giveawayEndDate)
+        let endDate = DateHelper.convertStringToDate(giveawayEndDate)
         guard let endDate = endDate else {
             expire.text = ""
             return
         }
         
-        let dayDiff = getDayDifference(from: Date(), to: endDate)
+        let dayDiff = DateHelper.getDayDifference(from: Date(), to: endDate)
         guard let dayDiff = dayDiff else {
             expire.text = ""
             return
@@ -140,5 +140,3 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
         }
     }
 }
-
-extension HomeCollectionViewCell: DateService {}

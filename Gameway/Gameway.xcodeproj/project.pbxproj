@@ -16,7 +16,7 @@
 		E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */; };
 		E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */; };
 		E1B940C3278DCAC100D5A5C3 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */; };
-		E1CD438E27BA149F00DCD7BA /* DateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD438D27BA149F00DCD7BA /* DateService.swift */; };
+		E1CD438E27BA149F00DCD7BA /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD438D27BA149F00DCD7BA /* DateHelper.swift */; };
 		E1CD439227BA286000DCD7BA /* ImageCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD439127BA286000DCD7BA /* ImageCacheType.swift */; };
 		E1CD439627BA28F200DCD7BA /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD439527BA28F200DCD7BA /* ImageCache.swift */; };
 		E1CD439827BA2B9C00DCD7BA /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD439727BA2B9C00DCD7BA /* UIImage+Ext.swift */; };
@@ -79,7 +79,7 @@
 		E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerFactoryProtocol.swift; sourceTree = "<group>"; };
 		E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCell.swift; sourceTree = "<group>"; };
 		E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
-		E1CD438D27BA149F00DCD7BA /* DateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateService.swift; sourceTree = "<group>"; };
+		E1CD438D27BA149F00DCD7BA /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		E1CD439127BA286000DCD7BA /* ImageCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheType.swift; sourceTree = "<group>"; };
 		E1CD439527BA28F200DCD7BA /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		E1CD439727BA2B9C00DCD7BA /* UIImage+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
@@ -144,6 +144,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E1155E7328142B0300B9FD5C /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */,
+				E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */,
+				E1E9838F27B514570048ED94 /* SkeletonTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		E198F7C627A1816C00B70F24 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,7 +260,7 @@
 		E1CD439A27BA440700DCD7BA /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				E1CD438D27BA149F00DCD7BA /* DateService.swift */,
+				E1CD438D27BA149F00DCD7BA /* DateHelper.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -305,7 +315,6 @@
 				E1D3A35827873DF000B03B55 /* App */,
 				E198F7D227A1883F00B70F24 /* Factory */,
 				E198F7CA27A181E000B70F24 /* Data */,
-				E1DA778D27B7A9C300BC60E6 /* Helper */,
 				E1D3A35C27873F9700B03B55 /* Home */,
 				E1F5EC162789D0A700084BC5 /* Giveaway */,
 				E1F5EC212789D53B00084BC5 /* Detail */,
@@ -383,11 +392,9 @@
 		E1D3A35D27873FA000B03B55 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E1155E7328142B0300B9FD5C /* Cells */,
 				E1D3A35E27873FB400B03B55 /* HomeViewController.swift */,
-				E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */,
-				E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */,
 				E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */,
-				E1E9838F27B514570048ED94 /* SkeletonTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -413,6 +420,7 @@
 		E1E20EC5278ADD8600A8EDB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				E1DA778D27B7A9C300BC60E6 /* Helper */,
 				E1ED898627B8E6700078A47C /* Components */,
 				E1E20ECF278B150100A8EDB6 /* Protocols */,
 				E1E20EC6278ADD9100A8EDB6 /* Extensions */,
@@ -671,7 +679,7 @@
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
 				E1E9839027B514570048ED94 /* SkeletonTableViewCell.swift in Sources */,
 				E1D83F3827BB88AA007077B2 /* GiveawayViewControllerFactory.swift in Sources */,
-				E1CD438E27BA149F00DCD7BA /* DateService.swift in Sources */,
+				E1CD438E27BA149F00DCD7BA /* DateHelper.swift in Sources */,
 				E1B940C3278DCAC100D5A5C3 /* HomeCollectionViewCell.swift in Sources */,
 				E1F69D2827BE3C8F00C71781 /* PaddingLabel.swift in Sources */,
 				E198F7D127A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift in Sources */,
