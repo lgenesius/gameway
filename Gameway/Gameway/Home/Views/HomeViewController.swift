@@ -22,6 +22,12 @@ class HomeViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var errorView: ErrorView = {
+        let errorView: ErrorView = ErrorView(frame: view.bounds)
+        errorView.delegate = self
+        return errorView
+    }()
+    
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     
     init(viewModel homeViewModel: HomeViewModelProtocol) {
@@ -217,10 +223,23 @@ extension HomeViewController: HomeViewModelDelegate {
     }
     
     func notifySuccessFetchSections() {
-        
+        errorView.removeFromSuperview()
     }
     
     func notifyFailedFetchSections(error: Error) {
-        
+        if errorView.superview == nil {
+            view.addSubview(errorView)
+            errorView.addMessage(error.localizedDescription)
+        } else {
+            errorView.stopActivityIndicator()
+        }
+    }
+}
+
+// MARK: - ErrorView Delegate
+
+extension HomeViewController: ErrorViewDelegate {
+    func retryErrorButtonOnTapped() {
+        homeViewModel.refetchSections()
     }
 }

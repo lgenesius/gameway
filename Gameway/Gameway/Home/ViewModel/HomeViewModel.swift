@@ -12,6 +12,7 @@ protocol HomeViewModelProtocol {
     var delegate: HomeViewModelDelegate? { get set }
     
     func onViewModelDidLoad()
+    func refetchSections()
 }
 
 protocol HomeViewModelDelegate {
@@ -38,20 +39,26 @@ final class HomeViewModel: HomeViewModelProtocol {
         fetchRecentGiveaways()
     }
     
+    func refetchSections() {
+        sections = []
+        fetchRecentGiveaways()
+    }
+    
     private func fetchRecentGiveaways() {
         remoteDataSourceRepository.fetchRecentGiveaways()
             .receive(on: DispatchQueue.main)
             .map { $0 }
-            .sink { (completion: Subscribers.Completion<Error>) in
+            .sink { [weak self] (completion: Subscribers.Completion<Error>) in
+                guard let self: HomeViewModel = self else { return }
+                
                 switch completion {
                 case .finished:
-                    print("mantap sukses 1")
+                    self.delegate?.notifySuccessFetchSections()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self.delegate?.notifyFailedFetchSections(error: error)
                 }
             } receiveValue: { [weak self] giveaways in
                 guard let self = self, !giveaways.isEmpty else { return }
-                print("mantap sukses 2")
                 self.filterToGetPopularGiveaways(giveaways: giveaways)
                 self.filterToGetRecentGiveaways(giveaways: giveaways)
                 self.filterToGetValuableGiveaways(giveaways: giveaways)
