@@ -13,7 +13,7 @@ final class HomeViewControllerFactory: ViewControllerFactoryProtocol {
     func createViewController() -> UIViewController {
         let remoteDataSource = RemoteDataSource()
         let remoteDataSourceRepository = RemoteDataSourceRepository(dataSource: remoteDataSource)
-        let sectionVM = SectionViewModel(repository: remoteDataSourceRepository)
-        return HomeViewController(viewModel: sectionVM)
+        let homeViewModel = HomeViewModel(repository: remoteDataSourceRepository)
+        return HomeViewController(viewModel: homeViewModel)
     }
 }

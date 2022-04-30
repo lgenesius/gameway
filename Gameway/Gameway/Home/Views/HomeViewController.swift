@@ -8,16 +8,26 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    private var sectionVM: SectionViewModel
+    private var homeViewModel: HomeViewModelProtocol
     
     private var collectionView: UICollectionView!
-    private var skeletonLoaderTableView: UITableView!
+    
+    private lazy var skeletonLoaderTableView: UITableView = {
+        let tableView = UITableView(frame: view.bounds)
+        tableView.backgroundColor = .darkKnight
+        tableView.alwaysBounceVertical = false
+        tableView.register(SkeletonTableViewCell.self, forCellReuseIdentifier: SkeletonTableViewCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
     
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
     
-    init(viewModel sectionVM: SectionViewModel) {
-        self.sectionVM = sectionVM
+    init(viewModel homeViewModel: HomeViewModelProtocol) {
+        self.homeViewModel = homeViewModel
         super.init(nibName: nil, bundle: nil)
+        self.homeViewModel.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -29,30 +39,16 @@ class HomeViewController: UIViewController {
         setCurrentViewInterface()
         setTableViewSettings()
         
-        sectionVM.fetchSections { [weak self] in
-            self?.skeletonLoaderTableView.removeFromSuperview()
-            
-            self?.setCollectionViewSettings()
-            self?.createDataSource()
-            self?.reloadData()
-        }
-    }
-    
-    private func setTableViewSettings() {
-        skeletonLoaderTableView = UITableView(frame: view.bounds)
-        skeletonLoaderTableView.backgroundColor = .darkKnight
-        skeletonLoaderTableView.alwaysBounceVertical = false
-        
-        view.addSubview(skeletonLoaderTableView)
-        
-        skeletonLoaderTableView.register(SkeletonTableViewCell.self, forCellReuseIdentifier: SkeletonTableViewCell.identifier)
-        skeletonLoaderTableView.delegate = self
-        skeletonLoaderTableView.dataSource = self
+        homeViewModel.onViewModelDidLoad()
     }
     
     private func setCurrentViewInterface() {
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.vividYellow]
         view.backgroundColor = .darkKnight
+    }
+    
+    private func setTableViewSettings() {
+        view.addSubview(skeletonLoaderTableView)
     }
     
     private func setCollectionViewSettings() {
@@ -98,11 +94,11 @@ extension HomeViewController {
         return cell
     }
     
-    private func reloadData() {
+    private func reloadData(sections: [Section]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections(sectionVM.sections)
+        snapshot.appendSections(sections)
         
-        for section in sectionVM.sections {
+        for section in sections {
             switch section.type {
             case .popular:
                 snapshot.appendItems(Array(section.items.prefix(8)), toSection: section)
@@ -124,9 +120,8 @@ extension HomeViewController {
     private func createCompositionalLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self = self else { return nil }
-            let section = self.sectionVM.sections[sectionIndex]
             
-            return self.createHomeGiveawaySection(using: section)
+            return self.createHomeGiveawaySection()
         }
         
         let config = UICollectionViewCompositionalLayoutConfiguration()
@@ -135,7 +130,7 @@ extension HomeViewController {
         return layout
     }
     
-    private func createHomeGiveawaySection(using section: Section) -> NSCollectionLayoutSection {
+    private func createHomeGiveawaySection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
@@ -177,10 +172,27 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-// MARK: UICollectionView Delegate
+// MARK: - UICollectionView Delegate
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
+}
+
+// MARK: - HomeViewModel Delegate
+
+extension HomeViewController: HomeViewModelDelegate {
+    func fetchSectionsFromViewModel(sections: [Section]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            
+            self.skeletonLoaderTableView.removeFromSuperview()
+            
+            self.setCollectionViewSettings()
+            self.createDataSource()
+            self.reloadData(sections: sections)
+        }
+    }
+    
 }
