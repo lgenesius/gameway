@@ -67,7 +67,7 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
     }
     
     private func setSectionTitleView() {
-        sectionTitleView.backgroundColor = .darkKnight
+        sectionTitleView.backgroundColor = .mainDarkBlue
         
         sectionTitleGradient.startPoint = CGPoint(x: 0, y: 0.5)
         sectionTitleGradient.endPoint = CGPoint(x: 1, y: 0.5)
@@ -81,7 +81,7 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
     }
     
     private func setSectionSubtitleView() {
-        sectionSubtitleView.backgroundColor = .darkKnight
+        sectionSubtitleView.backgroundColor = .mainDarkBlue
         
         sectionSubtitleGradient.startPoint = CGPoint(x: 0, y: 0.5)
         sectionSubtitleGradient.endPoint = CGPoint(x: 1, y: 0.5)
@@ -95,7 +95,7 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
     }
     
     private func setTheImageView() {
-        theImageView.backgroundColor = .darkKnight
+        theImageView.backgroundColor = .mainDarkBlue
         
         itemImageViewGradient.startPoint = CGPoint(x: 0, y: 0.5)
         itemImageViewGradient.endPoint = CGPoint(x: 1, y: 0.5)
@@ -109,7 +109,7 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
     }
     
     private func setTitleView() {
-        titleView.backgroundColor = .darkKnight
+        titleView.backgroundColor = .mainDarkBlue
         
         titleGradient.startPoint = CGPoint(x: 0, y: 0.5)
         titleGradient.endPoint = CGPoint(x: 1, y: 0.5)
@@ -123,7 +123,7 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
     }
     
     private func setWorthView() {
-        worthView.backgroundColor = .darkKnight
+        worthView.backgroundColor = .mainDarkBlue
         
         worthGradient.startPoint = CGPoint(x: 0, y: 0.5)
         worthGradient.endPoint = CGPoint(x: 1, y: 0.5)

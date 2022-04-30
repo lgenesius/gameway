@@ -11,8 +11,8 @@ class StatusViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.vividYellow]
-        view.backgroundColor = .darkKnight
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.mainYellow]
+        view.backgroundColor = .mainDarkBlue
     }
 
 }

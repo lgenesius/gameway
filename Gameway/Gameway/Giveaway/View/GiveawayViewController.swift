@@ -43,12 +43,12 @@ class GiveawayViewController: UIViewController {
     }
 
     private func setCurrentViewInterface() {
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.vividYellow]
-        view.backgroundColor = .darkKnight
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.mainYellow]
+        view.backgroundColor = .mainDarkBlue
         
         let button = UIButton(type: UIButton.ButtonType.custom)
         button.setImage(UIImage(systemName: "slider.vertical.3"), for: .normal)
-        button.tintColor = .vividYellow
+        button.tintColor = .mainYellow
         button.addTarget(self, action: #selector(rightBarButtonTapped), for: .touchUpInside)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: button)
@@ -56,7 +56,7 @@ class GiveawayViewController: UIViewController {
     
     private func setTableViewSettings() {
         tableView = UITableView()
-        tableView.backgroundColor = .darkKnight
+        tableView.backgroundColor = .mainDarkBlue
         tableView.separatorStyle = .none
         
         view.addSubview(tableView)

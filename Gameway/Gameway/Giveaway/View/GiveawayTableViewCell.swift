@@ -24,7 +24,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         layout.minimumInteritemSpacing = 5
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .darkKnight
+        collectionView.backgroundColor = .mainDarkBlue
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(PlatformCollectionViewCell.self, forCellWithReuseIdentifier: PlatformCollectionViewCell.identifier)
         return collectionView
@@ -33,7 +33,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .title3)
-        label.textColor = .vividYellow
+        label.textColor = .mainYellow
         label.numberOfLines = 0
         return label
     }()
@@ -41,7 +41,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         let label = UILabel()
         label.text = "FREE"
         label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.textColor = .vividYellow
+        label.textColor = .mainYellow
         return label
     }()
     private let worthLabel: UILabel = {
@@ -66,8 +66,8 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
     private let typeLabel: PaddingLabel = {
         let label = PaddingLabel(5, 5, 10, 10)
         label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.backgroundColor = .darkKnight
-        label.textColor = .vividYellow
+        label.backgroundColor = .mainDarkBlue
+        label.textColor = .mainYellow
         label.layer.cornerRadius = 8
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -146,8 +146,8 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
     
     func configure(with item: Giveaway?) {
         guard let giveaway = item else { return }
-        self.backgroundColor = .darkKnight
-        contentView.backgroundColor = .darkKnight
+        self.backgroundColor = .mainDarkBlue
+        contentView.backgroundColor = .mainDarkBlue
         
         
         getImage(giveaway.thumbnail)

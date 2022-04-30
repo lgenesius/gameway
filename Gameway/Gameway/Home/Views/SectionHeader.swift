@@ -16,7 +16,7 @@ final class SectionHeader: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        title.textColor = .vividYellow
+        title.textColor = .mainYellow
         title.font = UIFontMetrics.default.scaledFont(for: UIFont.systemFont(ofSize: 25, weight: .bold))
         
         subtitle.textColor = .secondaryLabel

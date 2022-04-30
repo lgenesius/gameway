@@ -15,7 +15,7 @@ class PlatformCollectionViewCell: UICollectionViewCell, ConfigCell {
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .footnote)
-        label.textColor = .darkKnight
+        label.textColor = .mainDarkBlue
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -38,7 +38,7 @@ class PlatformCollectionViewCell: UICollectionViewCell, ConfigCell {
     }
     
     func configure(with item: String?) {
-        self.backgroundColor = .vividYellow
+        self.backgroundColor = .mainYellow
         guard let text = item else {
             return
         }

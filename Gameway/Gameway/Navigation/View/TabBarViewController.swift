@@ -12,7 +12,7 @@ class TabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBar.tintColor = .vividYellow
+        self.tabBar.tintColor = .mainYellow
         
         let homeVC = HomeViewControllerFactory().createViewController()
         let giveawayVC = GiveawayViewControllerFactory().createViewController()

@@ -28,7 +28,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     private var remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol
     
     private var anyCancellable = Set<AnyCancellable>()
-    private let gameType: String = "Full Game"
+    private let gameType: String = "Game"
     
     init(repository remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol) {
         self.remoteDataSourceRepository = remoteDataSourceRepository

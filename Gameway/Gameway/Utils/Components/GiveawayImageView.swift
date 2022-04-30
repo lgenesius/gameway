@@ -36,7 +36,7 @@ class GiveawayImageView: UIImageView {
         self.layer.cornerRadius = 5
         self.clipsToBounds = true
         self.contentMode = .scaleToFill
-        self.backgroundColor = .darkKnight
+        self.backgroundColor = .mainDarkBlue
         
         self.addSubview(activityIndicator)
         

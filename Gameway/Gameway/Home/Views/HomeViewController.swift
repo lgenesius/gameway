@@ -14,7 +14,7 @@ class HomeViewController: UIViewController {
     
     private lazy var skeletonLoaderTableView: UITableView = {
         let tableView: UITableView = UITableView(frame: view.bounds)
-        tableView.backgroundColor = .darkKnight
+        tableView.backgroundColor = .mainDarkBlue
         tableView.alwaysBounceVertical = false
         tableView.register(SkeletonTableViewCell.self, forCellReuseIdentifier: SkeletonTableViewCell.identifier)
         tableView.delegate = self
@@ -43,8 +43,8 @@ class HomeViewController: UIViewController {
     }
     
     private func setCurrentViewInterface() {
-        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.vividYellow]
-        view.backgroundColor = .darkKnight
+        navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.mainYellow]
+        view.backgroundColor = .mainDarkBlue
     }
     
     private func setTableViewSettings() {
@@ -54,7 +54,7 @@ class HomeViewController: UIViewController {
     private func setCollectionViewSettings() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .darkKnight
+        collectionView.backgroundColor = .mainDarkBlue
         collectionView.delegate = self
         view.addSubview(collectionView)
         

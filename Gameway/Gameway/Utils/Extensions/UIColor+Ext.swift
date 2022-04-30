@@ -8,12 +8,12 @@
 import UIKit
 
 extension UIColor {
-    static var darkKnight: UIColor {
-        return UIColor(named: "161B33")!
+    static var mainDarkBlue: UIColor {
+        return UIColor(named: "161B33") ?? .black
     }
     
-    static var vividYellow: UIColor {
-        return UIColor(named: "FFE404")!
+    static var mainYellow: UIColor {
+        return UIColor(named: "FFE404") ?? .yellow
     }
     
     static var gradientDarkGrey: UIColor {

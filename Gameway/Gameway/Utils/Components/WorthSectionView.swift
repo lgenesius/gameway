@@ -10,12 +10,12 @@ import UIKit
 class WorthSectionView: UIView {
     private let activeGiveawaysContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .vividYellow
+        view.backgroundColor = .mainYellow
         return view
     }()
     private let worthEstimationContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .vividYellow
+        view.backgroundColor = .mainYellow
         return view
     }()
     

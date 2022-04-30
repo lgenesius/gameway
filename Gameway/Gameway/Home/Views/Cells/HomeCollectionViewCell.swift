@@ -17,7 +17,7 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     private let title: UILabel = {
         let label: UILabel = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .title3)
-        label.textColor = .vividYellow
+        label.textColor = .mainYellow
         return label
     }()
     
@@ -32,7 +32,7 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
         let label: UILabel = UILabel()
         label.text = "FREE"
         label.font = UIFont.preferredFont(forTextStyle: .headline)
-        label.textColor = .vividYellow
+        label.textColor = .mainYellow
         return label
     }()
     
