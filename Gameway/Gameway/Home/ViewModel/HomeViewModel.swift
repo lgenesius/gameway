@@ -15,7 +15,9 @@ protocol HomeViewModelProtocol {
 }
 
 protocol HomeViewModelDelegate {
-    func fetchSectionsFromViewModel(sections: [Section])
+    func processSectionsFromViewModel(sections: [Section])
+    func notifySuccessFetchSections()
+    func notifyFailedFetchSections(error: Error)
 }
 
 final class HomeViewModel: HomeViewModelProtocol {
@@ -43,18 +45,18 @@ final class HomeViewModel: HomeViewModelProtocol {
             .sink { completion in
                 switch completion {
                 case .finished:
-                    break
+                    print("mantap sukses 1")
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             } receiveValue: { [weak self] giveaways in
                 guard let self = self, !giveaways.isEmpty else { return }
-
+                print("mantap sukses 2")
                 self.filterToGetPopularGiveaways(giveaways: giveaways)
                 self.filterToGetRecentGiveaways(giveaways: giveaways)
                 self.filterToGetValuableGiveaways(giveaways: giveaways)
                 
-                self.delegate?.fetchSectionsFromViewModel(sections: self.sections)
+                self.delegate?.processSectionsFromViewModel(sections: self.sections)
             }
             .store(in: &anyCancellable)
     }

@@ -183,7 +183,7 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - HomeViewModel Delegate
 
 extension HomeViewController: HomeViewModelDelegate {
-    func fetchSectionsFromViewModel(sections: [Section]) {
+    func processSectionsFromViewModel(sections: [Section]) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
@@ -195,4 +195,11 @@ extension HomeViewController: HomeViewModelDelegate {
         }
     }
     
+    func notifySuccessFetchSections() {
+        
+    }
+    
+    func notifyFailedFetchSections(error: Error) {
+        
+    }
 }
