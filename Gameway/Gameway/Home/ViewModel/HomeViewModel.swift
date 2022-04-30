@@ -28,7 +28,7 @@ final class HomeViewModel: HomeViewModelProtocol {
     private var remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol
     
     private var anyCancellable = Set<AnyCancellable>()
-    private let gameType = "Full Game"
+    private let gameType: String = "Full Game"
     
     init(repository remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol) {
         self.remoteDataSourceRepository = remoteDataSourceRepository
@@ -42,7 +42,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         remoteDataSourceRepository.fetchRecentGiveaways()
             .receive(on: DispatchQueue.main)
             .map { $0 }
-            .sink { completion in
+            .sink { (completion: Subscribers.Completion<Error>) in
                 switch completion {
                 case .finished:
                     print("mantap sukses 1")
@@ -68,7 +68,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
         
         if !popularItems.isEmpty {
-            let popularSection = Section(id: 1,
+            let popularSection: Section = Section(id: 1,
                                          type: .popular,
                                          title: "Current Popular Giveaways",
                                          subtitle: "Games, DLC, Loots, Early Access and Other",
@@ -90,7 +90,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
         
         if !recentGameItems.isEmpty {
-            let gameRecentSection = Section(id: 2,
+            let gameRecentSection: Section = Section(id: 2,
                                             type: .recent,
                                             title: "Recent Game Giveaways",
                                             subtitle: "Only Games",
@@ -99,7 +99,7 @@ final class HomeViewModel: HomeViewModelProtocol {
         }
         
         if !recentOtherItems.isEmpty {
-            let otherRecentSection = Section(id: 3,
+            let otherRecentSection: Section = Section(id: 3,
                                              type: .recent,
                                              title: "Recent Other Giveaways",
                                              subtitle: "Containing DLC, Loots, Early Access and Other",
@@ -109,13 +109,13 @@ final class HomeViewModel: HomeViewModelProtocol {
     }
     
     private func filterToGetValuableGiveaways(giveaways: [Giveaway]) {
-        let valuableGiveaways = giveaways.sorted(by: { Double($0.worth.dropFirst()) ?? 0.0 > Double($1.worth.dropFirst()) ?? 0.0 })
-        let valuableItems = valuableGiveaways.map { giveaway -> Item in
+        let valuableGiveaways: [Giveaway] = giveaways.sorted(by: { Double($0.worth.dropFirst()) ?? 0.0 > Double($1.worth.dropFirst()) ?? 0.0 })
+        let valuableItems: [Item] = valuableGiveaways.map { giveaway -> Item in
             return Item(id: UUID().uuidString, giveaway: giveaway)
         }
         
         if !valuableItems.isEmpty {
-            let valuableSection = Section(id: 4,
+            let valuableSection: Section = Section(id: 4,
                                           type: .valuable,
                                           title: "Most Valuable Giveaways",
                                           subtitle: "Games, DLC, Loots, Early Access and Other",

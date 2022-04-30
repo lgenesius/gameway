@@ -13,7 +13,7 @@ class HomeViewController: UIViewController {
     private var collectionView: UICollectionView!
     
     private lazy var skeletonLoaderTableView: UITableView = {
-        let tableView = UITableView(frame: view.bounds)
+        let tableView: UITableView = UITableView(frame: view.bounds)
         tableView.backgroundColor = .darkKnight
         tableView.alwaysBounceVertical = false
         tableView.register(SkeletonTableViewCell.self, forCellReuseIdentifier: SkeletonTableViewCell.identifier)
@@ -58,7 +58,11 @@ class HomeViewController: UIViewController {
         collectionView.delegate = self
         view.addSubview(collectionView)
         
-        collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseIdentifier)
+        collectionView.register(
+            SectionHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeader.reuseIdentifier
+        )
         collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
     }
 }
@@ -69,16 +73,24 @@ extension HomeViewController {
     
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
-            return self?.configure(HomeCollectionViewCell.self, with: item, for: indexPath)
+            return self?.configure(
+                HomeCollectionViewCell.self,
+                with: item,
+                for: indexPath
+            )
         })
         
         dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.reuseIdentifier, for: indexPath) as? SectionHeader else {
+            guard let sectionHeader: SectionHeader = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionHeader.reuseIdentifier,
+                for: indexPath
+            ) as? SectionHeader else {
                 return nil
             }
             
-            guard let firstItem = self?.dataSource?.itemIdentifier(for: indexPath) else { return nil }
-            guard let section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
+            guard let firstItem: Item = self?.dataSource?.itemIdentifier(for: indexPath) else { return nil }
+            guard let section: Section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
             
             sectionHeader.setTitleText(title: section.title, subtitle: section.subtitle)
             return sectionHeader
@@ -86,7 +98,7 @@ extension HomeViewController {
     }
     
     private func configure<T: ConfigCell>(_ cellType: T.Type, with item: Item, for indexPath: IndexPath) -> T {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.identifier, for: indexPath) as? T else {
+        guard let cell: T = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.identifier, for: indexPath) as? T else {
             fatalError()
         }
         
@@ -118,38 +130,47 @@ extension HomeViewController {
 extension HomeViewController {
     
     private func createCompositionalLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+        let layout: UICollectionViewCompositionalLayout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self = self else { return nil }
             
             return self.createHomeGiveawaySection()
         }
         
-        let config = UICollectionViewCompositionalLayoutConfiguration()
+        let config: UICollectionViewCompositionalLayoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 40
         layout.configuration = config
         return layout
     }
     
     private func createHomeGiveawaySection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10)
+        let itemSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let layoutItem: NSCollectionLayoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+        layoutItem.contentInsets = NSDirectionalEdgeInsets(
+            top: 0,
+            leading: 0,
+            bottom: 0,
+            trailing: 10
+        )
         
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalHeight(1/3))
-        let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
+        let layoutGroupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalHeight(1/3))
+        let layoutGroup: NSCollectionLayoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
         
-        let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
+        let layoutSection: NSCollectionLayoutSection = NSCollectionLayoutSection(group: layoutGroup)
         layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
         
-        let layoutSectionHeader = createSectionHeader()
+        let layoutSectionHeader: NSCollectionLayoutBoundarySupplementaryItem = createSectionHeader()
         layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
         
         return layoutSection
     }
     
     private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(50))
-        let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        let layoutSectionHeaderSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(50))
+        let layoutSectionHeader: NSCollectionLayoutBoundarySupplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: layoutSectionHeaderSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
         return layoutSectionHeader
     }
 }
@@ -162,7 +183,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SkeletonTableViewCell.identifier, for: indexPath) as! SkeletonTableViewCell
+        let cell: SkeletonTableViewCell = tableView.dequeueReusableCell(withIdentifier: SkeletonTableViewCell.identifier, for: indexPath) as! SkeletonTableViewCell
         cell.configure(with: nil)
         return cell
     }
@@ -185,7 +206,7 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController: HomeViewModelDelegate {
     func processSectionsFromViewModel(sections: [Section]) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self: HomeViewController = self else { return }
             
             self.skeletonLoaderTableView.removeFromSuperview()
             

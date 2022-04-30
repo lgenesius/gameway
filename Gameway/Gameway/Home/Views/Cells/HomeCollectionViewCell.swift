@@ -12,24 +12,24 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     typealias Request = Item
     static var identifier: String = "HomeCollectionViewCell"
     
-    private let imageView = GiveawayImageView()
+    private let imageView: GiveawayImageView = GiveawayImageView()
     
     private let title: UILabel = {
-        let label = UILabel()
+        let label: UILabel = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .title3)
         label.textColor = .vividYellow
         return label
     }()
     
     private let worth: UILabel = {
-        let label = UILabel()
+        let label: UILabel = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .darkGray
         return label
     }()
     
     private let free: UILabel = {
-        let label = UILabel()
+        let label: UILabel = UILabel()
         label.text = "FREE"
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .vividYellow
@@ -37,7 +37,7 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     }()
     
     private let expire: UILabel = {
-        let label = UILabel()
+        let label: UILabel = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .red
         return label
@@ -52,16 +52,16 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
         attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
         worth.attributedText = attributeString
         
-        let priceHorizontalStackView = UIStackView(arrangedSubviews: [free, worth])
+        let priceHorizontalStackView: UIStackView = UIStackView(arrangedSubviews: [free, worth])
         priceHorizontalStackView.axis = .horizontal
         priceHorizontalStackView.distribution = .fill
         priceHorizontalStackView.spacing = 10
         
-        let horizontalStackView = UIStackView(arrangedSubviews: [priceHorizontalStackView, expire])
+        let horizontalStackView: UIStackView = UIStackView(arrangedSubviews: [priceHorizontalStackView, expire])
         horizontalStackView.axis = .horizontal
         horizontalStackView.distribution = .equalSpacing
         
-        let verticalStackView = UIStackView(arrangedSubviews: [imageView, title, horizontalStackView])
+        let verticalStackView: UIStackView = UIStackView(arrangedSubviews: [imageView, title, horizontalStackView])
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.axis = .vertical
         verticalStackView.alignment = .leading
@@ -87,7 +87,7 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     }
     
     func configure(with item: Item?) {
-        guard let item = item else { return }
+        guard let item: Item = item else { return }
         
         getImage(item.giveaway.thumbnail)
         
@@ -99,19 +99,17 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
         
         configureExpireText(endDate: item.giveaway.endDate)
         
-        let imageSize = contentView.frame.height - (20 + worth.intrinsicContentSize.height + title.intrinsicContentSize.height)
+        let imageSize: CGFloat = contentView.frame.height - (20 + worth.intrinsicContentSize.height + title.intrinsicContentSize.height)
         imageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
     }
     
     private func configureExpireText(endDate giveawayEndDate: String) {
-        let endDate = DateHelper.convertStringToDate(giveawayEndDate)
-        guard let endDate = endDate else {
+        guard let endDate: Date = DateHelper.convertStringToDate(giveawayEndDate) else {
             expire.text = ""
             return
         }
         
-        let dayDiff = DateHelper.getDayDifference(from: Date(), to: endDate)
-        guard let dayDiff = dayDiff else {
+        guard let dayDiff: Int = DateHelper.getDayDifference(from: Date(), to: endDate) else {
             expire.text = ""
             return
         }
@@ -127,11 +125,11 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     private func getImage(_ urlString: String) {
         imageView.startActivityIndicator()
         
-        if let url = URL(string: urlString) {
+        if let url: URL = URL(string: urlString) {
             cancellable = ImageLoader.shared.loadImage(from: url)
                 .sink(receiveValue: { [unowned self] image in
                     self.imageView.stopActivityIndicator()
-                    guard let image = image else { return }
+                    guard let image: UIImage = image else { return }
                     
                     self.imageView.image = image
                 })
