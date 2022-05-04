@@ -15,6 +15,8 @@ protocol ErrorViewDelegate {
 final class ErrorView: UIView {
     var delegate: ErrorViewDelegate?
     
+    private var lastDate: Date = Date()
+    
     private lazy var errorImageView: UIImageView = {
         let imageView: UIImageView = UIImageView()
         imageView.image = UIImage(named: "network-error-image")
@@ -60,7 +62,7 @@ final class ErrorView: UIView {
     }()
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView()
+        let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
         activityIndicator.color = .white
         activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
@@ -119,6 +121,7 @@ final class ErrorView: UIView {
     @objc
     private func retryButtonOnTapped(_ button: UIButton) {
         setActivityIndicator()
+        lastDate = Date()
         delegate?.retryErrorButtonOnTapped()
     }
     
@@ -127,9 +130,23 @@ final class ErrorView: UIView {
     }
     
     func stopActivityIndicator() {
-        activityIndicator.stopAnimating()
+        guard let seconds: Int = DateHelper.getSecondDifference(from: lastDate, to: Date()) else { return }
         
-        activityIndicator.isHidden = true
-        retryButton.isHidden = false
+        if seconds > 1 {
+            print("\(seconds)")
+            activityIndicator.stopAnimating()
+            
+            activityIndicator.isHidden = true
+            retryButton.isHidden = false
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { [weak self] in
+                guard let self: ErrorView = self else { return }
+                
+                self.activityIndicator.stopAnimating()
+                
+                self.activityIndicator.isHidden = true
+                self.retryButton.isHidden = false
+            }
+        }
     }
 }

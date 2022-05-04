@@ -94,7 +94,13 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
         title.text = item.giveaway.title
         
         if item.giveaway.worth != "N/A" {
+            worth.textColor = .darkGray
             worth.text = item.giveaway.worth
+        }
+        else {
+            //To fix cell conditional bug
+            worth.textColor = .mainDarkBlue
+            worth.text = "N/A"
         }
         
         configureExpireText(endDate: item.giveaway.endDate)
@@ -124,7 +130,7 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     
     private func getImage(_ urlString: String) {
         imageView.startActivityIndicator()
-        
+        imageView.image = UIImage(named: "placeholder-image")
         if let url: URL = URL(string: urlString) {
             cancellable = ImageLoader.shared.loadImage(from: url)
                 .sink(receiveValue: { [unowned self] image in

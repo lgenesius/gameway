@@ -10,12 +10,13 @@ import UIKit
 class HomeViewController: UIViewController {
     private var homeViewModel: HomeViewModelProtocol
     
-    private var collectionView: UICollectionView!
+    private lazy var collectionView: UICollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewLayout())
     
     private lazy var skeletonLoaderTableView: UITableView = {
         let tableView: UITableView = UITableView(frame: view.bounds)
         tableView.backgroundColor = .mainDarkBlue
         tableView.alwaysBounceVertical = false
+        tableView.separatorStyle = .none
         tableView.register(SkeletonTableViewCell.self, forCellReuseIdentifier: SkeletonTableViewCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,11 +41,14 @@ class HomeViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        super.loadView()
+        setCurrentViewInterface()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCurrentViewInterface()
         setTableViewSettings()
-        
         homeViewModel.onViewModelDidLoad()
     }
     
@@ -58,6 +62,7 @@ class HomeViewController: UIViewController {
     }
     
     private func setCollectionViewSettings() {
+        guard collectionView.superview == nil else { return }
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .mainDarkBlue
@@ -195,7 +200,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        tableView.bounds.height / 3 + 50
+        390
     }
 }
 
@@ -214,7 +219,9 @@ extension HomeViewController: HomeViewModelDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self: HomeViewController = self else { return }
             
-            self.skeletonLoaderTableView.removeFromSuperview()
+            if self.skeletonLoaderTableView.superview != nil {
+                self.skeletonLoaderTableView.removeFromSuperview()
+            }
             
             self.setCollectionViewSettings()
             self.createDataSource()
@@ -223,15 +230,25 @@ extension HomeViewController: HomeViewModelDelegate {
     }
     
     func notifySuccessFetchSections() {
-        errorView.removeFromSuperview()
+        DispatchQueue.main.async { [weak self] in
+            guard let self: HomeViewController = self else { return }
+            
+            if self.errorView.superview != nil {
+                self.errorView.removeFromSuperview()
+            }
+        }
     }
     
     func notifyFailedFetchSections(error: Error) {
-        if errorView.superview == nil {
-            view.addSubview(errorView)
-            errorView.addMessage(error.localizedDescription)
-        } else {
-            errorView.stopActivityIndicator()
+        DispatchQueue.main.async { [weak self] in
+            guard let self: HomeViewController = self else { return }
+            
+            if self.errorView.superview == nil {
+                self.view.addSubview(self.errorView)
+                self.errorView.addMessage(error.localizedDescription)
+            } else {
+                self.errorView.stopActivityIndicator()
+            }
         }
     }
 }
@@ -240,6 +257,6 @@ extension HomeViewController: HomeViewModelDelegate {
 
 extension HomeViewController: ErrorViewDelegate {
     func retryErrorButtonOnTapped() {
-        homeViewModel.refetchSections()
+        homeViewModel.onViewModelReloadData()
     }
 }

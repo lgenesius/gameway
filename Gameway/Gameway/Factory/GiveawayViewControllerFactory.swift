@@ -11,9 +11,9 @@ import UIKit.UIViewController
 final class GiveawayViewControllerFactory: ViewControllerFactoryProtocol {
     
     func createViewController() -> UIViewController {
-        let remoteDataSource = RemoteDataSource()
-        let remoteDataSourceRepository = RemoteDataSourceRepository(dataSource: remoteDataSource)
-        let giveawayVM = GiveawayViewModel(repository: remoteDataSourceRepository)
+        let remoteDataSource: RemoteDataSourceProtocol = RemoteDataSource()
+        let remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol = RemoteDataSourceRepository(dataSource: remoteDataSource)
+        let giveawayVM: GiveawayViewModelProtocol = GiveawayViewModel(repository: remoteDataSourceRepository)
         return GiveawayViewController(viewModel: giveawayVM)
     }
 }

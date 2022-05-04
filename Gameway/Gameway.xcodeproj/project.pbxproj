@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		E1129EB527AE6B4800CBEE7F /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */; };
-		E1129EB727AE927F00CBEE7F /* RecentGiveawayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */; };
 		E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7C727A1819300B70F24 /* RemoteDataSourceRepository.swift */; };
 		E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7CD27A1843600B70F24 /* RemoteDataSourceProtocol.swift */; };
 		E198F7D127A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D027A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift */; };
@@ -35,6 +34,7 @@
 		E1D83F3827BB88AA007077B2 /* GiveawayViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D83F3727BB88AA007077B2 /* GiveawayViewControllerFactory.swift */; };
 		E1D83F3A27BB9DEC007077B2 /* GiveawayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */; };
 		E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */; };
+		E1DD13A728211030003F53A1 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DD13A628211030003F53A1 /* SkeletonView.swift */; };
 		E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC3278ADB3A00A8EDB6 /* Section.swift */; };
 		E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */; };
 		E1E20ECB278B0F1900A8EDB6 /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */; };
@@ -72,7 +72,6 @@
 
 /* Begin PBXFileReference section */
 		E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
-		E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentGiveawayCell.swift; sourceTree = "<group>"; };
 		E198F7C727A1819300B70F24 /* RemoteDataSourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceRepository.swift; sourceTree = "<group>"; };
 		E198F7CD27A1843600B70F24 /* RemoteDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceProtocol.swift; sourceTree = "<group>"; };
 		E198F7D027A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -103,6 +102,7 @@
 		E1D83F3727BB88AA007077B2 /* GiveawayViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewControllerFactory.swift; sourceTree = "<group>"; };
 		E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayTableViewCell.swift; sourceTree = "<group>"; };
 		E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		E1DD13A628211030003F53A1 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
 		E1E20EC3278ADB3A00A8EDB6 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
@@ -150,8 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				E1B940C2278DCAC100D5A5C3 /* HomeCollectionViewCell.swift */,
-				E1129EB627AE927F00CBEE7F /* RecentGiveawayCell.swift */,
-				E1E9838F27B514570048ED94 /* SkeletonTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -419,6 +417,14 @@
 			path = Helper;
 			sourceTree = "<group>";
 		};
+		E1DD13A52820FBED003F53A1 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		E1E20EC5278ADD8600A8EDB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -458,6 +464,8 @@
 		E1ED898627B8E6700078A47C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				E1E9838F27B514570048ED94 /* SkeletonTableViewCell.swift */,
+				E1DD13A628211030003F53A1 /* SkeletonView.swift */,
 				E1ED898727B8E7070078A47C /* GiveawayImageView.swift */,
 				E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */,
 				E1F69D2727BE3C8F00C71781 /* PaddingLabel.swift */,
@@ -471,18 +479,18 @@
 			isa = PBXGroup;
 			children = (
 				E1D83F3427BB85DF007077B2 /* ViewModel */,
-				E1F5EC172789D0C400084BC5 /* View */,
+				E1F5EC172789D0C400084BC5 /* Views */,
 			);
 			path = Giveaway;
 			sourceTree = "<group>";
 		};
-		E1F5EC172789D0C400084BC5 /* View */ = {
+		E1F5EC172789D0C400084BC5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E1DD13A52820FBED003F53A1 /* Cells */,
 				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
-				E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E1F5EC1A2789D10200084BC5 /* Status */ = {
@@ -663,10 +671,10 @@
 				E1E20ECE278B0F3300A8EDB6 /* HomeViewModel.swift in Sources */,
 				E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */,
 				E1D43B3E27AD2F75004E294D /* Item.swift in Sources */,
+				E1DD13A728211030003F53A1 /* SkeletonView.swift in Sources */,
 				E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */,
 				E1D83F3A27BB9DEC007077B2 /* GiveawayTableViewCell.swift in Sources */,
 				E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */,
-				E1129EB727AE927F00CBEE7F /* RecentGiveawayCell.swift in Sources */,
 				E1CD439227BA286000DCD7BA /* ImageCacheType.swift in Sources */,
 				E1CD439827BA2B9C00DCD7BA /* UIImage+Ext.swift in Sources */,
 				E198F7D427A1885C00B70F24 /* HomeViewControllerFactory.swift in Sources */,

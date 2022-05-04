@@ -8,11 +8,28 @@
 import Foundation
 import Combine
 
-final class GiveawayViewModel {
-    @Published var giveaways = [Giveaway]()
-    @Published var worth: Worth?
+protocol GiveawayViewModelProtocol {
+    var delegate: GiveawayViewModelDelegate? { get set }
+    var isFetched: Bool { get }
     
-    var isFetched: Bool
+    func onViewModelGetGiveaways() -> [Giveaway]
+    func onViewModelDidLoad()
+    func onViewModelReloadData()
+}
+
+protocol GiveawayViewModelDelegate {
+    func processGiveawaysFromViewModel(giveaways: [Giveaway])
+    func notifySuccessFetchSections()
+    func notifyFailedFetchSections(error: Error)
+}
+
+final class GiveawayViewModel {
+    var delegate: GiveawayViewModelDelegate?
+    
+    @Published private var giveaways = [Giveaway]()
+    @Published private var worth: Worth?
+    
+    private(set) var isFetched: Bool
     
     private var remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol
     
@@ -23,28 +40,28 @@ final class GiveawayViewModel {
         isFetched = false
     }
     
-    func fetchGiveaways(completion: @escaping () -> Void) {
+    private func fetchGiveaways() {
         isFetched = false
         
         remoteDataSourceRepository.fetchRecentGiveaways()
             .receive(on: DispatchQueue.main)
             .map { $0 }
-            .sink { completion in
+            .sink { [weak self] (completion: Subscribers.Completion<Error>) in
                 switch completion {
                 case .finished:
-                    break
+                    self?.delegate?.notifySuccessFetchSections()
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self?.delegate?.notifyFailedFetchSections(error: error)
                 }
             } receiveValue: { [weak self] giveaways in
                 self?.giveaways = giveaways
                 self?.isFetched = true
-                completion()
+                self?.delegate?.processGiveawaysFromViewModel(giveaways: giveaways)
             }
             .store(in: &anyCancellable)
     }
     
-    func fetchWorth(completion: @escaping () -> Void) {
+    private func fetchWorth() {
         remoteDataSourceRepository.fetchWorth()
             .receive(on: DispatchQueue.main)
             .map { $0 }
@@ -57,7 +74,6 @@ final class GiveawayViewModel {
                 }
             } receiveValue: { [weak self] worth in
                 self?.worth = worth
-                completion()
             }
             .store(in: &anyCancellable)
     }
@@ -65,4 +81,22 @@ final class GiveawayViewModel {
     deinit {
         anyCancellable.removeAll()
     }
+}
+
+// MARK: - GiveawayViewModel Protocol
+
+extension GiveawayViewModel: GiveawayViewModelProtocol {
+    func onViewModelGetGiveaways() -> [Giveaway] {
+        return giveaways
+    }
+    
+    func onViewModelDidLoad() {
+        fetchGiveaways()
+    }
+    
+    func onViewModelReloadData() {
+        fetchGiveaways()
+    }
+    
+    
 }

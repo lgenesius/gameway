@@ -158,7 +158,12 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         descriptionLabel.text = giveaway.description
         
         if giveaway.worth != "N/A" {
+            worthLabel.textColor = .darkGray
             worthLabel.text = giveaway.worth
+        }
+        else {
+            worthLabel.textColor = .mainDarkBlue
+            worthLabel.text = "N/A"
         }
         
         configureExpireText(endDate: giveaway.endDate)
@@ -166,7 +171,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
     
     private func getImage(_ urlString: String) {
         giveawayImageView.startActivityIndicator()
-        
+        giveawayImageView.image = UIImage(named: "placeholder-image")
         if let url = URL(string: urlString) {
             cancellable = ImageLoader.shared.loadImage(from: url)
                 .sink(receiveValue: { [unowned self] image in

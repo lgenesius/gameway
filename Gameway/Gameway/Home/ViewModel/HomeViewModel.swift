@@ -7,12 +7,13 @@
 
 import Foundation
 import Combine
+import UIKit
 
 protocol HomeViewModelProtocol {
     var delegate: HomeViewModelDelegate? { get set }
     
     func onViewModelDidLoad()
-    func refetchSections()
+    func onViewModelReloadData()
 }
 
 protocol HomeViewModelDelegate {
@@ -21,7 +22,7 @@ protocol HomeViewModelDelegate {
     func notifyFailedFetchSections(error: Error)
 }
 
-final class HomeViewModel: HomeViewModelProtocol {
+final class HomeViewModel {
     var delegate: HomeViewModelDelegate?
     
     @Published private var sections = [Section]()
@@ -33,15 +34,6 @@ final class HomeViewModel: HomeViewModelProtocol {
     
     init(repository remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol) {
         self.remoteDataSourceRepository = remoteDataSourceRepository
-    }
-    
-    func onViewModelDidLoad() {
-        fetchRecentGiveaways()
-    }
-    
-    func refetchSections() {
-        sections = []
-        fetchRecentGiveaways()
     }
     
     private func fetchRecentGiveaways() {
@@ -59,6 +51,7 @@ final class HomeViewModel: HomeViewModelProtocol {
                 }
             } receiveValue: { [weak self] giveaways in
                 guard let self = self, !giveaways.isEmpty else { return }
+                self.sections = []
                 self.filterToGetPopularGiveaways(giveaways: giveaways)
                 self.filterToGetRecentGiveaways(giveaways: giveaways)
                 self.filterToGetValuableGiveaways(giveaways: giveaways)
@@ -133,5 +126,32 @@ final class HomeViewModel: HomeViewModelProtocol {
     
     deinit {
         anyCancellable.removeAll()
+    }
+}
+
+// MARK: - Observers
+
+extension HomeViewModel {
+    private func addObservers() {
+        let notificationCenter: NotificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(onViewModelWillEnterForegroundNotification), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc
+    private func onViewModelWillEnterForegroundNotification() {
+        onViewModelReloadData()
+    }
+}
+
+// MARK: - HomeViewModel Protocol
+
+extension HomeViewModel: HomeViewModelProtocol {
+    func onViewModelDidLoad() {
+        addObservers()
+        fetchRecentGiveaways()
+    }
+    
+    func onViewModelReloadData() {
+        fetchRecentGiveaways()
     }
 }
