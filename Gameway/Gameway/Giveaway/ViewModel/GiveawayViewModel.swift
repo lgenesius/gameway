@@ -13,12 +13,16 @@ protocol GiveawayViewModelProtocol {
     var isFetched: Bool { get }
     
     func onViewModelGetGiveaways() -> [Giveaway]
+    func onViewModelGetWorth() -> Worth?
     func onViewModelDidLoad()
     func onViewModelReloadData()
+    func onViewModelLoadMore()
+    func onViewModelCanPaginate() -> Bool
 }
 
 protocol GiveawayViewModelDelegate {
     func processGiveawaysFromViewModel(giveaways: [Giveaway])
+    func processWorthFromViewModel(worth: Worth)
     func notifySuccessFetchSections()
     func notifyFailedFetchSections(error: Error)
 }
@@ -26,6 +30,7 @@ protocol GiveawayViewModelDelegate {
 final class GiveawayViewModel {
     var delegate: GiveawayViewModelDelegate?
     
+    private var giveawaysContainer = [Giveaway]()
     @Published private var giveaways = [Giveaway]()
     @Published private var worth: Worth?
     
@@ -50,11 +55,13 @@ final class GiveawayViewModel {
                 switch completion {
                 case .finished:
                     self?.delegate?.notifySuccessFetchSections()
+                    break
                 case .failure(let error):
                     self?.delegate?.notifyFailedFetchSections(error: error)
                 }
             } receiveValue: { [weak self] giveaways in
-                self?.giveaways = giveaways
+                self?.giveawaysContainer = giveaways
+                self?.giveaways.append(contentsOf: giveaways[0..<10])
                 self?.isFetched = true
                 self?.delegate?.processGiveawaysFromViewModel(giveaways: giveaways)
             }
@@ -74,6 +81,7 @@ final class GiveawayViewModel {
                 }
             } receiveValue: { [weak self] worth in
                 self?.worth = worth
+                self?.delegate?.processWorthFromViewModel(worth: worth)
             }
             .store(in: &anyCancellable)
     }
@@ -90,13 +98,27 @@ extension GiveawayViewModel: GiveawayViewModelProtocol {
         return giveaways
     }
     
+    func onViewModelGetWorth() -> Worth? {
+        return worth
+    }
+    
     func onViewModelDidLoad() {
+        fetchWorth()
         fetchGiveaways()
     }
     
     func onViewModelReloadData() {
+        fetchWorth()
         fetchGiveaways()
     }
     
+    func onViewModelLoadMore() {
+        guard giveawaysContainer.count > giveaways.count else { return }
+        giveaways.append(contentsOf: giveawaysContainer[giveaways.count + 1...giveaways.count + 10])
+        delegate?.processGiveawaysFromViewModel(giveaways: giveaways)
+    }
     
+    func onViewModelCanPaginate() -> Bool {
+        return giveawaysContainer.count > giveaways.count
+    }
 }

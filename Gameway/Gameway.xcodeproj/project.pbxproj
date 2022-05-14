@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E1129EB527AE6B4800CBEE7F /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */; };
+		E13E1BBC28266124004088A3 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E1BBB28266124004088A3 /* UIViewController+Ext.swift */; };
 		E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7C727A1819300B70F24 /* RemoteDataSourceRepository.swift */; };
 		E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7CD27A1843600B70F24 /* RemoteDataSourceProtocol.swift */; };
 		E198F7D127A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E198F7D027A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift */; };
@@ -44,6 +45,8 @@
 		E1EB182E281CE8020055EB39 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB182D281CE8020055EB39 /* ErrorView.swift */; };
 		E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898727B8E7070078A47C /* GiveawayImageView.swift */; };
 		E1ED898A27B8FD200078A47C /* PlatformCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */; };
+		E1F575B628229732003A1424 /* GiveawayWorthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F575B528229732003A1424 /* GiveawayWorthView.swift */; };
+		E1F575B828229ADB003A1424 /* BoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F575B728229ADB003A1424 /* BoxView.swift */; };
 		E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */; };
 		E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */; };
 		E1F5EC202789D51500084BC5 /* Giveaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1F2789D51500084BC5 /* Giveaway.swift */; };
@@ -72,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		E1129EB427AE6B4800CBEE7F /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		E13E1BBB28266124004088A3 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		E198F7C727A1819300B70F24 /* RemoteDataSourceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceRepository.swift; sourceTree = "<group>"; };
 		E198F7CD27A1843600B70F24 /* RemoteDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceProtocol.swift; sourceTree = "<group>"; };
 		E198F7D027A1872300B70F24 /* RemoteDataSourceRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSourceRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 		E1EB182D281CE8020055EB39 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		E1ED898727B8E7070078A47C /* GiveawayImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayImageView.swift; sourceTree = "<group>"; };
 		E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformCollectionViewCell.swift; sourceTree = "<group>"; };
+		E1F575B528229732003A1424 /* GiveawayWorthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayWorthView.swift; sourceTree = "<group>"; };
+		E1F575B728229ADB003A1424 /* BoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxView.swift; sourceTree = "<group>"; };
 		E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1F2789D51500084BC5 /* Giveaway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Giveaway.swift; sourceTree = "<group>"; };
@@ -441,6 +447,7 @@
 			children = (
 				E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */,
 				E1CD439727BA2B9C00DCD7BA /* UIImage+Ext.swift */,
+				E13E1BBB28266124004088A3 /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -471,6 +478,7 @@
 				E1F69D2727BE3C8F00C71781 /* PaddingLabel.swift */,
 				E1F69D2927BE4C3B00C71781 /* WorthSectionView.swift */,
 				E1EB182D281CE8020055EB39 /* ErrorView.swift */,
+				E1F575B728229ADB003A1424 /* BoxView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -489,6 +497,7 @@
 			children = (
 				E1DD13A52820FBED003F53A1 /* Cells */,
 				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
+				E1F575B528229732003A1424 /* GiveawayWorthView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -668,8 +677,10 @@
 			files = (
 				E1E20ECB278B0F1900A8EDB6 /* RemoteDataSource.swift in Sources */,
 				E1F5EC242789D55300084BC5 /* DetailViewController.swift in Sources */,
+				E13E1BBC28266124004088A3 /* UIViewController+Ext.swift in Sources */,
 				E1E20ECE278B0F3300A8EDB6 /* HomeViewModel.swift in Sources */,
 				E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */,
+				E1F575B828229ADB003A1424 /* BoxView.swift in Sources */,
 				E1D43B3E27AD2F75004E294D /* Item.swift in Sources */,
 				E1DD13A728211030003F53A1 /* SkeletonView.swift in Sources */,
 				E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */,
@@ -688,6 +699,7 @@
 				E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */,
 				E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
+				E1F575B628229732003A1424 /* GiveawayWorthView.swift in Sources */,
 				E1E9839027B514570048ED94 /* SkeletonTableViewCell.swift in Sources */,
 				E1D83F3827BB88AA007077B2 /* GiveawayViewControllerFactory.swift in Sources */,
 				E1CD438E27BA149F00DCD7BA /* DateHelper.swift in Sources */,

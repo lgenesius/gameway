@@ -23,7 +23,7 @@ class PlatformCollectionViewCell: UICollectionViewCell, ConfigCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 8.0
         
         contentView.addSubview(titleLabel)
         

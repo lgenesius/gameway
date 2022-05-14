@@ -97,7 +97,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         let priceHorizontalStackView = UIStackView(arrangedSubviews: [freeLabel, worthLabel])
         priceHorizontalStackView.axis = .horizontal
         priceHorizontalStackView.distribution = .fill
-        priceHorizontalStackView.spacing = 10
+        priceHorizontalStackView.spacing = 8.0
         
         let horizontalStackView = UIStackView(arrangedSubviews: [priceHorizontalStackView, endDateLabel])
         horizontalStackView.axis = .horizontal
@@ -115,25 +115,25 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.axis = .vertical
         verticalStackView.alignment = .leading
-        verticalStackView.spacing = 10
+        verticalStackView.spacing = 8.0
         contentView.addSubview(verticalStackView)
         
         NSLayoutConstraint.activate([
-            horizontalStackView.widthAnchor.constraint(equalToConstant: contentView.bounds.width - 20),
+            horizontalStackView.widthAnchor.constraint(equalToConstant: contentView.bounds.width - 32.0),
             
-            giveawayImageView.widthAnchor.constraint(equalToConstant: contentView.frame.width - 20),
+            giveawayImageView.widthAnchor.constraint(equalToConstant: contentView.frame.width - 32.0),
             giveawayImageView.heightAnchor.constraint(equalToConstant: 250),
             
-            typeLabel.trailingAnchor.constraint(equalTo: giveawayImageView.trailingAnchor, constant: -10),
-            typeLabel.topAnchor.constraint(equalTo: giveawayImageView.topAnchor, constant: 10),
+            typeLabel.trailingAnchor.constraint(equalTo: giveawayImageView.trailingAnchor, constant: -8.0),
+            typeLabel.topAnchor.constraint(equalTo: giveawayImageView.topAnchor, constant: 8.0),
             
-            platformCollectionView.widthAnchor.constraint(equalToConstant: contentView.frame.width - 20),
+            platformCollectionView.widthAnchor.constraint(equalToConstant: contentView.frame.width - 32.0),
             platformCollectionView.heightAnchor.constraint(equalToConstant: 30),
             
             verticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
             verticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
-            verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
+            verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
         ])
         
         platformCollectionView.dataSource = self
@@ -152,7 +152,6 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         
         getImage(giveaway.thumbnail)
         
-        platforms = giveaway.platforms.components(separatedBy: ", ")
         typeLabel.text = giveaway.type
         titleLabel.text = giveaway.title
         descriptionLabel.text = giveaway.description
@@ -167,6 +166,11 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         }
         
         configureExpireText(endDate: giveaway.endDate)
+        
+        platforms = giveaway.platforms.components(separatedBy: ", ")
+        DispatchQueue.main.async { [weak self] in
+            self?.platformCollectionView.reloadData()
+        }
     }
     
     private func getImage(_ urlString: String) {

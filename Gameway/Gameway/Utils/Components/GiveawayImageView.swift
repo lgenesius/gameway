@@ -33,7 +33,7 @@ class GiveawayImageView: UIImageView {
     }
     
     private func set() {
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 8.0
         self.clipsToBounds = true
         self.contentMode = .scaleToFill
         self.backgroundColor = .mainDarkBlue
