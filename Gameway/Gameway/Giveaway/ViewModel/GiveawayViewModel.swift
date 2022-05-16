@@ -18,6 +18,7 @@ protocol GiveawayViewModelProtocol {
     func onViewModelReloadData()
     func onViewModelLoadMore()
     func onViewModelCanPaginate() -> Bool
+    func onViewModelSetFilterSheet()
 }
 
 protocol GiveawayViewModelDelegate {
@@ -25,10 +26,44 @@ protocol GiveawayViewModelDelegate {
     func processWorthFromViewModel(worth: Worth)
     func notifySuccessFetchSections()
     func notifyFailedFetchSections(error: Error)
+    func setFilterSheetView(platformFilters: [Filter], typeFilters: [Filter], sortFilters: [Filter])
 }
 
 final class GiveawayViewModel {
     var delegate: GiveawayViewModelDelegate?
+    
+    private var platformFilters: [Filter] = [
+        Filter(name: "PC", code: "pc", type: .platform),
+        Filter(name: "Steam", code: "steam", type: .platform),
+        Filter(name: "Epic Games Store", code: "epic-games-store", type: .platform),
+        Filter(name: "Ubisoft", code: "ubisoft", type: .platform),
+        Filter(name: "GOG", code: "gog", type: .platform),
+        Filter(name: "Itch.io", code: "itchio", type: .platform),
+        Filter(name: "PS4", code: "ps4", type: .platform),
+        Filter(name: "PS5", code: "ps5", type: .platform),
+        Filter(name: "Xbox One", code: "xbox-one", type: .platform),
+        Filter(name: "Xbox Series XS", code: "xbox-series-xs", type: .platform),
+        Filter(name: "Switch", code: "switch", type: .platform),
+        Filter(name: "Android", code: "android", type: .platform),
+        Filter(name: "iOS", code: "ios", type: .platform),
+        Filter(name: "VR", code: "vr", type: .platform),
+        Filter(name: "Battle.net", code: "battlenet", type: .platform),
+        Filter(name: "Origin", code: "origin", type: .platform),
+        Filter(name: "DRM Free", code: "drm-free", type: .platform),
+        Filter(name: "Xbox 360", code: "xbox-360", type: .platform)
+    ]
+
+    private var typeFilters: [Filter] = [
+        Filter(name: "Game", code: "game", type: .type),
+        Filter(name: "Loot", code: "loot", type: .type),
+        Filter(name: "Beta", code: "beta", type: .type)
+    ]
+
+    private var sortFilters: [Filter] = [
+        Filter(name: "Date", code: "date", type: .sort),
+        Filter(name: "Value", code: "value", type: .sort),
+        Filter(name: "Popularity", code: "popularity", type: .sort)
+    ]
     
     private var giveawaysContainer = [Giveaway]()
     @Published private var giveaways = [Giveaway]()
@@ -61,8 +96,11 @@ final class GiveawayViewModel {
                 }
             } receiveValue: { [weak self] giveaways in
                 self?.giveawaysContainer = giveaways
-                self?.giveaways.append(contentsOf: giveaways[0..<10])
+                
+                let maxItemSize: Int = giveaways.count < 10 ? giveaways.count : 10
+                self?.giveaways.append(contentsOf: giveaways[0..<maxItemSize])
                 self?.isFetched = true
+                self?.setWorth()
                 self?.delegate?.processGiveawaysFromViewModel(giveaways: giveaways)
             }
             .store(in: &anyCancellable)
@@ -86,6 +124,21 @@ final class GiveawayViewModel {
             .store(in: &anyCancellable)
     }
     
+    private func setWorth() {
+        let activeGiveawayNumber: Int = giveawaysContainer.count
+        let worthEstimation: Double = giveawaysContainer.reduce(0.0) { result, giveaway in
+            //Drop the dollar sign from string
+            let removedFirstCharString: String = String(giveaway.worth.dropFirst())
+            if let worth: Double = Double(removedFirstCharString) {
+                return result + worth
+            }
+            return result
+        }
+        let tempWorth: Worth = Worth(activeGiveawaysNumber: activeGiveawayNumber, worthEstimationUSD: String(format: "%.2f", worthEstimation))
+        worth = tempWorth
+        delegate?.processWorthFromViewModel(worth: tempWorth)
+    }
+    
     deinit {
         anyCancellable.removeAll()
     }
@@ -103,22 +156,29 @@ extension GiveawayViewModel: GiveawayViewModelProtocol {
     }
     
     func onViewModelDidLoad() {
-        fetchWorth()
         fetchGiveaways()
     }
     
     func onViewModelReloadData() {
-        fetchWorth()
         fetchGiveaways()
     }
     
     func onViewModelLoadMore() {
         guard giveawaysContainer.count > giveaways.count else { return }
-        giveaways.append(contentsOf: giveawaysContainer[giveaways.count + 1...giveaways.count + 10])
+        let maxItemSize: Int = giveaways.count + 10 < giveawaysContainer.count ? giveaways.count + 10 : giveawaysContainer.count
+        giveaways.append(contentsOf: giveawaysContainer[giveaways.count..<maxItemSize])
         delegate?.processGiveawaysFromViewModel(giveaways: giveaways)
     }
     
     func onViewModelCanPaginate() -> Bool {
         return giveawaysContainer.count > giveaways.count
+    }
+    
+    func onViewModelSetFilterSheet() {
+        delegate?.setFilterSheetView(
+            platformFilters: platformFilters,
+            typeFilters: typeFilters,
+            sortFilters: sortFilters
+        )
     }
 }

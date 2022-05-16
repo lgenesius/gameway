@@ -110,13 +110,12 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
     }
     
     private func configureExpireText(endDate giveawayEndDate: String) {
-        guard let endDate: Date = DateHelper.convertStringToDate(giveawayEndDate) else {
-            expire.text = ""
-            return
-        }
+        expire.textColor = .red
+        expire.text = ""
         
-        guard let dayDiff: Int = DateHelper.getDayDifference(from: Date(), to: endDate) else {
-            expire.text = ""
+        guard let endDate: Date = DateHelper.convertStringToDate(giveawayEndDate),
+              let dayDiff: Int = DateHelper.getDayDifference(from: Date(), to: endDate)
+        else {
             return
         }
         

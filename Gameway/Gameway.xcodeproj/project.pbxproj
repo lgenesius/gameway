@@ -36,6 +36,8 @@
 		E1D83F3A27BB9DEC007077B2 /* GiveawayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */; };
 		E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */; };
 		E1DD13A728211030003F53A1 /* SkeletonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DD13A628211030003F53A1 /* SkeletonView.swift */; };
+		E1E09C8C282F9DC5006C3F94 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E09C8B282F9DC5006C3F94 /* UIView+Ext.swift */; };
+		E1E09C8E282FD2BA006C3F94 /* GiveawayFilterSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E09C8D282FD2BA006C3F94 /* GiveawayFilterSheetView.swift */; };
 		E1E20EC4278ADB3A00A8EDB6 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC3278ADB3A00A8EDB6 /* Section.swift */; };
 		E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */; };
 		E1E20ECB278B0F1900A8EDB6 /* RemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */; };
@@ -43,6 +45,9 @@
 		E1E9839027B514570048ED94 /* SkeletonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E9838F27B514570048ED94 /* SkeletonTableViewCell.swift */; };
 		E1E9839227B51A7D0048ED94 /* SkeletonLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E9839127B51A7D0048ED94 /* SkeletonLoader.swift */; };
 		E1EB182E281CE8020055EB39 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB182D281CE8020055EB39 /* ErrorView.swift */; };
+		E1EB481B2830FB2700FECF42 /* ChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB481A2830FB2700FECF42 /* ChoiceTableViewCell.swift */; };
+		E1EB481D283109A700FECF42 /* UIHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB481C283109A700FECF42 /* UIHelper.swift */; };
+		E1EB481F283119CB00FECF42 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB481E283119CB00FECF42 /* Filter.swift */; };
 		E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898727B8E7070078A47C /* GiveawayImageView.swift */; };
 		E1ED898A27B8FD200078A47C /* PlatformCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */; };
 		E1F575B628229732003A1424 /* GiveawayWorthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F575B528229732003A1424 /* GiveawayWorthView.swift */; };
@@ -107,6 +112,8 @@
 		E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayTableViewCell.swift; sourceTree = "<group>"; };
 		E1DA778E27B7A9D700BC60E6 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		E1DD13A628211030003F53A1 /* SkeletonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonView.swift; sourceTree = "<group>"; };
+		E1E09C8B282F9DC5006C3F94 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
+		E1E09C8D282FD2BA006C3F94 /* GiveawayFilterSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayFilterSheetView.swift; sourceTree = "<group>"; };
 		E1E20EC3278ADB3A00A8EDB6 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
 		E1E20ECA278B0F1900A8EDB6 /* RemoteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataSource.swift; sourceTree = "<group>"; };
@@ -114,6 +121,9 @@
 		E1E9838F27B514570048ED94 /* SkeletonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonTableViewCell.swift; sourceTree = "<group>"; };
 		E1E9839127B51A7D0048ED94 /* SkeletonLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoader.swift; sourceTree = "<group>"; };
 		E1EB182D281CE8020055EB39 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		E1EB481A2830FB2700FECF42 /* ChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceTableViewCell.swift; sourceTree = "<group>"; };
+		E1EB481C283109A700FECF42 /* UIHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHelper.swift; sourceTree = "<group>"; };
+		E1EB481E283119CB00FECF42 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		E1ED898727B8E7070078A47C /* GiveawayImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayImageView.swift; sourceTree = "<group>"; };
 		E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformCollectionViewCell.swift; sourceTree = "<group>"; };
 		E1F575B528229732003A1424 /* GiveawayWorthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayWorthView.swift; sourceTree = "<group>"; };
@@ -419,6 +429,7 @@
 				E1CD439B27BA442300DCD7BA /* Skeleton */,
 				E1CD439927BA43F500DCD7BA /* Date */,
 				E1CD438F27BA281B00DCD7BA /* Image */,
+				E1EB481C283109A700FECF42 /* UIHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -427,6 +438,7 @@
 			isa = PBXGroup;
 			children = (
 				E1D83F3927BB9DEC007077B2 /* GiveawayTableViewCell.swift */,
+				E1EB481A2830FB2700FECF42 /* ChoiceTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -448,6 +460,7 @@
 				E1E20EC7278ADDA100A8EDB6 /* UIColor+Ext.swift */,
 				E1CD439727BA2B9C00DCD7BA /* UIImage+Ext.swift */,
 				E13E1BBB28266124004088A3 /* UIViewController+Ext.swift */,
+				E1E09C8B282F9DC5006C3F94 /* UIView+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -498,6 +511,7 @@
 				E1DD13A52820FBED003F53A1 /* Cells */,
 				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
 				E1F575B528229732003A1424 /* GiveawayWorthView.swift */,
+				E1E09C8D282FD2BA006C3F94 /* GiveawayFilterSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -525,6 +539,7 @@
 				E1F5EC1F2789D51500084BC5 /* Giveaway.swift */,
 				E1D43B3D27AD2F75004E294D /* Item.swift */,
 				E1F69D2B27BE4CD300C71781 /* Worth.swift */,
+				E1EB481E283119CB00FECF42 /* Filter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -675,10 +690,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1EB481F283119CB00FECF42 /* Filter.swift in Sources */,
 				E1E20ECB278B0F1900A8EDB6 /* RemoteDataSource.swift in Sources */,
 				E1F5EC242789D55300084BC5 /* DetailViewController.swift in Sources */,
 				E13E1BBC28266124004088A3 /* UIViewController+Ext.swift in Sources */,
+				E1E09C8E282FD2BA006C3F94 /* GiveawayFilterSheetView.swift in Sources */,
 				E1E20ECE278B0F3300A8EDB6 /* HomeViewModel.swift in Sources */,
+				E1EB481D283109A700FECF42 /* UIHelper.swift in Sources */,
 				E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */,
 				E1F575B828229ADB003A1424 /* BoxView.swift in Sources */,
 				E1D43B3E27AD2F75004E294D /* Item.swift in Sources */,
@@ -693,6 +711,7 @@
 				E1F69D2A27BE4C3B00C71781 /* WorthSectionView.swift in Sources */,
 				E1129EB527AE6B4800CBEE7F /* SectionHeader.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
+				E1EB481B2830FB2700FECF42 /* ChoiceTableViewCell.swift in Sources */,
 				E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */,
 				E1D83F3627BB85EF007077B2 /* GiveawayViewModel.swift in Sources */,
 				E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */,
@@ -711,6 +730,7 @@
 				E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */,
 				E1CD439627BA28F200DCD7BA /* ImageCache.swift in Sources */,
 				E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */,
+				E1E09C8C282F9DC5006C3F94 /* UIView+Ext.swift in Sources */,
 				E1E9839227B51A7D0048ED94 /* SkeletonLoader.swift in Sources */,
 				E1D3A328278732F800B03B55 /* Gameway.xcdatamodeld in Sources */,
 				E1F5EC202789D51500084BC5 /* Giveaway.swift in Sources */,

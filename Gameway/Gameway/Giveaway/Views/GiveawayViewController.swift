@@ -14,6 +14,10 @@ class GiveawayViewController: UIViewController {
     
     private var isPaginating: Bool = false
     
+    private var traySettingsHeight: CGFloat {
+        return view.bounds.size.height * 0.75
+    }
+    
     private lazy var tableView: UITableView = {
         let tableView: UITableView = UITableView(frame: view.bounds, style: .grouped)
         tableView.backgroundColor = .mainDarkBlue
@@ -29,6 +33,21 @@ class GiveawayViewController: UIViewController {
         let errorView: ErrorView = ErrorView(frame: view.bounds)
         errorView.delegate = self
         return errorView
+    }()
+    
+    private lazy var blackView: UIView = {
+        let view: UIView = UIView()
+        view.backgroundColor = .black
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(blackViewTapped))
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+    
+    private lazy var filterSheetView: GiveawayFilterSheetView = {
+        let view: GiveawayFilterSheetView = GiveawayFilterSheetView()
+        view.backgroundColor = .mainDarkBlue
+        view.delegate = self
+        return view
     }()
     
     init(viewModel giveawayVM: GiveawayViewModelProtocol) {
@@ -85,7 +104,32 @@ class GiveawayViewController: UIViewController {
 
 extension GiveawayViewController {
     @objc private func rightBarButtonTapped() {
-        print("Right bar button tapped...")
+        giveawayVM.onViewModelSetFilterSheet()
+    }
+    
+    @objc private func blackViewTapped() {
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 1.0,
+            initialSpringVelocity: 1.0,
+            options: .curveEaseInOut,
+            animations: { [weak self] in
+                guard let self = self else { return }
+                self.blackView.alpha = 0.0
+                self.filterSheetView.frame = CGRect(
+                    x: 0,
+                    y: UIHelper.screenSize.height,
+                    width: UIHelper.screenSize.width,
+                    height: self.traySettingsHeight
+                )
+            },
+            completion: { [weak self] _ in
+                guard let self = self else { return }
+                self.blackView.removeFromSuperview()
+                self.filterSheetView.removeFromSuperview()
+            }
+        )
     }
 }
 
@@ -224,6 +268,85 @@ extension GiveawayViewController: GiveawayViewModelDelegate {
             }
         }
     }
+    
+    func setFilterSheetView(
+        platformFilters: [Filter],
+        typeFilters: [Filter],
+        sortFilters: [Filter]
+    ) {
+        guard blackView.superview == nil else { return }
+        blackView.frame = view.bounds
+        
+        UIHelper.keyWindow?.addSubview(blackView)
+        
+        filterSheetView.setFiltersData(
+            platformFilters: platformFilters,
+            typeFilters: typeFilters,
+            sortFilters: sortFilters
+        )
+        filterSheetView.frame = CGRect(
+            x: 0,
+            y: UIHelper.screenSize.height,
+            width: UIHelper.screenSize.width,
+            height: traySettingsHeight
+        )
+        filterSheetView.roundCorners([.topLeft, .topRight], radius: 8.0)
+        UIHelper.keyWindow?.addSubview(filterSheetView)
+        
+        blackView.alpha = 0
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 1.0,
+            initialSpringVelocity: 1.0,
+            options: .curveEaseInOut,
+            animations: { [weak self] in
+                guard let self = self else { return }
+                self.blackView.alpha = 0.5
+                self.filterSheetView.frame = CGRect(
+                    x: 0,
+                    y: UIHelper.screenSize.height - self.traySettingsHeight,
+                    width: UIHelper.screenSize.width,
+                    height: self.traySettingsHeight
+                )
+            },
+            completion: nil
+        )
+    }
+}
+
+// MARK: - GiveawayFilterSheetView Delegate
+
+extension GiveawayViewController: GiveawayFilterSheetViewDelegate {
+    func notifyDoneButtonTapped() {
+        
+    }
+    
+    func notifyCancelButtonTapped() {
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0,
+            usingSpringWithDamping: 1.0,
+            initialSpringVelocity: 1.0,
+            options: .curveEaseInOut,
+            animations: { [weak self] in
+                guard let self = self else { return }
+                self.blackView.alpha = 0.0
+                self.filterSheetView.frame = CGRect(
+                    x: 0,
+                    y: UIHelper.screenSize.height,
+                    width: UIHelper.screenSize.width,
+                    height: self.traySettingsHeight
+                )
+            },
+            completion: { [weak self] _ in
+                guard let self = self else { return }
+                self.blackView.removeFromSuperview()
+                self.filterSheetView.removeFromSuperview()
+            }
+        )
+    }
+    
 }
 
 // MARK: - ErrorView Delegate
