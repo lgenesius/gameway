@@ -318,11 +318,19 @@ extension GiveawayViewController: GiveawayViewModelDelegate {
 // MARK: - GiveawayFilterSheetView Delegate
 
 extension GiveawayViewController: GiveawayFilterSheetViewDelegate {
-    func notifyDoneButtonTapped() {
-        
+    func updateGiveawayForFilter(
+        platformFilters: [Filter],
+        typeFilters: [Filter],
+        sortFilters: [Filter]
+    ) {
+        giveawayVM.onViewModelProcessFilter(
+            platformFilters: platformFilters,
+            typeFilters: typeFilters,
+            sortFilters: sortFilters
+        )
     }
     
-    func notifyCancelButtonTapped() {
+    func dismissFilterSheetView() {
         UIView.animate(
             withDuration: 0.5,
             delay: 0,

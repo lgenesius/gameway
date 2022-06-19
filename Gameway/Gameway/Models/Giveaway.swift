@@ -17,7 +17,7 @@ struct Giveaway: Decodable, Hashable {
     let description: String
     let instructions: String
     let openGiveawayURL: String
-    let publishedDate: String
+    let publishedDate: String?
     let type: String
     let platforms: String
     let endDate: String

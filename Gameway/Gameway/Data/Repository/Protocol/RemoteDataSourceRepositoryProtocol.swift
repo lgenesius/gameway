@@ -9,6 +9,8 @@ import Foundation
 import Combine
 
 protocol RemoteDataSourceRepositoryProtocol {
+    func fetchGiveaways() -> AnyPublisher<[Giveaway], Error>
     func fetchRecentGiveaways() -> AnyPublisher<[Giveaway], Error>
+    func fetchFilter(params: [String: String]) -> AnyPublisher<[Giveaway], Error>
     func fetchWorth() -> AnyPublisher<Worth, Error>
 }

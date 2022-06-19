@@ -23,6 +23,10 @@ final class RemoteDataSourceRepository: RemoteDataSourceRepositoryProtocol {
         return remoteDataSource.fetchGiveaways(params: ["sort-by": "date"])
     }
     
+    func fetchFilter(params: [String : String]) -> AnyPublisher<[Giveaway], Error> {
+        return remoteDataSource.fetchFilter(params: params)
+    }
+    
     func fetchWorth() -> AnyPublisher<Worth, Error> {
         return remoteDataSource.fetchWorth(params: nil)
     }

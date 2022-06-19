@@ -11,4 +11,5 @@ import Combine
 protocol RemoteDataSourceProtocol {
     func fetchGiveaways(params: [String: String]?) -> AnyPublisher<[Giveaway], Error>
     func fetchWorth(params: [String: String]?) -> AnyPublisher<Worth, Error>
+    func fetchFilter(params: [String: String]?) -> AnyPublisher<[Giveaway], Error>
 }

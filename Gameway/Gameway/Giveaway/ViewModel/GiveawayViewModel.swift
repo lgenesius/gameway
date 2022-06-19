@@ -10,7 +10,6 @@ import Combine
 
 protocol GiveawayViewModelProtocol {
     var delegate: GiveawayViewModelDelegate? { get set }
-    var isFetched: Bool { get }
     
     func onViewModelGetGiveaways() -> [Giveaway]
     func onViewModelGetWorth() -> Worth?
@@ -19,6 +18,11 @@ protocol GiveawayViewModelProtocol {
     func onViewModelLoadMore()
     func onViewModelCanPaginate() -> Bool
     func onViewModelSetFilterSheet()
+    func onViewModelProcessFilter(
+        platformFilters: [Filter],
+        typeFilters: [Filter],
+        sortFilters: [Filter]
+    )
 }
 
 protocol GiveawayViewModelDelegate {
@@ -26,7 +30,11 @@ protocol GiveawayViewModelDelegate {
     func processWorthFromViewModel(worth: Worth)
     func notifySuccessFetchSections()
     func notifyFailedFetchSections(error: Error)
-    func setFilterSheetView(platformFilters: [Filter], typeFilters: [Filter], sortFilters: [Filter])
+    func setFilterSheetView(
+        platformFilters: [Filter],
+        typeFilters: [Filter],
+        sortFilters: [Filter]
+    )
 }
 
 final class GiveawayViewModel {
@@ -69,20 +77,15 @@ final class GiveawayViewModel {
     @Published private var giveaways = [Giveaway]()
     @Published private var worth: Worth?
     
-    private(set) var isFetched: Bool
-    
     private var remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol
     
     private var anyCancellable = Set<AnyCancellable>()
     
     init(repository remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol) {
         self.remoteDataSourceRepository = remoteDataSourceRepository
-        isFetched = false
     }
     
-    private func fetchGiveaways() {
-        isFetched = false
-        
+    private func fetchRecentGiveaways() {
         remoteDataSourceRepository.fetchRecentGiveaways()
             .receive(on: DispatchQueue.main)
             .map { $0 }
@@ -98,8 +101,8 @@ final class GiveawayViewModel {
                 self?.giveawaysContainer = giveaways
                 
                 let maxItemSize: Int = giveaways.count < 10 ? giveaways.count : 10
+                self?.giveaways = []
                 self?.giveaways.append(contentsOf: giveaways[0..<maxItemSize])
-                self?.isFetched = true
                 self?.setWorth()
                 self?.delegate?.processGiveawaysFromViewModel(giveaways: giveaways)
             }
@@ -124,6 +127,50 @@ final class GiveawayViewModel {
             .store(in: &anyCancellable)
     }
     
+    private func fetchFilterIfNeeded() {
+        var dictionary: [String : String] = [:]
+        
+        let platformQuery: String = getQuery(filters: platformFilters)
+        if !platformQuery.isEmpty {
+            dictionary["platform"] = platformQuery
+        }
+        
+        let typeQuery: String = getQuery(filters: typeFilters)
+        if !typeQuery.isEmpty {
+            dictionary["type"] = typeQuery
+        }
+        
+        let sortQuery: String = getQuery(filters: sortFilters)
+        if !sortQuery.isEmpty {
+            dictionary["sort-by"] = sortQuery
+        }
+        
+        if !dictionary.isEmpty && (!platformQuery.isEmpty || !typeQuery.isEmpty) {
+            remoteDataSourceRepository.fetchFilter(params: dictionary)
+                .receive(on: DispatchQueue.main)
+                .map { $0 }
+                .sink { [weak self] (completion: Subscribers.Completion<Error>) in
+                    switch completion {
+                    case .finished:
+                        self?.delegate?.notifySuccessFetchSections()
+                        break
+                    case .failure(let error):
+                        self?.delegate?.notifyFailedFetchSections(error: error)
+                    }
+                } receiveValue: { [weak self] giveaways in
+                    self?.giveawaysContainer = giveaways
+                    let maxItemSize: Int = giveaways.count < 10 ? giveaways.count : 10
+                    self?.giveaways = []
+                    self?.giveaways.append(contentsOf: giveaways[0..<maxItemSize])
+                    self?.setWorth()
+                    self?.delegate?.processGiveawaysFromViewModel(giveaways: giveaways)
+                }
+                .store(in: &anyCancellable)
+        } else {
+            fetchRecentGiveaways()
+        }
+    }
+    
     private func setWorth() {
         let activeGiveawayNumber: Int = giveawaysContainer.count
         let worthEstimation: Double = giveawaysContainer.reduce(0.0) { result, giveaway in
@@ -139,6 +186,23 @@ final class GiveawayViewModel {
         delegate?.processWorthFromViewModel(worth: tempWorth)
     }
     
+    private func getQuery(filters: [Filter]) -> String {
+        var queryResult: String = ""
+        
+        queryResult = filters.reduce("", { result, filter in
+            if filter.isSelected {
+                if !result.isEmpty {
+                    return result + ".\(filter.code)"
+                } else {
+                    return filter.code
+                }
+            }
+            return result
+        })
+        
+        return queryResult
+    }
+    
     deinit {
         anyCancellable.removeAll()
     }
@@ -147,6 +211,31 @@ final class GiveawayViewModel {
 // MARK: - GiveawayViewModel Protocol
 
 extension GiveawayViewModel: GiveawayViewModelProtocol {
+    func onViewModelProcessFilter(
+        platformFilters: [Filter],
+        typeFilters: [Filter],
+        sortFilters: [Filter]
+    ) {
+        let userDefaults: UserDefaults = UserDefaults.standard
+        
+        self.platformFilters = platformFilters.map({
+            userDefaults.set($0.isSelected, forKey: "user-defaults-\($0.code)")
+            return $0
+        })
+        
+        self.typeFilters = typeFilters.map({
+            userDefaults.set($0.isSelected, forKey: "user-defaults-\($0.code)")
+            return $0
+        })
+        
+        self.sortFilters = sortFilters.map({
+            userDefaults.set($0.isSelected, forKey: "user-defaults-\($0.code)")
+            return $0
+        })
+        
+        fetchFilterIfNeeded()
+    }
+    
     func onViewModelGetGiveaways() -> [Giveaway] {
         return giveaways
     }
@@ -156,11 +245,11 @@ extension GiveawayViewModel: GiveawayViewModelProtocol {
     }
     
     func onViewModelDidLoad() {
-        fetchGiveaways()
+        fetchFilterIfNeeded()
     }
     
     func onViewModelReloadData() {
-        fetchGiveaways()
+        fetchFilterIfNeeded()
     }
     
     func onViewModelLoadMore() {

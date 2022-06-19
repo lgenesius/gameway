@@ -15,8 +15,12 @@ enum Choice {
 }
 
 protocol GiveawayFilterSheetViewDelegate {
-    func notifyDoneButtonTapped()
-    func notifyCancelButtonTapped()
+    func updateGiveawayForFilter(
+        platformFilters: [Filter],
+        typeFilters: [Filter],
+        sortFilters: [Filter]
+    )
+    func dismissFilterSheetView()
 }
 
 final class GiveawayFilterSheetView: UIView {
@@ -284,11 +288,16 @@ final class GiveawayFilterSheetView: UIView {
 
 extension GiveawayFilterSheetView {
     @objc private func doneButtonTapped(_ button: UIButton) {
-        print("done button tapped")
+        delegate?.updateGiveawayForFilter(
+            platformFilters: platformFilters,
+            typeFilters: typeFilters,
+            sortFilters: sortFilters
+        )
+        delegate?.dismissFilterSheetView()
     }
     
     @objc private func cancelButtonTapped(_ button: UIButton) {
-        delegate?.notifyCancelButtonTapped()
+        delegate?.dismissFilterSheetView()
     }
     
     @objc private func choiceTransparentViewTapped() {

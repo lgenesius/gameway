@@ -133,7 +133,6 @@ final class ErrorView: UIView {
         guard let seconds: Int = DateHelper.getSecondDifference(from: lastDate, to: Date()) else { return }
         
         if seconds > 1 {
-            print("\(seconds)")
             activityIndicator.stopAnimating()
             
             activityIndicator.isHidden = true
