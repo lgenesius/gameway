@@ -15,9 +15,9 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
     
     private var platforms = [String]()
     
-    private let giveawayImageView = GiveawayImageView()
+    private lazy var giveawayImageView = GiveawayImageView()
     
-    private var platformCollectionView: UICollectionView = {
+    private lazy var platformCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 1
@@ -30,40 +30,40 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         return collectionView
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .title3)
         label.textColor = .mainYellow
         label.numberOfLines = 0
         return label
     }()
-    private let freeLabel: UILabel = {
+    private lazy var freeLabel: UILabel = {
         let label = UILabel()
         label.text = "FREE"
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .mainYellow
         return label
     }()
-    private let worthLabel: UILabel = {
+    private lazy var worthLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .darkGray
         return label
     }()
-    private let endDateLabel: UILabel = {
+    private lazy var endDateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .red
         return label
     }()
-    private let descriptionLabel: UILabel = {
+    private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .lightGray
         label.numberOfLines = 2
         return label
     }()
-    private let typeLabel: PaddingLabel = {
+    private lazy var typeLabel: PaddingLabel = {
         let label = PaddingLabel(5, 5, 10, 10)
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.backgroundColor = .mainDarkBlue
@@ -149,8 +149,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         self.backgroundColor = .mainDarkBlue
         contentView.backgroundColor = .mainDarkBlue
         
-        
-        getImage(giveaway.thumbnail)
+        giveawayImageView.setImage(with: giveaway.thumbnail)
         
         typeLabel.text = giveaway.type
         titleLabel.text = giveaway.title
@@ -174,23 +173,22 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
     }
     
     private func getImage(_ urlString: String) {
-        giveawayImageView.startActivityIndicator()
-        giveawayImageView.image = UIImage(named: "placeholder-image")
+        giveawayImageView.showLoadingImage()
         if let url = URL(string: urlString) {
             cancellable = ImageLoader.shared.loadImage(from: url)
                 .sink(receiveValue: { [unowned self] image in
-                    self.giveawayImageView.stopActivityIndicator()
+                    self.giveawayImageView.stopLoadingImage()
                     guard let image = image else { return }
                     
                     self.giveawayImageView.image = image
                 })
         } else {
-            self.giveawayImageView.stopActivityIndicator()
+            self.giveawayImageView.stopLoadingImage()
         }
     }
     
     private func configureExpireText(endDate giveawayEndDate: String) {
-        let endDate = DateHelper.convertStringToDate(giveawayEndDate)
+        let endDate: Date? = DateHelper.convertStringToDate(giveawayEndDate)
         guard let endDate = endDate else {
             endDateLabel.text = ""
             return
@@ -204,9 +202,20 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         
         if dayDiff < 0 {
             endDateLabel.text = "Has Expired"
-            endDateLabel.textColor = .gray
+            endDateLabel.textColor = .systemGray
+        } else if dayDiff == 0 {
+            endDateLabel.text = "Expire Today"
+            endDateLabel.textColor = .systemRed
         } else {
-            endDateLabel.text = dayDiff == 0 ? "Expire Today": "\(dayDiff) Days Left"
+            endDateLabel.text = "\(dayDiff) Days Left"
+            
+            if dayDiff <= 3 {
+                endDateLabel.textColor = .systemRed
+            } else if dayDiff <= 7 {
+                endDateLabel.textColor = .systemOrange
+            } else {
+                endDateLabel.textColor = .systemGreen
+            }
         }
     }
 }

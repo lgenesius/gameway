@@ -74,6 +74,7 @@ class GiveawayViewController: UIViewController {
 
     private func setCurrentViewInterface() {
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.mainYellow]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.mainYellow]
         view.backgroundColor = .mainDarkBlue
         
         let button = UIButton(type: UIButton.ButtonType.custom)

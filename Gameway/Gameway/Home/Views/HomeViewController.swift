@@ -54,6 +54,7 @@ class HomeViewController: UIViewController {
     
     private func setCurrentViewInterface() {
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.mainYellow]
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.mainYellow]
         view.backgroundColor = .mainDarkBlue
     }
     
@@ -126,8 +127,10 @@ extension HomeViewController {
             case .popular:
                 snapshot.appendItems(Array(section.items.prefix(8)), toSection: section)
             case .recent:
-                snapshot.appendItems(Array(section.items.prefix(16)), toSection: section)
+                snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
             case .valuable:
+                snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
+            case .soonExpired:
                 snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
             }
         }
@@ -208,14 +211,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        guard self.skeletonLoaderTableView.superview == nil else { return }
+        homeViewModel.onViewModelDidSelectItem(at: indexPath)
     }
 }
 
 // MARK: - HomeViewModel Delegate
 
 extension HomeViewController: HomeViewModelDelegate {
-    func processSectionsFromViewModel(sections: [Section]) {
+    func notifyProcessSections(sections: [Section]) {
         DispatchQueue.main.async { [weak self] in
             guard let self: HomeViewController = self else { return }
             
@@ -250,6 +254,12 @@ extension HomeViewController: HomeViewModelDelegate {
                 self.errorView.stopActivityIndicator()
             }
         }
+    }
+    
+    func notifyNavigateToDetailPage(with viewModel: DetailViewModelProtocol) {
+        let detailVC: DetailViewController = DetailViewController(viewModel: viewModel)
+        detailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 

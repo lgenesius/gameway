@@ -5,9 +5,12 @@
 //  Created by Luis Genesius on 13/02/22.
 //
 
+import Combine
 import UIKit
 
 class GiveawayImageView: UIImageView {
+    
+    private var cancellable: AnyCancellable?
     
     private var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
@@ -46,12 +49,33 @@ class GiveawayImageView: UIImageView {
         ])
     }
     
-    func startActivityIndicator() {
+    func showLoadingImage() {
         activityIndicator.startAnimating()
+        self.image = UIImage(named: "placeholder-image")
     }
     
-    func stopActivityIndicator() {
+    func stopLoadingImage() {
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
+    }
+    
+    func setImage(with urlString: String) {
+        if activityIndicator.superview != nil {
+            stopLoadingImage()
+        }
+        
+        if let url = URL(string: urlString) {
+            cancellable = ImageLoader.shared.loadImage(from: url)
+                .sink(receiveValue: { [unowned self] image in
+                    guard let image = image else { return }
+                    
+                    self.image = image
+                })
+        }
+    }
+    
+    deinit {
+        cancellable?.cancel()
+        cancellable = nil
     }
 }

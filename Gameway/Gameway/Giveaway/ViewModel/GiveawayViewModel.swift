@@ -25,7 +25,7 @@ protocol GiveawayViewModelProtocol {
     )
 }
 
-protocol GiveawayViewModelDelegate {
+protocol GiveawayViewModelDelegate: NSObject {
     func processGiveawaysFromViewModel(giveaways: [Giveaway])
     func processWorthFromViewModel(worth: Worth)
     func notifySuccessFetchSections()
@@ -38,7 +38,7 @@ protocol GiveawayViewModelDelegate {
 }
 
 final class GiveawayViewModel {
-    var delegate: GiveawayViewModelDelegate?
+    weak var delegate: GiveawayViewModelDelegate?
     
     private var platformFilters: [Filter] = [
         Filter(name: "PC", code: "pc", type: .platform),

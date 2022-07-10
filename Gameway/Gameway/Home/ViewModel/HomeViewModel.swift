@@ -14,16 +14,18 @@ protocol HomeViewModelProtocol {
     
     func onViewModelDidLoad()
     func onViewModelReloadData()
+    func onViewModelDidSelectItem(at indexPath: IndexPath)
 }
 
-protocol HomeViewModelDelegate {
-    func processSectionsFromViewModel(sections: [Section])
+protocol HomeViewModelDelegate: NSObject {
+    func notifyProcessSections(sections: [Section])
     func notifySuccessFetchSections()
     func notifyFailedFetchSections(error: Error)
+    func notifyNavigateToDetailPage(with viewModel: DetailViewModelProtocol)
 }
 
 final class HomeViewModel {
-    var delegate: HomeViewModelDelegate?
+    weak var delegate: HomeViewModelDelegate?
     
     @Published private var sections = [Section]()
     
@@ -52,28 +54,44 @@ final class HomeViewModel {
             } receiveValue: { [weak self] giveaways in
                 guard let self = self, !giveaways.isEmpty else { return }
                 self.sections = []
-                self.filterToGetPopularGiveaways(giveaways: giveaways)
+                self.filterToGetSoonExpiredGiveaways(giveaways: giveaways)
                 self.filterToGetRecentGiveaways(giveaways: giveaways)
                 self.filterToGetValuableGiveaways(giveaways: giveaways)
                 
-                self.delegate?.processSectionsFromViewModel(sections: self.sections)
+                self.delegate?.notifyProcessSections(sections: self.sections)
             }
             .store(in: &anyCancellable)
     }
     
-    private func filterToGetPopularGiveaways(giveaways: [Giveaway]) {
-        let sortedPopularGiveaways: [Giveaway] = giveaways.sorted(by: { $0.users > $1.users })
-        let popularItems: [Item] = sortedPopularGiveaways.map { giveaway -> Item in
+    private func filterToGetSoonExpiredGiveaways(giveaways: [Giveaway]) {
+        let sortedSoonExpiredGiveaways: [Giveaway] = giveaways.sorted(by: {
+            let previousGiveawayEndDate: Date? = DateHelper.convertStringToDate($0.endDate)
+            let nextGiveawayEndDate: Date? = DateHelper.convertStringToDate($1.endDate)
+            
+            guard let previousEndDate: Date = previousGiveawayEndDate,
+                  let previousDayDiff = DateHelper.getDayDifference(from: Date(), to: previousEndDate),
+            previousDayDiff >= 0 else {
+                return false
+            }
+            guard let nextEndDate: Date = nextGiveawayEndDate,
+                  let nextDayDiff = DateHelper.getDayDifference(from: Date(), to: nextEndDate),
+                  nextDayDiff >= 0
+            else { return true }
+
+            return previousEndDate < nextEndDate
+        })
+        
+        let soonExpiredItems: [Item] = sortedSoonExpiredGiveaways.map { giveaway -> Item in
             return Item(id: UUID().uuidString, giveaway: giveaway)
         }
         
-        if !popularItems.isEmpty {
-            let popularSection: Section = Section(id: 1,
-                                         type: .popular,
-                                         title: "Current Popular Giveaways",
-                                         subtitle: "Games, DLC, Loots, Early Access and Other",
-                                         items: popularItems)
-            sections.append(popularSection)
+        if !soonExpiredItems.isEmpty {
+            let soonExpiredSection: Section = Section(id: 1,
+                                                      type: .soonExpired,
+                                                      title: "Soon Expired Giveaways",
+                                                      subtitle: "Games, DLC, Loots, Early Access and Other",
+                                                      items: soonExpiredItems)
+            sections.append(soonExpiredSection)
         }
     }
     
@@ -153,5 +171,17 @@ extension HomeViewModel: HomeViewModelProtocol {
     
     func onViewModelReloadData() {
         fetchRecentGiveaways()
+    }
+    
+    func onViewModelDidSelectItem(at indexPath: IndexPath) {
+        guard indexPath.section < sections.count else { return }
+        
+        let section: Section = sections[indexPath.section]
+        guard indexPath.row < section.items.count else { return }
+        
+        let item: Item = section.items[indexPath.row]
+        
+        let detailVM: DetailViewModelProtocol = DetailViewModel(giveaway: item.giveaway)
+        delegate?.notifyNavigateToDetailPage(with: detailVM)
     }
 }

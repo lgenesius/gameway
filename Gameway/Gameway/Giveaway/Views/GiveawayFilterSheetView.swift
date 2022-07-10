@@ -7,6 +7,9 @@
 
 import UIKit
 
+private let standardPaddingConstant: CGFloat = 16.0
+private let confirmationHeightConstant: CGFloat = 40.0
+
 enum Choice {
     case none
     case platform
@@ -41,14 +44,12 @@ final class GiveawayFilterSheetView: UIView {
         return label
     }()
     
-    private lazy var doneButton: UIButton = {
-        let button: UIButton = UIButton()
-        button.setTitle("Done", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 15.0, weight: .medium)
-        button.setTitleColor(.systemGreen, for: .normal)
+    private lazy var confirmationButton: PrimaryButton = {
+        let button: PrimaryButton = PrimaryButton()
+        button.setTitle("Confirm", for: .normal)
         button.addTarget(
             self,
-            action: #selector(doneButtonTapped(_:)),
+            action: #selector(confirmationButtonTapped(_:)),
             for: .touchUpInside
         )
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -67,15 +68,6 @@ final class GiveawayFilterSheetView: UIView {
         )
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }()
-    
-    private lazy var topHorizontalStackView: UIStackView = {
-        let stackView: UIStackView = UIStackView()
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .center
-        stackView.axis = .horizontal
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
     }()
     
     private lazy var platformChoiceView: ChoiceView = {
@@ -160,31 +152,36 @@ final class GiveawayFilterSheetView: UIView {
     }
 
     private func setupView() {
-        topHorizontalStackView.addArrangedSubview(doneButton)
-        topHorizontalStackView.addArrangedSubview(titleLabel)
-        topHorizontalStackView.addArrangedSubview(cancelButton)
-        
-        addSubview(topHorizontalStackView)
+        addSubview(titleLabel)
+        addSubview(cancelButton)
         addSubview(platformChoiceView)
         addSubview(typeChoiceView)
         addSubview(sortChoiceView)
+        addSubview(confirmationButton)
         
         NSLayoutConstraint.activate([
-            topHorizontalStackView.topAnchor.constraint(equalTo: topAnchor, constant: 16.0),
-            topHorizontalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
-            topHorizontalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: standardPaddingConstant),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            platformChoiceView.topAnchor.constraint(equalTo: topHorizontalStackView.bottomAnchor, constant: 32.0),
-            platformChoiceView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
-            platformChoiceView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
+            cancelButton.topAnchor.constraint(equalTo: topAnchor, constant: standardPaddingConstant),
+            cancelButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -standardPaddingConstant),
             
-            typeChoiceView.topAnchor.constraint(equalTo: platformChoiceView.bottomAnchor, constant: 16.0),
-            typeChoiceView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
-            typeChoiceView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
+            platformChoiceView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: standardPaddingConstant * 2),
+            platformChoiceView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: standardPaddingConstant),
+            platformChoiceView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -standardPaddingConstant),
             
-            sortChoiceView.topAnchor.constraint(equalTo: typeChoiceView.bottomAnchor, constant: 16.0),
-            sortChoiceView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
-            sortChoiceView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0)
+            typeChoiceView.topAnchor.constraint(equalTo: platformChoiceView.bottomAnchor, constant: standardPaddingConstant),
+            typeChoiceView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: standardPaddingConstant),
+            typeChoiceView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -standardPaddingConstant),
+            
+            sortChoiceView.topAnchor.constraint(equalTo: typeChoiceView.bottomAnchor, constant: standardPaddingConstant),
+            sortChoiceView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: standardPaddingConstant),
+            sortChoiceView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -standardPaddingConstant),
+            
+            confirmationButton.heightAnchor.constraint(equalToConstant: confirmationHeightConstant),
+            confirmationButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: standardPaddingConstant),
+            confirmationButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -(UIHelper.keyWindow?.safeAreaInsets.bottom ?? 0.0)),
+            confirmationButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -standardPaddingConstant),
         ])
     }
     
@@ -228,7 +225,7 @@ final class GiveawayFilterSheetView: UIView {
                 
                 self.choiceTableView.frame = CGRect(
                     x: self.choiceViewRect.origin.x,
-                    y: self.choiceViewRect.origin.y + self.frame.origin.y + self.choiceViewRect.size.height + 8.0,
+                    y: self.choiceViewRect.origin.y + self.frame.origin.y + self.choiceViewRect.size.height + standardPaddingConstant / 2,
                     width: self.choiceViewRect.size.width,
                     height: self.getTotalHeightForChoice(self.choice)
                 )
@@ -238,7 +235,7 @@ final class GiveawayFilterSheetView: UIView {
     }
     
     private func getTotalHeightForChoice(_ choice: Choice) -> CGFloat {
-        let totalOrigin: CGFloat = choiceViewRect.origin.y + frame.origin.y + choiceViewRect.height + 8.0
+        let totalOrigin: CGFloat = choiceViewRect.origin.y + frame.origin.y + choiceViewRect.height + standardPaddingConstant / 2
         
         switch choice {
         case .none:
@@ -287,7 +284,7 @@ final class GiveawayFilterSheetView: UIView {
 // MARK: - Tap Function
 
 extension GiveawayFilterSheetView {
-    @objc private func doneButtonTapped(_ button: UIButton) {
+    @objc private func confirmationButtonTapped(_ button: UIButton) {
         delegate?.updateGiveawayForFilter(
             platformFilters: platformFilters,
             typeFilters: typeFilters,
@@ -311,7 +308,7 @@ extension GiveawayFilterSheetView {
                 guard let self = self else { return }
                 self.choiceTableView.frame = CGRect(
                     x: self.choiceViewRect.origin.x,
-                    y: self.choiceViewRect.origin.y + self.frame.origin.y + self.choiceViewRect.size.height + 8.0,
+                    y: self.choiceViewRect.origin.y + self.frame.origin.y + self.choiceViewRect.size.height + standardPaddingConstant / 2,
                     width: self.choiceViewRect.size.width,
                     height: 0
                 )
@@ -348,41 +345,68 @@ extension GiveawayFilterSheetView: ChoiceViewDelegate {
 extension GiveawayFilterSheetView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         choiceTableView.deselectRow(at: indexPath, animated: false)
-        if let cell = tableView.cellForRow(at: indexPath) {
+        if let cell: UITableViewCell = choiceTableView.cellForRow(at: indexPath) {
             switch choice {
             case .platform:
-                platformFilters[indexPath.row].isSelected = !platformFilters[indexPath.row].isSelected
-                if platformFilters[indexPath.row].isSelected {
-                    cell.accessoryType = .checkmark
-                    platformChoiceView.selectedNumber += 1
-                } else {
-                    cell.accessoryType = .none
-                    platformChoiceView.selectedNumber -= 1
-                }
-                
+                platformFiltersSelectionProcessing(with: indexPath, and: cell)
             case .type:
-                typeFilters[indexPath.row].isSelected = !typeFilters[indexPath.row].isSelected
-                if typeFilters[indexPath.row].isSelected {
-                    cell.accessoryType = .checkmark
-                    typeChoiceView.selectedNumber += 1
-                } else {
-                    cell.accessoryType = .none
-                    typeChoiceView.selectedNumber -= 1
-                }
-                
+                typeFiltersSelectionProcessing(with: indexPath, and: cell)
             case .sort:
-                sortFilters[indexPath.row].isSelected = !sortFilters[indexPath.row].isSelected
-                if sortFilters[indexPath.row].isSelected {
-                    cell.accessoryType = .checkmark
-                    sortChoiceView.selectedNumber += 1
-                } else {
-                    cell.accessoryType = .none
-                    sortChoiceView.selectedNumber -= 1
-                }
-                
+                sortFiltersSelectionProcessing(with: indexPath, and: cell)
             default:
                 break
             }
+        }
+    }
+    
+    private func platformFiltersSelectionProcessing(with indexPath: IndexPath,
+                                                    and cell: UITableViewCell) {
+        platformFilters[indexPath.row].isSelected = !platformFilters[indexPath.row].isSelected
+        if platformFilters[indexPath.row].isSelected {
+            cell.accessoryType = .checkmark
+            platformChoiceView.selectedNumber += 1
+        } else {
+            cell.accessoryType = .none
+            platformChoiceView.selectedNumber -= 1
+        }
+    }
+    
+    private func typeFiltersSelectionProcessing(with indexPath: IndexPath,
+                                                    and cell: UITableViewCell) {
+        typeFilters[indexPath.row].isSelected = !typeFilters[indexPath.row].isSelected
+        if typeFilters[indexPath.row].isSelected {
+            cell.accessoryType = .checkmark
+            typeChoiceView.selectedNumber += 1
+        } else {
+            cell.accessoryType = .none
+            typeChoiceView.selectedNumber -= 1
+        }
+    }
+    
+    private func sortFiltersSelectionProcessing(with indexPath: IndexPath,
+                                                and cell: UITableViewCell) {
+        //reset all selected only for sort filters
+        for (index, filter) in sortFilters.enumerated() {
+            guard index != indexPath.row,
+                  filter.isSelected
+            else {
+                continue
+            }
+            
+            sortFilters[index].isSelected = false
+            sortChoiceView.selectedNumber -= 1
+            if let targetCell: UITableViewCell = choiceTableView.cellForRow(at: IndexPath(row: index, section: 0)) {
+                targetCell.accessoryType = .none
+            }
+        }
+        
+        sortFilters[indexPath.row].isSelected = !sortFilters[indexPath.row].isSelected
+        if sortFilters[indexPath.row].isSelected {
+            cell.accessoryType = .checkmark
+            sortChoiceView.selectedNumber += 1
+        } else {
+            cell.accessoryType = .none
+            sortChoiceView.selectedNumber -= 1
         }
     }
 }

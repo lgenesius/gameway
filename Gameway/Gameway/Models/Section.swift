@@ -11,6 +11,7 @@ enum SectionType: Decodable {
     case popular
     case recent
     case valuable
+    case soonExpired
 }
 
 struct Section: Decodable, Hashable {
