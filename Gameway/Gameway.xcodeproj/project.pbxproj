@@ -52,12 +52,13 @@
 		E1EB481F283119CB00FECF42 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EB481E283119CB00FECF42 /* Filter.swift */; };
 		E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898727B8E7070078A47C /* GiveawayImageView.swift */; };
 		E1ED898A27B8FD200078A47C /* PlatformCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */; };
-		E1F575B628229732003A1424 /* GiveawayWorthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F575B528229732003A1424 /* GiveawayWorthView.swift */; };
+		E1F575B628229732003A1424 /* HorizontalBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F575B528229732003A1424 /* HorizontalBoxView.swift */; };
 		E1F575B828229ADB003A1424 /* BoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F575B728229ADB003A1424 /* BoxView.swift */; };
 		E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */; };
 		E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */; };
 		E1F5EC202789D51500084BC5 /* Giveaway.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC1F2789D51500084BC5 /* Giveaway.swift */; };
 		E1F5EC242789D55300084BC5 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F5EC232789D55300084BC5 /* DetailViewController.swift */; };
+		E1F63F57287C5C7400D0DC2F /* ExpandableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F63F56287C5C7400D0DC2F /* ExpandableView.swift */; };
 		E1F69D2827BE3C8F00C71781 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F69D2727BE3C8F00C71781 /* PaddingLabel.swift */; };
 		E1F69D2A27BE4C3B00C71781 /* WorthSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F69D2927BE4C3B00C71781 /* WorthSectionView.swift */; };
 		E1F69D2C27BE4CD300C71781 /* Worth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F69D2B27BE4CD300C71781 /* Worth.swift */; };
@@ -130,12 +131,13 @@
 		E1EB481E283119CB00FECF42 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		E1ED898727B8E7070078A47C /* GiveawayImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayImageView.swift; sourceTree = "<group>"; };
 		E1ED898927B8FD200078A47C /* PlatformCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformCollectionViewCell.swift; sourceTree = "<group>"; };
-		E1F575B528229732003A1424 /* GiveawayWorthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayWorthView.swift; sourceTree = "<group>"; };
+		E1F575B528229732003A1424 /* HorizontalBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalBoxView.swift; sourceTree = "<group>"; };
 		E1F575B728229ADB003A1424 /* BoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxView.swift; sourceTree = "<group>"; };
 		E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1C2789D11600084BC5 /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		E1F5EC1F2789D51500084BC5 /* Giveaway.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Giveaway.swift; sourceTree = "<group>"; };
 		E1F5EC232789D55300084BC5 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		E1F63F56287C5C7400D0DC2F /* ExpandableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableView.swift; sourceTree = "<group>"; };
 		E1F69D2727BE3C8F00C71781 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		E1F69D2927BE4C3B00C71781 /* WorthSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorthSectionView.swift; sourceTree = "<group>"; };
 		E1F69D2B27BE4CD300C71781 /* Worth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worth.swift; sourceTree = "<group>"; };
@@ -520,6 +522,7 @@
 				E1EB182D281CE8020055EB39 /* ErrorView.swift */,
 				E1F575B728229ADB003A1424 /* BoxView.swift */,
 				E1B6E8AF2864C0B20009C35A /* PrimaryButton.swift */,
+				E1F63F56287C5C7400D0DC2F /* ExpandableView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -539,7 +542,7 @@
 			children = (
 				E1DD13A52820FBED003F53A1 /* Cells */,
 				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
-				E1F575B528229732003A1424 /* GiveawayWorthView.swift */,
+				E1F575B528229732003A1424 /* HorizontalBoxView.swift */,
 				E1E09C8D282FD2BA006C3F94 /* GiveawayFilterSheetView.swift */,
 			);
 			path = Views;
@@ -732,6 +735,7 @@
 				E1D43B3E27AD2F75004E294D /* Item.swift in Sources */,
 				E1DD13A728211030003F53A1 /* SkeletonView.swift in Sources */,
 				E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */,
+				E1F63F57287C5C7400D0DC2F /* ExpandableView.swift in Sources */,
 				E1D83F3A27BB9DEC007077B2 /* GiveawayTableViewCell.swift in Sources */,
 				E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */,
 				E1CD439227BA286000DCD7BA /* ImageCacheType.swift in Sources */,
@@ -748,7 +752,7 @@
 				E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */,
 				E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
-				E1F575B628229732003A1424 /* GiveawayWorthView.swift in Sources */,
+				E1F575B628229732003A1424 /* HorizontalBoxView.swift in Sources */,
 				E1E9839027B514570048ED94 /* SkeletonTableViewCell.swift in Sources */,
 				E1D6CEF728684A6D00522E1B /* DetailViewModel.swift in Sources */,
 				E1B6E8B02864C0B20009C35A /* PrimaryButton.swift in Sources */,

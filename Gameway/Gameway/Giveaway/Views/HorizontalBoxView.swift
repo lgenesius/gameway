@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class GiveawayWorthView: UIView {
+final class HorizontalBoxView: UIView {
     private lazy var horizontalStackView: UIStackView = {
         let stackView: UIStackView = UIStackView()
         stackView.axis = .horizontal
@@ -18,8 +18,7 @@ final class GiveawayWorthView: UIView {
         return stackView
     }()
     
-    private lazy var activeGiveawayBoxView: BoxView = BoxView()
-    private lazy var worthEstimationBoxView: BoxView = BoxView()
+    private var boxViews: [BoxView] = []
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,19 +30,8 @@ final class GiveawayWorthView: UIView {
     }
     
     private func setupView() {
-        horizontalStackView.addArrangedSubview(activeGiveawayBoxView)
-        horizontalStackView.addArrangedSubview(worthEstimationBoxView)
-        
         addSubview(horizontalStackView)
-        
-        activeGiveawayBoxView.translatesAutoresizingMaskIntoConstraints = false
-        worthEstimationBoxView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
-            activeGiveawayBoxView.heightAnchor.constraint(equalTo: heightAnchor),
-            
-            worthEstimationBoxView.heightAnchor.constraint(equalTo: heightAnchor),
-            
             horizontalStackView.topAnchor.constraint(equalTo: topAnchor),
             horizontalStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             horizontalStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
@@ -51,13 +39,30 @@ final class GiveawayWorthView: UIView {
         ])
     }
     
-    func setupBoxDataView() {
-        activeGiveawayBoxView.setupView()
-        worthEstimationBoxView.setupView()
+    func addBoxView(_ boxView: BoxView) {
+        boxViews.append(boxView)
+        horizontalStackView.addArrangedSubview(boxView)
+        
+        boxView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            boxView.heightAnchor.constraint(equalTo: heightAnchor)
+        ])
     }
     
-    func addInfoText(_ activeGiveawayNumber: String, _ worthEstimationUSD: String) {
-        activeGiveawayBoxView.addText(title: "Active Giveaway Number", info: activeGiveawayNumber)
-        worthEstimationBoxView.addText(title: "Worth Estimation in USD", info: "$\(worthEstimationUSD)")
+    func setupColor(backgroundColor: UIColor,
+                    titleTextColor: UIColor,
+                    infoTextColor: UIColor) {
+        boxViews.forEach {
+            $0.backgroundColor = backgroundColor
+            $0.changeTitleTextColor(to: titleTextColor)
+            $0.changeInfoTextColor(to: infoTextColor)
+        }
+    }
+    
+    func addInfo(to index: Int, title: String, info: String) {
+        guard index < boxViews.count else { return }
+        let boxView: BoxView = boxViews[index]
+        boxView.setupView()
+        boxView.addText(title: title, info: info)
     }
 }

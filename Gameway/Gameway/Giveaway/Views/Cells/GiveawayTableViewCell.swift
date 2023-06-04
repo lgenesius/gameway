@@ -149,6 +149,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         self.backgroundColor = .mainDarkBlue
         contentView.backgroundColor = .mainDarkBlue
         
+        giveawayImageView.image = nil
         giveawayImageView.setImage(with: giveaway.thumbnail)
         
         typeLabel.text = giveaway.type

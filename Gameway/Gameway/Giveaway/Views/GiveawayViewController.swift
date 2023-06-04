@@ -10,7 +10,7 @@ import UIKit
 class GiveawayViewController: UIViewController {
     private var giveawayVM: GiveawayViewModelProtocol
     
-    private var headerTableView: GiveawayWorthView?
+    private var horizontalBoxView: HorizontalBoxView?
     
     private var isPaginating: Bool = false
     
@@ -162,17 +162,23 @@ extension GiveawayViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        headerTableView = GiveawayWorthView(frame: CGRect(x: 16.0, y: 0, width:view.bounds.width, height: 120))
+        horizontalBoxView = HorizontalBoxView(frame: CGRect(x: 16.0, y: 0, width:view.bounds.width, height: 120))
+        horizontalBoxView?.addBoxView(BoxView())
+        horizontalBoxView?.addBoxView(BoxView())
+        horizontalBoxView?.setupColor(backgroundColor: .mainYellow,
+                                      titleTextColor: .mainDarkBlue,
+                                      infoTextColor: .mainDarkBlue)
         
         if let worth: Worth = giveawayVM.onViewModelGetWorth() {
-            headerTableView?.setupBoxDataView()
-            headerTableView?.addInfoText(
-                String(worth.activeGiveawaysNumber),
-                String(worth.worthEstimationUSD)
-            )
+            horizontalBoxView?.addInfo(to: 0,
+                                       title: "Active Giveaway Number",
+                                       info: String(worth.activeGiveawaysNumber))
+            horizontalBoxView?.addInfo(to: 1,
+                                       title: "Worth Estimation in USD",
+                                       info: worth.worthEstimationUSD)
         }
         
-        return headerTableView
+        return horizontalBoxView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -199,6 +205,7 @@ extension GiveawayViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+        giveawayVM.onViewModelDidSelectItem(at: indexPath)
     }
 }
 
@@ -239,11 +246,12 @@ extension GiveawayViewController: GiveawayViewModelDelegate {
         DispatchQueue.main.async { [weak self] in
             guard let self: GiveawayViewController = self else { return }
             // reload the header only
-            self.headerTableView?.setupBoxDataView()
-            self.headerTableView?.addInfoText(
-                String(worth.activeGiveawaysNumber),
-                String(worth.worthEstimationUSD)
-            )
+            self.horizontalBoxView?.addInfo(to: 0,
+                                       title: "Active Giveaway Number",
+                                       info: String(worth.activeGiveawaysNumber))
+            self.horizontalBoxView?.addInfo(to: 1,
+                                       title: "Worth Estimation in USD",
+                                       info: worth.worthEstimationUSD)
         }
     }
     
@@ -313,6 +321,12 @@ extension GiveawayViewController: GiveawayViewModelDelegate {
             },
             completion: nil
         )
+    }
+    
+    func notifyNavigateToDetailPage(with viewModel: DetailViewModelProtocol) {
+        let detailVC: DetailViewController = DetailViewController(viewModel: viewModel)
+        detailVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 

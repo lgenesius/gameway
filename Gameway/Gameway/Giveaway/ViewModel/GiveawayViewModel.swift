@@ -23,6 +23,7 @@ protocol GiveawayViewModelProtocol {
         typeFilters: [Filter],
         sortFilters: [Filter]
     )
+    func onViewModelDidSelectItem(at indexPath: IndexPath)
 }
 
 protocol GiveawayViewModelDelegate: NSObject {
@@ -30,6 +31,7 @@ protocol GiveawayViewModelDelegate: NSObject {
     func processWorthFromViewModel(worth: Worth)
     func notifySuccessFetchSections()
     func notifyFailedFetchSections(error: Error)
+    func notifyNavigateToDetailPage(with viewModel: DetailViewModelProtocol)
     func setFilterSheetView(
         platformFilters: [Filter],
         typeFilters: [Filter],
@@ -269,5 +271,14 @@ extension GiveawayViewModel: GiveawayViewModelProtocol {
             typeFilters: typeFilters,
             sortFilters: sortFilters
         )
+    }
+    
+    func onViewModelDidSelectItem(at indexPath: IndexPath) {
+        guard indexPath.row < giveaways.count else { return }
+        
+        let giveaway: Giveaway = giveaways[indexPath.row]
+        
+        let detailVM: DetailViewModelProtocol = DetailViewModel(giveaway: giveaway)
+        delegate?.notifyNavigateToDetailPage(with: detailVM)
     }
 }

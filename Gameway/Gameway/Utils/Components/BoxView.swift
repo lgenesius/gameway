@@ -61,9 +61,9 @@ final class BoxView: UIView {
     }
 
     func setupView() {
+        guard skeletonView.superview != nil else { return }
+
         skeletonView.removeFromSuperview()
-        
-        backgroundColor = .mainYellow
         layer.cornerRadius = 8.0
         
         verticalStackView.addArrangedSubview(titleLabel)
@@ -88,5 +88,13 @@ final class BoxView: UIView {
     func addText(title: String, info: String) {
         titleLabel.text = title
         infoLabel.text = info
+    }
+    
+    func changeTitleTextColor(to color: UIColor) {
+        titleLabel.textColor = color
+    }
+    
+    func changeInfoTextColor(to color: UIColor) {
+        infoLabel.textColor = color
     }
 }
