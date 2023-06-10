@@ -8,7 +8,6 @@
 import UIKit
 
 final class PrimaryButton: UIButton {
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupButton()

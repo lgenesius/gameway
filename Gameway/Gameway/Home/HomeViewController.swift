@@ -10,7 +10,25 @@ import UIKit
 class HomeViewController: UIViewController {
     private var homeViewModel: HomeViewModelProtocol
     
-    private lazy var collectionView: UICollectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewLayout())
+    private lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: createCompositionalLayout()
+        )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .mainDarkBlue
+        collectionView.delegate = self
+        collectionView.register(
+            HomeCardCollectionViewCell.self,
+            forCellWithReuseIdentifier: HomeCardCollectionViewCell.identifier
+        )
+        collectionView.register(
+            HomeSectionHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: HomeSectionHeader.reuseIdentifier
+        )
+        return collectionView
+    }()
     
     private lazy var skeletonLoaderTableView: UITableView = {
         let tableView: UITableView = UITableView(frame: view.bounds)
@@ -29,7 +47,38 @@ class HomeViewController: UIViewController {
         return errorView
     }()
     
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
+    private lazy var dataSource: UICollectionViewDiffableDataSource<HomeSectionModel, Item> = {
+        let dataSource: UICollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<HomeSectionModel, Item>(
+            collectionView: collectionView,
+            cellProvider: { [weak self] collectionView, indexPath, item in
+                return self?.configure(
+                    HomeCardCollectionViewCell.self,
+                    with: item,
+                    for: indexPath
+                )
+            }
+        )
+        
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+            guard let sectionHeader: HomeSectionHeader = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: HomeSectionHeader.reuseIdentifier,
+                for: indexPath
+            ) as? HomeSectionHeader else {
+                return nil
+            }
+            
+            guard let firstItem: Item = self?.dataSource.itemIdentifier(for: indexPath) else { return nil }
+            guard let section: HomeSectionModel = self?.dataSource.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
+            
+            sectionHeader.setTitleText(
+                title: section.title,
+                subtitle: section.subtitle
+            )
+            return sectionHeader
+        }
+        return dataSource
+    }()
     
     init(viewModel homeViewModel: HomeViewModelProtocol) {
         self.homeViewModel = homeViewModel
@@ -48,6 +97,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setCollectionViewSettings()
         setTableViewSettings()
         homeViewModel.onViewModelDidLoad()
     }
@@ -63,66 +113,36 @@ class HomeViewController: UIViewController {
     }
     
     private func setCollectionViewSettings() {
-        guard collectionView.superview == nil else { return }
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.backgroundColor = .mainDarkBlue
-        collectionView.delegate = self
         view.addSubview(collectionView)
-        
-        collectionView.register(
-            SectionHeader.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SectionHeader.reuseIdentifier
-        )
-        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
     }
 }
 
 // MARK: - Diffable Data Source
 
 extension HomeViewController {
-    
-    private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Item>(collectionView: collectionView, cellProvider: { [weak self] collectionView, indexPath, item in
-            return self?.configure(
-                HomeCollectionViewCell.self,
-                with: item,
-                for: indexPath
-            )
-        })
-        
-        dataSource?.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let sectionHeader: SectionHeader = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: SectionHeader.reuseIdentifier,
-                for: indexPath
-            ) as? SectionHeader else {
-                return nil
-            }
-            
-            guard let firstItem: Item = self?.dataSource?.itemIdentifier(for: indexPath) else { return nil }
-            guard let section: Section = self?.dataSource?.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
-            
-            sectionHeader.setTitleText(title: section.title, subtitle: section.subtitle)
-            return sectionHeader
-        }
-    }
-    
-    private func configure<T: ConfigCell>(_ cellType: T.Type, with item: Item, for indexPath: IndexPath) -> T {
+    private func configure<T: ConfigCell>(
+        _ cellType: T.Type,
+        with item: Item,
+        for indexPath: IndexPath
+    ) -> T {
         guard let cell: T = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.identifier, for: indexPath) as? T else {
             fatalError()
         }
-        
         cell.configure(with: item as? T.Request)
         return cell
     }
     
-    private func reloadData(sections: [Section]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+    private func reloadData(sections: [HomeSectionModel]) {
+        var snapshot = NSDiffableDataSourceSnapshot<HomeSectionModel, Item>()
         snapshot.appendSections(sections)
         
-        for section in sections {
+        for section: HomeSectionModel in sections {
             switch section.type {
             case .popular:
                 snapshot.appendItems(Array(section.items.prefix(8)), toSection: section)
@@ -132,60 +152,32 @@ extension HomeViewController {
                 snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
             case .soonExpired:
                 snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
+            case .loading:
+                snapshot.appendItems(section.items, toSection: section)
             }
         }
         
-        dataSource?.apply(snapshot)
+        dataSource.apply(snapshot)
     }
 }
 
 // MARK: - Compositional Layout
 
 extension HomeViewController {
-    
     private func createCompositionalLayout() -> UICollectionViewLayout {
         let layout: UICollectionViewCompositionalLayout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self = self else { return nil }
-            
-            return self.createHomeGiveawaySection()
+            return self.homeViewModel.onViewModelSelectLayoutSection(
+                sectionIndex: sectionIndex,
+                layoutEnvironment: layoutEnvironment
+            )
         }
         
         let config: UICollectionViewCompositionalLayoutConfiguration = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 40
+        
         layout.configuration = config
         return layout
-    }
-    
-    private func createHomeGiveawaySection() -> NSCollectionLayoutSection {
-        let itemSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
-        let layoutItem: NSCollectionLayoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-        layoutItem.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 0,
-            bottom: 0,
-            trailing: 10
-        )
-        
-        let layoutGroupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .fractionalHeight(1/3))
-        let layoutGroup: NSCollectionLayoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
-        
-        let layoutSection: NSCollectionLayoutSection = NSCollectionLayoutSection(group: layoutGroup)
-        layoutSection.orthogonalScrollingBehavior = .groupPagingCentered
-        
-        let layoutSectionHeader: NSCollectionLayoutBoundarySupplementaryItem = createSectionHeader()
-        layoutSection.boundarySupplementaryItems = [layoutSectionHeader]
-        
-        return layoutSection
-    }
-    
-    private func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let layoutSectionHeaderSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.93), heightDimension: .estimated(50))
-        let layoutSectionHeader: NSCollectionLayoutBoundarySupplementaryItem = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: layoutSectionHeaderSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-        return layoutSectionHeader
     }
 }
 
@@ -219,7 +211,7 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - HomeViewModel Delegate
 
 extension HomeViewController: HomeViewModelDelegate {
-    func notifyProcessSections(sections: [Section]) {
+    func notifyProcessSections(sections: [HomeSectionModel]) {
         DispatchQueue.main.async { [weak self] in
             guard let self: HomeViewController = self else { return }
             
@@ -227,8 +219,6 @@ extension HomeViewController: HomeViewModelDelegate {
                 self.skeletonLoaderTableView.removeFromSuperview()
             }
             
-            self.setCollectionViewSettings()
-            self.createDataSource()
             self.reloadData(sections: sections)
         }
     }

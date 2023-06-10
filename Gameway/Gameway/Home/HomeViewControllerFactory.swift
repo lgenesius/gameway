@@ -9,11 +9,8 @@ import Foundation
 import UIKit.UIViewController
 
 final class HomeViewControllerFactory: ViewControllerFactoryProtocol {
-    
     func createViewController() -> UIViewController {
-        let remoteDataSource: RemoteDataSource = RemoteDataSource()
-        let remoteDataSourceRepository: RemoteDataSourceRepository = RemoteDataSourceRepository(dataSource: remoteDataSource)
-        let homeViewModel: HomeViewModelProtocol = HomeViewModel(repository: remoteDataSourceRepository)
+        let homeViewModel: HomeViewModelProtocol = HomeViewModel(dependency: HomeViewModelDependency())
         return HomeViewController(viewModel: homeViewModel)
     }
 }

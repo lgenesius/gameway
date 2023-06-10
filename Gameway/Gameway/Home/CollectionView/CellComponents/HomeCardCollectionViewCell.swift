@@ -1,16 +1,16 @@
 //
-//  HomeGiveawayCell.swift
+//  HomeCardCollectionViewCell.swift
 //  Gameway
 //
 //  Created by Luis Genesius on 11/01/22.
 //
 
-import UIKit
 import Combine
+import UIKit
 
-class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
+final class HomeCardCollectionViewCell: UICollectionViewCell, ConfigCell {
     typealias Request = Item
-    static var identifier: String = "HomeCollectionViewCell"
+    static var identifier: String = "HomeCardCollectionViewCell"
     
     private lazy var imageView: GiveawayImageView = GiveawayImageView()
     
@@ -49,19 +49,29 @@ class HomeCollectionViewCell: UICollectionViewCell, ConfigCell {
         super.init(frame: frame)
         
         let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: " ")
-        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 1, range: NSRange(location: 0, length: attributeString.length))
+        attributeString.addAttribute(
+            NSAttributedString.Key.strikethroughStyle,
+            value: 1,
+            range: NSRange(location: 0, length: attributeString.length)
+        )
         worthLabel.attributedText = attributeString
         
-        let priceHorizontalStackView: UIStackView = UIStackView(arrangedSubviews: [freeLabel, worthLabel])
+        let priceHorizontalStackView: UIStackView = UIStackView(
+            arrangedSubviews: [freeLabel, worthLabel]
+        )
         priceHorizontalStackView.axis = .horizontal
         priceHorizontalStackView.distribution = .fill
         priceHorizontalStackView.spacing = 10
         
-        let horizontalStackView: UIStackView = UIStackView(arrangedSubviews: [priceHorizontalStackView, expireLabel])
+        let horizontalStackView: UIStackView = UIStackView(
+            arrangedSubviews: [priceHorizontalStackView, expireLabel]
+        )
         horizontalStackView.axis = .horizontal
         horizontalStackView.distribution = .equalSpacing
         
-        let verticalStackView: UIStackView = UIStackView(arrangedSubviews: [imageView, titleLabel, horizontalStackView])
+        let verticalStackView: UIStackView = UIStackView(
+            arrangedSubviews: [imageView, titleLabel, horizontalStackView]
+        )
         verticalStackView.translatesAutoresizingMaskIntoConstraints = false
         verticalStackView.axis = .vertical
         verticalStackView.alignment = .leading

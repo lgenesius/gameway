@@ -1,5 +1,5 @@
 //
-//  SectionHeader.swift
+//  HomeSectionHeader.swift
 //  Gameway
 //
 //  Created by Luis Genesius on 05/02/22.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class SectionHeader: UICollectionReusableView {
-    static let reuseIdentifier = "SectionHeader"
+final class HomeSectionHeader: UICollectionReusableView {
+    static let reuseIdentifier = "HomeSectionHeader"
     
     private let title = UILabel()
     private let subtitle = UILabel()
@@ -39,7 +39,10 @@ final class SectionHeader: UICollectionReusableView {
         fatalError("Error Section Header")
     }
     
-    func setTitleText(title titleText: String, subtitle subtitleText: String) {
+    func setTitleText(
+        title titleText: String?,
+        subtitle subtitleText: String?
+    ) {
         title.text = titleText
         subtitle.text = subtitleText
     }
