@@ -15,14 +15,11 @@ protocol HomeViewModelProtocol {
     func onViewModelDidLoad()
     func onViewModelReloadData()
     func onViewModelDidSelectItem(at indexPath: IndexPath)
-    func onViewModelSelectLayoutSection(
-        sectionIndex: Int,
-        layoutEnvironment: NSCollectionLayoutEnvironment
-    ) -> NSCollectionLayoutSection
+    func onViewModelReturnSections() -> [HomeLayoutSectionModel]
 }
 
 protocol HomeViewModelDelegate: NSObject {
-    func notifyProcessSections(sections: [HomeSectionModel])
+    func notifyProcessSections(sections: [HomeLayoutSectionModel])
     func notifySuccessFetchSections()
     func notifyFailedFetchSections(error: Error)
     func notifyNavigateToDetailPage(with viewModel: DetailViewModelProtocol)
@@ -34,10 +31,9 @@ final class HomeViewModel {
     
     weak var delegate: HomeViewModelDelegate?
     
-    @Published private var sections = [HomeSectionModel]()
+    @Published private var sections = [HomeLayoutSectionModel]()
     
     private var anyCancellable = Set<AnyCancellable>()
-    private let gameType: String = "Game"
     
     private let dependency: HomeViewModelDependency
     
@@ -53,15 +49,30 @@ final class HomeViewModel {
         anyCancellable.removeAll()
     }
     
+    // MARK: - Loading
+    
+    private func startLoading() {
+        sections = []
+        
+        let loadingSectionModel: LoadingLayoutSectionModel = LoadingLayoutSectionModel(items: [
+            LoadingLayoutItemModel(),
+            LoadingLayoutItemModel()
+        ])
+        sections.append(loadingSectionModel)
+        
+        delegate?.notifyProcessSections(sections: sections)
+    }
+    
     // MARK: - Fetch Giveaways
     
     private func fetchRecentGiveaways() {
+        startLoading()
         dependency.remoteDataSourceRepository.fetchRecentGiveaways()
             .receive(on: DispatchQueue.main)
             .map { $0 }
             .sink { [weak self] (completion: Subscribers.Completion<Error>) in
                 guard let self: HomeViewModel = self else { return }
-                
+
                 switch completion {
                 case .finished:
                     self.delegate?.notifySuccessFetchSections()
@@ -74,7 +85,7 @@ final class HomeViewModel {
                 self.filterToGetSoonExpiredGiveaways(giveaways: giveaways)
                 self.filterToGetRecentGiveaways(giveaways: giveaways)
                 self.filterToGetValuableGiveaways(giveaways: giveaways)
-                
+
                 self.delegate?.notifyProcessSections(sections: self.sections)
             }
             .store(in: &anyCancellable)
@@ -83,70 +94,54 @@ final class HomeViewModel {
     // MARK: - Filter Giveaways
     
     private func filterToGetSoonExpiredGiveaways(giveaways: [Giveaway]) {
-        let soonExpiredItems: [Item] = dependency.giveawaysFilterProvider.filterToGetSoonExpiredGiveaways(giveaways).map {
-            return Item(id: UUID().uuidString, giveaway: $0)
+        let soonExpiredItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetSoonExpiredGiveaways(giveaways).map {
+            return CarouselLayoutItemModel(giveaway: $0)
         }
         
         if !soonExpiredItems.isEmpty {
-            let soonExpiredSection: HomeSectionModel = HomeSectionModel(
-                id: UUID().uuidString,
-                type: .soonExpired,
-                title: "Soon Expired Giveaways",
-                subtitle: "Games, DLC, Loots, Early Access and Other",
-                items: soonExpiredItems
-            )
-            sections.append(soonExpiredSection)
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: soonExpiredItems)
+            carouselSectionModel.title = "Soon Expired Giveaways"
+            carouselSectionModel.subtitle = "Games, DLC, Loots, Early Access and Other"
+            sections.append(carouselSectionModel)
         }
     }
     
     private func filterToGetRecentGiveaways(giveaways: [Giveaway]) {
-        let recentGameItems: [Item] = dependency.giveawaysFilterProvider.filterToGetRecentGiveaways(
+        let recentGameItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentGiveaways(
             giveaways,
             type: DirectGiveawayType.game
-        ).map { Item(id: UUID().uuidString, giveaway: $0) }
+        ).map { CarouselLayoutItemModel(giveaway: $0) }
         
-        let recentOtherItems: [Item] = dependency.giveawaysFilterProvider.filterToGetRecentGiveaways(
+        let recentOtherItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentGiveaways(
             giveaways,
             type: ConditionalGiveawayType.otherThanGame
-        ).map { Item(id: UUID().uuidString, giveaway: $0) }
+        ).map { CarouselLayoutItemModel(giveaway: $0) }
         
         if !recentGameItems.isEmpty {
-            let gameRecentSection: HomeSectionModel = HomeSectionModel(
-                id: UUID().uuidString,
-                type: .recent,
-                title: "Recent Game Giveaways",
-                subtitle: "Only Games",
-                items: recentGameItems
-            )
-            sections.append(gameRecentSection)
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: recentGameItems)
+            carouselSectionModel.title = "Recent Game Giveaways"
+            carouselSectionModel.subtitle = "Only Games"
+            sections.append(carouselSectionModel)
         }
         
         if !recentOtherItems.isEmpty {
-            let otherRecentSection: HomeSectionModel = HomeSectionModel(
-                id: UUID().uuidString,
-                type: .recent,
-                title: "Recent Other Giveaways",
-                subtitle: "Containing DLC, Loots, Early Access and Other",
-                items: recentOtherItems
-            )
-            sections.append(otherRecentSection)
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: recentOtherItems)
+            carouselSectionModel.title = "Recent Other Giveaways"
+            carouselSectionModel.subtitle = "Containing DLC, Loots, Early Access and Other"
+            sections.append(carouselSectionModel)
         }
     }
     
     private func filterToGetValuableGiveaways(giveaways: [Giveaway]) {
-        let valuableItems: [Item] = dependency.giveawaysFilterProvider.filterToGetValueableGiveaways(giveaways).map {
-            return Item(id: UUID().uuidString, giveaway: $0)
+        let valuableItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetValueableGiveaways(giveaways).map {
+            return CarouselLayoutItemModel(giveaway: $0)
         }
         
         if !valuableItems.isEmpty {
-            let valuableSection: HomeSectionModel = HomeSectionModel(
-                id: UUID().uuidString,
-                type: .valuable,
-                title: "Most Valuable Giveaways",
-                subtitle: "Games, DLC, Loots, Early Access and Other",
-                items: valuableItems
-            )
-            sections.append(valuableSection)
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: valuableItems)
+            carouselSectionModel.title = "Most Valuable Giveaways"
+            carouselSectionModel.subtitle = "Games, DLC, Loots, Early Access and Other"
+            sections.append(carouselSectionModel)
         }
     }
 }
@@ -165,42 +160,18 @@ extension HomeViewModel: HomeViewModelProtocol {
     func onViewModelDidSelectItem(at indexPath: IndexPath) {
         guard indexPath.section < sections.count else { return }
         
-        let section: HomeSectionModel = sections[indexPath.section]
-        guard indexPath.row < section.items.count else { return }
+        let section: HomeLayoutSectionModel = sections[indexPath.section]
         
-        let item: Item = section.items[indexPath.row]
-        
-        let detailVM: DetailViewModelProtocol = DetailViewModel(giveaway: item.giveaway)
-        delegate?.notifyNavigateToDetailPage(with: detailVM)
+        if let carouselSection: CarouselLayoutSectionModel = section as? CarouselLayoutSectionModel {
+            guard indexPath.row < carouselSection.carouselItems.count else { return }
+            let carouselItem: CarouselLayoutItemModel = carouselSection.carouselItems[indexPath.row]
+            
+            let detailVM: DetailViewModelProtocol = DetailViewModel(giveaway: carouselItem.giveaway)
+            delegate?.notifyNavigateToDetailPage(with: detailVM)
+        }
     }
     
-    func onViewModelSelectLayoutSection(
-        sectionIndex: Int,
-        layoutEnvironment: NSCollectionLayoutEnvironment
-    ) -> NSCollectionLayoutSection {
-        var layoutSectionType: HomeCollectionLayoutSectionType = .card
-        var sectionHeaderType: HomeCollectionLayoutSectionHeaderType?
-        
-        guard sectionIndex < sections.count
-        else {
-            return dependency.layoutSectionProvider.provideCollectionLayoutSection(
-                type: layoutSectionType,
-                sectionHeaderType: sectionHeaderType
-            )
-        }
-        
-        if sections[sectionIndex].type == .loading {
-            layoutSectionType = .card
-            sectionHeaderType = nil
-        }
-        else {
-            layoutSectionType = .carousel
-            sectionHeaderType = .default
-        }
-        
-        return dependency.layoutSectionProvider.provideCollectionLayoutSection(
-            type: layoutSectionType,
-            sectionHeaderType: sectionHeaderType
-        )
+    func onViewModelReturnSections() -> [HomeLayoutSectionModel] {
+        return sections
     }
 }

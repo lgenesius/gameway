@@ -8,6 +8,9 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    // MARK: - Properties
+    
     private var homeViewModel: HomeViewModelProtocol
     
     private lazy var collectionView: UICollectionView = {
@@ -19,26 +22,19 @@ class HomeViewController: UIViewController {
         collectionView.backgroundColor = .mainDarkBlue
         collectionView.delegate = self
         collectionView.register(
-            HomeCardCollectionViewCell.self,
-            forCellWithReuseIdentifier: HomeCardCollectionViewCell.identifier
+            CarouselCardCollectionViewCell.self,
+            forCellWithReuseIdentifier: CarouselCardCollectionViewCell.identifier
         )
         collectionView.register(
-            HomeSectionHeader.self,
+            LoadingCardCollectionViewCell.self,
+            forCellWithReuseIdentifier: LoadingCardCollectionViewCell.identifier
+        )
+        collectionView.register(
+            DefaultSectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: HomeSectionHeader.reuseIdentifier
+            withReuseIdentifier: DefaultSectionHeaderView.reuseIdentifier
         )
         return collectionView
-    }()
-    
-    private lazy var skeletonLoaderTableView: UITableView = {
-        let tableView: UITableView = UITableView(frame: view.bounds)
-        tableView.backgroundColor = .mainDarkBlue
-        tableView.alwaysBounceVertical = false
-        tableView.separatorStyle = .none
-        tableView.register(SkeletonTableViewCell.self, forCellReuseIdentifier: SkeletonTableViewCell.identifier)
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
     }()
     
     private lazy var errorView: ErrorView = {
@@ -47,29 +43,48 @@ class HomeViewController: UIViewController {
         return errorView
     }()
     
-    private lazy var dataSource: UICollectionViewDiffableDataSource<HomeSectionModel, Item> = {
-        let dataSource: UICollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<HomeSectionModel, Item>(
+    private lazy var dataSource: UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel> = {
+        let dataSource: UICollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>(
             collectionView: collectionView,
             cellProvider: { [weak self] collectionView, indexPath, item in
-                return self?.configure(
-                    HomeCardCollectionViewCell.self,
-                    with: item,
-                    for: indexPath
-                )
+                guard let self else { return nil }
+                
+                let sections: [HomeLayoutSectionModel] = self.homeViewModel.onViewModelReturnSections()
+                guard indexPath.section < sections.count else { return nil }
+                
+                if sections[indexPath.section] is LoadingLayoutSectionModel,
+                   let loadingItem: LoadingLayoutItemModel = item as? LoadingLayoutItemModel {
+                    return self.configure(
+                        LoadingCardCollectionViewCell.self,
+                        with: loadingItem,
+                        for: indexPath
+                    )
+                }
+                else if sections[indexPath.section] is CarouselLayoutSectionModel,
+                        let carouselItem: CarouselLayoutItemModel = item as? CarouselLayoutItemModel {
+                    return self.configure(
+                        CarouselCardCollectionViewCell.self,
+                        with: carouselItem,
+                        for: indexPath
+                    )
+                }
+                else {
+                    return nil
+                }
             }
         )
         
         dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let sectionHeader: HomeSectionHeader = collectionView.dequeueReusableSupplementaryView(
+            guard let sectionHeader: DefaultSectionHeaderView = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
-                withReuseIdentifier: HomeSectionHeader.reuseIdentifier,
+                withReuseIdentifier: DefaultSectionHeaderView.reuseIdentifier,
                 for: indexPath
-            ) as? HomeSectionHeader else {
+            ) as? DefaultSectionHeaderView else {
                 return nil
             }
             
-            guard let firstItem: Item = self?.dataSource.itemIdentifier(for: indexPath) else { return nil }
-            guard let section: HomeSectionModel = self?.dataSource.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
+            guard let firstItem: HomeLayoutItemModel = self?.dataSource.itemIdentifier(for: indexPath) else { return nil }
+            guard let section: HomeLayoutSectionModel = self?.dataSource.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
             
             sectionHeader.setTitleText(
                 title: section.title,
@@ -80,8 +95,16 @@ class HomeViewController: UIViewController {
         return dataSource
     }()
     
-    init(viewModel homeViewModel: HomeViewModelProtocol) {
+    private let collectionLayoutProvider: HomeCollectionLayoutSectionProviderProtocol
+    
+    // MARK: - Initialization
+    
+    init(
+        viewModel homeViewModel: HomeViewModelProtocol,
+        collectionLayoutProvider: HomeCollectionLayoutSectionProviderProtocol = HomeCollectionLayoutSectionProvider()
+    ) {
         self.homeViewModel = homeViewModel
+        self.collectionLayoutProvider = collectionLayoutProvider
         super.init(nibName: nil, bundle: nil)
         self.homeViewModel.delegate = self
     }
@@ -89,6 +112,8 @@ class HomeViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycles
     
     override func loadView() {
         super.loadView()
@@ -98,18 +123,15 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setCollectionViewSettings()
-        setTableViewSettings()
         homeViewModel.onViewModelDidLoad()
     }
+    
+    // MARK: - Interface
     
     private func setCurrentViewInterface() {
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.mainYellow]
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.mainYellow]
         view.backgroundColor = .mainDarkBlue
-    }
-    
-    private func setTableViewSettings() {
-        view.addSubview(skeletonLoaderTableView)
     }
     
     private func setCollectionViewSettings() {
@@ -128,33 +150,25 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     private func configure<T: ConfigCell>(
         _ cellType: T.Type,
-        with item: Item,
+        with item: HomeLayoutItemModel,
         for indexPath: IndexPath
     ) -> T {
-        guard let cell: T = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.identifier, for: indexPath) as? T else {
+        guard let cell: T = collectionView.dequeueReusableCell(
+            withReuseIdentifier: cellType.identifier,
+            for: indexPath
+        ) as? T else {
             fatalError()
         }
         cell.configure(with: item as? T.Request)
         return cell
     }
     
-    private func reloadData(sections: [HomeSectionModel]) {
-        var snapshot = NSDiffableDataSourceSnapshot<HomeSectionModel, Item>()
+    private func reloadData(sections: [HomeLayoutSectionModel]) {
+        var snapshot = NSDiffableDataSourceSnapshot<HomeLayoutSectionModel, HomeLayoutItemModel>()
         snapshot.appendSections(sections)
         
-        for section: HomeSectionModel in sections {
-            switch section.type {
-            case .popular:
-                snapshot.appendItems(Array(section.items.prefix(8)), toSection: section)
-            case .recent:
-                snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
-            case .valuable:
-                snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
-            case .soonExpired:
-                snapshot.appendItems(Array(section.items.prefix(10)), toSection: section)
-            case .loading:
-                snapshot.appendItems(section.items, toSection: section)
-            }
+        for section: HomeLayoutSectionModel in sections {
+            snapshot.appendItems(section.items, toSection: section)
         }
         
         dataSource.apply(snapshot)
@@ -167,7 +181,7 @@ extension HomeViewController {
     private func createCompositionalLayout() -> UICollectionViewLayout {
         let layout: UICollectionViewCompositionalLayout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
             guard let self = self else { return nil }
-            return self.homeViewModel.onViewModelSelectLayoutSection(
+            return self.selectLayoutSection(
                 sectionIndex: sectionIndex,
                 layoutEnvironment: layoutEnvironment
             )
@@ -179,23 +193,37 @@ extension HomeViewController {
         layout.configuration = config
         return layout
     }
-}
-
-// MARK: - UITableView Protocol
-
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: SkeletonTableViewCell = tableView.dequeueReusableCell(withIdentifier: SkeletonTableViewCell.identifier, for: indexPath) as! SkeletonTableViewCell
-        cell.configure(with: nil)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        390
+    private func selectLayoutSection(
+        sectionIndex: Int,
+        layoutEnvironment: NSCollectionLayoutEnvironment
+    ) -> NSCollectionLayoutSection {
+        var layoutSectionType: HomeCollectionLayoutSectionType = .loading
+        var sectionHeaderType: HomeCollectionLayoutSectionHeaderType?
+        
+        let sections: [HomeLayoutSectionModel] = homeViewModel.onViewModelReturnSections()
+        
+        guard sectionIndex < sections.count
+        else {
+            return collectionLayoutProvider.provideCollectionLayoutSection(
+                type: layoutSectionType,
+                sectionHeaderType: sectionHeaderType
+            )
+        }
+        
+        if sections[sectionIndex] is CarouselLayoutSectionModel {
+            layoutSectionType = .carousel
+            sectionHeaderType = .default
+        }
+        else {
+            layoutSectionType = .loading
+            sectionHeaderType = nil
+        }
+        
+        return collectionLayoutProvider.provideCollectionLayoutSection(
+            type: layoutSectionType,
+            sectionHeaderType: sectionHeaderType
+        )
     }
 }
 
@@ -203,7 +231,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard self.skeletonLoaderTableView.superview == nil else { return }
         homeViewModel.onViewModelDidSelectItem(at: indexPath)
     }
 }
@@ -211,14 +238,9 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - HomeViewModel Delegate
 
 extension HomeViewController: HomeViewModelDelegate {
-    func notifyProcessSections(sections: [HomeSectionModel]) {
+    func notifyProcessSections(sections: [HomeLayoutSectionModel]) {
         DispatchQueue.main.async { [weak self] in
             guard let self: HomeViewController = self else { return }
-            
-            if self.skeletonLoaderTableView.superview != nil {
-                self.skeletonLoaderTableView.removeFromSuperview()
-            }
-            
             self.reloadData(sections: sections)
         }
     }

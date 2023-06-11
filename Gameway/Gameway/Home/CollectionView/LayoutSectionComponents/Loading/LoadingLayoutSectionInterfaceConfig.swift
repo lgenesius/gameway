@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class CardLayoutSectionInterfaceConfig: LayoutSectionInterfaceConfigProtocol {
+final class LoadingLayoutSectionInterfaceConfig: LayoutSectionInterfaceConfigProtocol {
     func getLayoutSection() -> NSCollectionLayoutSection {
         let itemSize: NSCollectionLayoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
+            heightDimension: .estimated(382.0)
         )
         let layoutItem: NSCollectionLayoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
         layoutItem.contentInsets = NSDirectionalEdgeInsets(
@@ -23,7 +23,7 @@ final class CardLayoutSectionInterfaceConfig: LayoutSectionInterfaceConfigProtoc
         
         let layoutGroupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1/2)
+            heightDimension: .estimated(382.0)
         )
         let layoutGroup: NSCollectionLayoutGroup = NSCollectionLayoutGroup.vertical(
             layoutSize: layoutGroupSize,

@@ -1,16 +1,16 @@
 //
-//  SkeletonHomeCell.swift
+//  LoadingCardCollectionViewCell.swift
 //  Gameway
 //
-//  Created by Luis Genesius on 10/02/22.
+//  Created by Luis Genesius on 04/06/23.
 //
 
 import UIKit
 
-class SkeletonTableViewCell: UITableViewCell, ConfigCell {
-    typealias Request = Any
+final class LoadingCardCollectionViewCell: UICollectionViewCell, ConfigCell {
+    typealias Request = LoadingLayoutItemModel
+    static var identifier: String = "LoadingCardCollectionViewCell"
     
-    static var identifier: String = "SkeletonTableViewCell"
     private let paddingLeading: CGFloat = 10
     
     private let sectionTitleGradient: CAGradientLayer = CAGradientLayer()
@@ -41,13 +41,13 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
         return stackView
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupSkeletonView()
     }
     
     required init?(coder: NSCoder) {
-        fatalError()
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setupSkeletonView() {
@@ -84,13 +84,12 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
             
             verticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16.0),
             verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
-            verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0)
+            verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
+            verticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16.0)
         ])
     }
     
-    func configure(with item: Any?) {
+    func configure(with item: LoadingLayoutItemModel?) {
         
     }
 }
-
-extension SkeletonTableViewCell: SkeletonLoader {}

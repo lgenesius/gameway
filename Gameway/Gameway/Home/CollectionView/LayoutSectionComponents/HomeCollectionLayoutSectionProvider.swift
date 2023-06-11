@@ -13,7 +13,7 @@ enum HomeCollectionLayoutSectionHeaderType {
 
 enum HomeCollectionLayoutSectionType {
     case carousel
-    case card
+    case loading
 }
 
 protocol HomeCollectionLayoutSectionProviderProtocol {
@@ -40,8 +40,8 @@ final class HomeCollectionLayoutSectionProvider: HomeCollectionLayoutSectionProv
         switch type {
         case .carousel:
             layoutSection = CarouselLayoutSectionInterfaceConfig().getLayoutSection()
-        case .card:
-            layoutSection = CardLayoutSectionInterfaceConfig().getLayoutSection()
+        case .loading:
+            layoutSection = LoadingLayoutSectionInterfaceConfig().getLayoutSection()
         }
         
         if let sectionHeaderType: HomeCollectionLayoutSectionHeaderType {

@@ -1,5 +1,5 @@
 //
-//  HomeCardCollectionViewCell.swift
+//  CarouselCardCollectionViewCell.swift
 //  Gameway
 //
 //  Created by Luis Genesius on 11/01/22.
@@ -8,9 +8,9 @@
 import Combine
 import UIKit
 
-final class HomeCardCollectionViewCell: UICollectionViewCell, ConfigCell {
-    typealias Request = Item
-    static var identifier: String = "HomeCardCollectionViewCell"
+final class CarouselCardCollectionViewCell: UICollectionViewCell, ConfigCell {
+    typealias Request = CarouselLayoutItemModel
+    static var identifier: String = "CarouselCardCollectionViewCell"
     
     private lazy var imageView: GiveawayImageView = GiveawayImageView()
     
@@ -96,8 +96,8 @@ final class HomeCardCollectionViewCell: UICollectionViewCell, ConfigCell {
         fatalError()
     }
     
-    func configure(with item: Item?) {
-        guard let item: Item = item else { return }
+    func configure(with item: CarouselLayoutItemModel?) {
+        guard let item: CarouselLayoutItemModel = item else { return }
         
         imageView.image = nil
         imageView.setImage(with: item.giveaway.thumbnail)

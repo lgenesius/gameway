@@ -1,5 +1,5 @@
 //
-//  HomeSectionHeader.swift
+//  DefaultSectionHeaderView.swift
 //  Gameway
 //
 //  Created by Luis Genesius on 05/02/22.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class HomeSectionHeader: UICollectionReusableView {
-    static let reuseIdentifier = "HomeSectionHeader"
+final class DefaultSectionHeaderView: UICollectionReusableView {
+    static let reuseIdentifier = "DefaultSectionHeaderView"
     
     private let title = UILabel()
     private let subtitle = UILabel()
