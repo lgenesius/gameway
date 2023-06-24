@@ -19,6 +19,7 @@
 		E115B28F2A34A07C00D0C4D4 /* CarouselLayoutItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B28E2A34A07C00D0C4D4 /* CarouselLayoutItemModel.swift */; };
 		E115B2922A34A21000D0C4D4 /* LoadingLayoutSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2912A34A21000D0C4D4 /* LoadingLayoutSectionModel.swift */; };
 		E115B2942A34A21800D0C4D4 /* LoadingLayoutItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2932A34A21800D0C4D4 /* LoadingLayoutItemModel.swift */; };
+		E115B2972A36057500D0C4D4 /* GiveawayViewModelDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2962A36057500D0C4D4 /* GiveawayViewModelDependency.swift */; };
 		E13E1BBC28266124004088A3 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13E1BBB28266124004088A3 /* UIViewController+Ext.swift */; };
 		E149B5942A2C659900A4DEE2 /* HomeLayoutItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E149B5932A2C659900A4DEE2 /* HomeLayoutItemModel.swift */; };
 		E149B5972A2C672500A4DEE2 /* LoadingCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E149B5962A2C672500A4DEE2 /* LoadingCardCollectionViewCell.swift */; };
@@ -106,6 +107,7 @@
 		E115B28E2A34A07C00D0C4D4 /* CarouselLayoutItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayoutItemModel.swift; sourceTree = "<group>"; };
 		E115B2912A34A21000D0C4D4 /* LoadingLayoutSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingLayoutSectionModel.swift; sourceTree = "<group>"; };
 		E115B2932A34A21800D0C4D4 /* LoadingLayoutItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingLayoutItemModel.swift; sourceTree = "<group>"; };
+		E115B2962A36057500D0C4D4 /* GiveawayViewModelDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveawayViewModelDependency.swift; sourceTree = "<group>"; };
 		E13E1BBB28266124004088A3 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
 		E149B5932A2C659900A4DEE2 /* HomeLayoutItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLayoutItemModel.swift; sourceTree = "<group>"; };
 		E149B5962A2C672500A4DEE2 /* LoadingCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCardCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -440,28 +442,12 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		E1D6CEF528684A5D00522E1B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				E1D6CEF628684A6D00522E1B /* DetailViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		E1D6CEF828684F0300522E1B /* Factory */ = {
 			isa = PBXGroup;
 			children = (
 				E1D83F3727BB88AA007077B2 /* GiveawayViewControllerFactory.swift */,
 			);
 			path = Factory;
-			sourceTree = "<group>";
-		};
-		E1D83F3427BB85DF007077B2 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				E1D83F3527BB85EF007077B2 /* GiveawayViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E1DA778D27B7A9C300BC60E6 /* Helper */ = {
@@ -536,8 +522,10 @@
 		E1F5EC162789D0A700084BC5 /* Giveaway */ = {
 			isa = PBXGroup;
 			children = (
+				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
+				E1D83F3527BB85EF007077B2 /* GiveawayViewModel.swift */,
+				E115B2962A36057500D0C4D4 /* GiveawayViewModelDependency.swift */,
 				E1D6CEF828684F0300522E1B /* Factory */,
-				E1D83F3427BB85DF007077B2 /* ViewModel */,
 				E1F5EC172789D0C400084BC5 /* Views */,
 			);
 			path = Giveaway;
@@ -547,7 +535,6 @@
 			isa = PBXGroup;
 			children = (
 				E1DD13A52820FBED003F53A1 /* Cells */,
-				E1F5EC182789D0D200084BC5 /* GiveawayViewController.swift */,
 				E1F575B528229732003A1424 /* HorizontalBoxView.swift */,
 				E1E09C8D282FD2BA006C3F94 /* GiveawayFilterSheetView.swift */,
 			);
@@ -583,18 +570,10 @@
 		E1F5EC212789D53B00084BC5 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				E1D6CEF528684A5D00522E1B /* ViewModel */,
-				E1F5EC222789D54600084BC5 /* Views */,
-			);
-			path = Detail;
-			sourceTree = "<group>";
-		};
-		E1F5EC222789D54600084BC5 /* Views */ = {
-			isa = PBXGroup;
-			children = (
+				E1D6CEF628684A6D00522E1B /* DetailViewModel.swift */,
 				E1F5EC232789D55300084BC5 /* DetailViewController.swift */,
 			);
-			path = Views;
+			path = Detail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -755,6 +734,7 @@
 				E1129EB527AE6B4800CBEE7F /* DefaultSectionHeaderView.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
 				E1EB481B2830FB2700FECF42 /* ChoiceTableViewCell.swift in Sources */,
+				E115B2972A36057500D0C4D4 /* GiveawayViewModelDependency.swift in Sources */,
 				E115B27B2A34294400D0C4D4 /* HomeGiveawayFilterService.swift in Sources */,
 				E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */,
 				E1D83F3627BB85EF007077B2 /* GiveawayViewModel.swift in Sources */,

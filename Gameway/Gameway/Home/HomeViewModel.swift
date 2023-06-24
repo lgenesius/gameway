@@ -99,7 +99,10 @@ final class HomeViewModel {
         }
         
         if !soonExpiredItems.isEmpty {
-            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: soonExpiredItems)
+            // Only show the first 8 items
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                items: Array(soonExpiredItems.prefix(8))
+            )
             carouselSectionModel.title = "Soon Expired Giveaways"
             carouselSectionModel.subtitle = "Games, DLC, Loots, Early Access and Other"
             sections.append(carouselSectionModel)
@@ -118,14 +121,20 @@ final class HomeViewModel {
         ).map { CarouselLayoutItemModel(giveaway: $0) }
         
         if !recentGameItems.isEmpty {
-            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: recentGameItems)
+            // Only show the first 10 items
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                items: Array(recentGameItems.prefix(10))
+            )
             carouselSectionModel.title = "Recent Game Giveaways"
             carouselSectionModel.subtitle = "Only Games"
             sections.append(carouselSectionModel)
         }
         
         if !recentOtherItems.isEmpty {
-            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: recentOtherItems)
+            // Only show the first 10 items
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                items: Array(recentOtherItems.prefix(10))
+            )
             carouselSectionModel.title = "Recent Other Giveaways"
             carouselSectionModel.subtitle = "Containing DLC, Loots, Early Access and Other"
             sections.append(carouselSectionModel)
@@ -138,7 +147,10 @@ final class HomeViewModel {
         }
         
         if !valuableItems.isEmpty {
-            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(items: valuableItems)
+            // Only show the first 10 items
+            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                items: Array(valuableItems.prefix(10))
+            )
             carouselSectionModel.title = "Most Valuable Giveaways"
             carouselSectionModel.subtitle = "Games, DLC, Loots, Early Access and Other"
             sections.append(carouselSectionModel)

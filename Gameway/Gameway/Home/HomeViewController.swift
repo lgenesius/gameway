@@ -9,6 +9,13 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    // MARK: - Typealias
+    
+    typealias LoadingCellRegistration = UICollectionView.CellRegistration<LoadingCardCollectionViewCell, LoadingLayoutItemModel>
+    typealias CarouselCellRegistration = UICollectionView.CellRegistration<CarouselCardCollectionViewCell, CarouselLayoutItemModel>
+    typealias HomeDiffableDataSource = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>
+    typealias HomeDiffableSupplementaryViewProvider = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>.SupplementaryViewProvider
+    
     // MARK: - Properties
     
     private var homeViewModel: HomeViewModelProtocol
@@ -43,55 +50,9 @@ class HomeViewController: UIViewController {
         return errorView
     }()
     
-    private lazy var dataSource: UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel> = {
-        let dataSource: UICollectionViewDiffableDataSource = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>(
-            collectionView: collectionView,
-            cellProvider: { [weak self] collectionView, indexPath, item in
-                guard let self else { return nil }
-                
-                let sections: [HomeLayoutSectionModel] = self.homeViewModel.onViewModelReturnSections()
-                guard indexPath.section < sections.count else { return nil }
-                
-                if sections[indexPath.section] is LoadingLayoutSectionModel,
-                   let loadingItem: LoadingLayoutItemModel = item as? LoadingLayoutItemModel {
-                    return self.configure(
-                        LoadingCardCollectionViewCell.self,
-                        with: loadingItem,
-                        for: indexPath
-                    )
-                }
-                else if sections[indexPath.section] is CarouselLayoutSectionModel,
-                        let carouselItem: CarouselLayoutItemModel = item as? CarouselLayoutItemModel {
-                    return self.configure(
-                        CarouselCardCollectionViewCell.self,
-                        with: carouselItem,
-                        for: indexPath
-                    )
-                }
-                else {
-                    return nil
-                }
-            }
-        )
-        
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
-            guard let sectionHeader: DefaultSectionHeaderView = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: DefaultSectionHeaderView.reuseIdentifier,
-                for: indexPath
-            ) as? DefaultSectionHeaderView else {
-                return nil
-            }
-            
-            guard let firstItem: HomeLayoutItemModel = self?.dataSource.itemIdentifier(for: indexPath) else { return nil }
-            guard let section: HomeLayoutSectionModel = self?.dataSource.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
-            
-            sectionHeader.setTitleText(
-                title: section.title,
-                subtitle: section.subtitle
-            )
-            return sectionHeader
-        }
+    private lazy var dataSource: HomeDiffableDataSource = {
+        let dataSource: UICollectionViewDiffableDataSource = createDiffableDataSource()
+        dataSource.supplementaryViewProvider = provideSupplementaryViewProvider()
         return dataSource
     }()
     
@@ -148,19 +109,72 @@ class HomeViewController: UIViewController {
 // MARK: - Diffable Data Source
 
 extension HomeViewController {
-    private func configure<T: ConfigCell>(
-        _ cellType: T.Type,
-        with item: HomeLayoutItemModel,
-        for indexPath: IndexPath
-    ) -> T {
-        guard let cell: T = collectionView.dequeueReusableCell(
-            withReuseIdentifier: cellType.identifier,
-            for: indexPath
-        ) as? T else {
-            fatalError()
+    private func getLoadingCellRegistration() -> LoadingCellRegistration {
+        return LoadingCellRegistration { (cell, indexPath, itemModel) in
+            cell.configure(with: itemModel)
         }
-        cell.configure(with: item as? T.Request)
-        return cell
+    }
+    
+    private func getCarouselCellRegistration() -> CarouselCellRegistration {
+        return CarouselCellRegistration { (cell, indexPath, itemModel) in
+            cell.configure(with: itemModel)
+        }
+    }
+    
+    private func createDiffableDataSource() -> HomeDiffableDataSource {
+        let loadingCellRegistration: LoadingCellRegistration = getLoadingCellRegistration()
+        let carouselCellRegistration: CarouselCellRegistration = getCarouselCellRegistration()
+        
+        return HomeDiffableDataSource(
+            collectionView: collectionView,
+            cellProvider: { [weak self] collectionView, indexPath, item in
+                guard let self else { return nil }
+                
+                let sections: [HomeLayoutSectionModel] = self.homeViewModel.onViewModelReturnSections()
+                guard indexPath.section < sections.count else { return nil }
+                
+                if sections[indexPath.section] is LoadingLayoutSectionModel,
+                   let loadingItem: LoadingLayoutItemModel = item as? LoadingLayoutItemModel {
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: loadingCellRegistration,
+                        for: indexPath,
+                        item: loadingItem
+                    )
+                }
+                else if sections[indexPath.section] is CarouselLayoutSectionModel,
+                        let carouselItem: CarouselLayoutItemModel = item as? CarouselLayoutItemModel {
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: carouselCellRegistration,
+                        for: indexPath,
+                        item: carouselItem
+                    )
+                }
+                else {
+                    return nil
+                }
+            }
+        )
+    }
+    
+    private func provideSupplementaryViewProvider() -> HomeDiffableSupplementaryViewProvider? {
+        return HomeDiffableSupplementaryViewProvider? { [weak self] collectionView, kind, indexPath in
+            guard let sectionHeader: DefaultSectionHeaderView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: DefaultSectionHeaderView.reuseIdentifier,
+                for: indexPath
+            ) as? DefaultSectionHeaderView else {
+                return nil
+            }
+            
+            guard let firstItem: HomeLayoutItemModel = self?.dataSource.itemIdentifier(for: indexPath) else { return nil }
+            guard let section: HomeLayoutSectionModel = self?.dataSource.snapshot().sectionIdentifier(containingItem: firstItem) else { return nil }
+            
+            sectionHeader.setTitleText(
+                title: section.title,
+                subtitle: section.subtitle
+            )
+            return sectionHeader
+        }
     }
     
     private func reloadData(sections: [HomeLayoutSectionModel]) {
