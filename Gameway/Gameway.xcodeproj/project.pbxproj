@@ -10,7 +10,6 @@
 		E1129EB527AE6B4800CBEE7F /* DefaultSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1129EB427AE6B4800CBEE7F /* DefaultSectionHeaderView.swift */; };
 		E115B2752A34264600D0C4D4 /* HomeViewModelDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2742A34264600D0C4D4 /* HomeViewModelDependency.swift */; };
 		E115B2782A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2772A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift */; };
-		E115B27B2A34294400D0C4D4 /* HomeGiveawayFilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B27A2A34294400D0C4D4 /* HomeGiveawayFilterService.swift */; };
 		E115B27E2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B27D2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift */; };
 		E115B2842A3457CD00D0C4D4 /* CarouselLayoutSectionInterfaceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2832A3457CD00D0C4D4 /* CarouselLayoutSectionInterfaceConfig.swift */; };
 		E115B2872A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2862A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift */; };
@@ -31,6 +30,12 @@
 		E1B6E8B02864C0B20009C35A /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B6E8AF2864C0B20009C35A /* PrimaryButton.swift */; };
 		E1B940C1278DCA4400D5A5C3 /* ConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */; };
 		E1B940C3278DCAC100D5A5C3 /* CarouselCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B940C2278DCAC100D5A5C3 /* CarouselCardCollectionViewCell.swift */; };
+		E1C087BD2CD7B233000F384A /* HomeViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C087BC2CD7B233000F384A /* HomeViewModelProtocol.swift */; };
+		E1C087BF2CD7B25E000F384A /* HomeViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C087BE2CD7B25E000F384A /* HomeViewModelDelegate.swift */; };
+		E1C087C62CD7B62D000F384A /* HomeGiveawayFilterServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C087C52CD7B62D000F384A /* HomeGiveawayFilterServiceProtocol.swift */; };
+		E1C087C82CD7B641000F384A /* HomeFilterSoonExpiredService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C087C72CD7B641000F384A /* HomeFilterSoonExpiredService.swift */; };
+		E1C087CA2CD7B665000F384A /* HomeFilterRecentGiveawayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C087C92CD7B665000F384A /* HomeFilterRecentGiveawayService.swift */; };
+		E1C087CC2CD7B67A000F384A /* HomeFilterValuableGiveawayService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C087CB2CD7B67A000F384A /* HomeFilterValuableGiveawayService.swift */; };
 		E1CD438E27BA149F00DCD7BA /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD438D27BA149F00DCD7BA /* DateHelper.swift */; };
 		E1CD439227BA286000DCD7BA /* ImageCacheType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD439127BA286000DCD7BA /* ImageCacheType.swift */; };
 		E1CD439627BA28F200DCD7BA /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CD439527BA28F200DCD7BA /* ImageCache.swift */; };
@@ -98,7 +103,6 @@
 		E1129EB427AE6B4800CBEE7F /* DefaultSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionHeaderView.swift; sourceTree = "<group>"; };
 		E115B2742A34264600D0C4D4 /* HomeViewModelDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelDependency.swift; sourceTree = "<group>"; };
 		E115B2772A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGiveawayFilterProvider.swift; sourceTree = "<group>"; };
-		E115B27A2A34294400D0C4D4 /* HomeGiveawayFilterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGiveawayFilterService.swift; sourceTree = "<group>"; };
 		E115B27D2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionLayoutSectionProvider.swift; sourceTree = "<group>"; };
 		E115B2832A3457CD00D0C4D4 /* CarouselLayoutSectionInterfaceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayoutSectionInterfaceConfig.swift; sourceTree = "<group>"; };
 		E115B2862A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSectionInterfaceConfigProtocol.swift; sourceTree = "<group>"; };
@@ -119,6 +123,12 @@
 		E1B6E8AF2864C0B20009C35A /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		E1B940C0278DCA4400D5A5C3 /* ConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigCell.swift; sourceTree = "<group>"; };
 		E1B940C2278DCAC100D5A5C3 /* CarouselCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		E1C087BC2CD7B233000F384A /* HomeViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelProtocol.swift; sourceTree = "<group>"; };
+		E1C087BE2CD7B25E000F384A /* HomeViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelDelegate.swift; sourceTree = "<group>"; };
+		E1C087C52CD7B62D000F384A /* HomeGiveawayFilterServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGiveawayFilterServiceProtocol.swift; sourceTree = "<group>"; };
+		E1C087C72CD7B641000F384A /* HomeFilterSoonExpiredService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFilterSoonExpiredService.swift; sourceTree = "<group>"; };
+		E1C087C92CD7B665000F384A /* HomeFilterRecentGiveawayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFilterRecentGiveawayService.swift; sourceTree = "<group>"; };
+		E1C087CB2CD7B67A000F384A /* HomeFilterValuableGiveawayService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFilterValuableGiveawayService.swift; sourceTree = "<group>"; };
 		E1CD438D27BA149F00DCD7BA /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		E1CD439127BA286000DCD7BA /* ImageCacheType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheType.swift; sourceTree = "<group>"; };
 		E1CD439527BA28F200DCD7BA /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
@@ -194,13 +204,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E115B2792A34291B00D0C4D4 /* Service */ = {
+		E115B2792A34291B00D0C4D4 /* Dependency */ = {
 			isa = PBXGroup;
 			children = (
-				E115B2772A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift */,
-				E115B27A2A34294400D0C4D4 /* HomeGiveawayFilterService.swift */,
+				E1C087C02CD7B57D000F384A /* Filter */,
 			);
-			path = Service;
+			path = Dependency;
 			sourceTree = "<group>";
 		};
 		E115B28A2A34A01700D0C4D4 /* LayoutSectionComponents */ = {
@@ -210,8 +219,6 @@
 				E115B2902A34A09900D0C4D4 /* Loading */,
 				E115B28B2A34A05900D0C4D4 /* Carousel */,
 				E115B2862A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift */,
-				E1E20EC3278ADB3A00A8EDB6 /* HomeLayoutSectionModel.swift */,
-				E149B5932A2C659900A4DEE2 /* HomeLayoutItemModel.swift */,
 				E115B27D2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift */,
 			);
 			path = LayoutSectionComponents;
@@ -250,6 +257,8 @@
 		E149B5912A2C639A00A4DEE2 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				E1E20EC3278ADB3A00A8EDB6 /* HomeLayoutSectionModel.swift */,
+				E149B5932A2C659900A4DEE2 /* HomeLayoutItemModel.swift */,
 				E115B28A2A34A01700D0C4D4 /* LayoutSectionComponents */,
 			);
 			path = CollectionView;
@@ -310,6 +319,51 @@
 			isa = PBXGroup;
 			children = (
 				E198F7D627A189D900B70F24 /* ViewControllerFactoryProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		E1C087BB2CD7B228000F384A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				E1C087BC2CD7B233000F384A /* HomeViewModelProtocol.swift */,
+				E1C087BE2CD7B25E000F384A /* HomeViewModelDelegate.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		E1C087C02CD7B57D000F384A /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				E1C087C22CD7B615000F384A /* Service */,
+				E1C087C12CD7B60C000F384A /* Provider */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		E1C087C12CD7B60C000F384A /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				E115B2772A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
+		E1C087C22CD7B615000F384A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				E1C087C32CD7B61B000F384A /* Protocol */,
+				E1C087C72CD7B641000F384A /* HomeFilterSoonExpiredService.swift */,
+				E1C087C92CD7B665000F384A /* HomeFilterRecentGiveawayService.swift */,
+				E1C087CB2CD7B67A000F384A /* HomeFilterValuableGiveawayService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		E1C087C32CD7B61B000F384A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				E1C087C52CD7B62D000F384A /* HomeGiveawayFilterServiceProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -432,7 +486,8 @@
 		E1D3A35C27873F9700B03B55 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				E115B2792A34291B00D0C4D4 /* Service */,
+				E1C087BB2CD7B228000F384A /* Protocol */,
+				E115B2792A34291B00D0C4D4 /* Dependency */,
 				E149B5912A2C639A00A4DEE2 /* CollectionView */,
 				E198F7D327A1885C00B70F24 /* HomeViewControllerFactory.swift */,
 				E1E20ECD278B0F3300A8EDB6 /* HomeViewModel.swift */,
@@ -710,6 +765,7 @@
 				E1E20ECB278B0F1900A8EDB6 /* RemoteDataSource.swift in Sources */,
 				E1F5EC242789D55300084BC5 /* DetailViewController.swift in Sources */,
 				E13E1BBC28266124004088A3 /* UIViewController+Ext.swift in Sources */,
+				E1C087C82CD7B641000F384A /* HomeFilterSoonExpiredService.swift in Sources */,
 				E115B2942A34A21800D0C4D4 /* LoadingLayoutItemModel.swift in Sources */,
 				E1E09C8E282FD2BA006C3F94 /* GiveawayFilterSheetView.swift in Sources */,
 				E1E20ECE278B0F3300A8EDB6 /* HomeViewModel.swift in Sources */,
@@ -723,6 +779,7 @@
 				E115B2922A34A21000D0C4D4 /* LoadingLayoutSectionModel.swift in Sources */,
 				E198F7C827A1819300B70F24 /* RemoteDataSourceRepository.swift in Sources */,
 				E1F63F57287C5C7400D0DC2F /* ExpandableView.swift in Sources */,
+				E1C087CA2CD7B665000F384A /* HomeFilterRecentGiveawayService.swift in Sources */,
 				E1D83F3A27BB9DEC007077B2 /* GiveawayTableViewCell.swift in Sources */,
 				E115B28F2A34A07C00D0C4D4 /* CarouselLayoutItemModel.swift in Sources */,
 				E1F5EC1D2789D11600084BC5 /* StatusViewController.swift in Sources */,
@@ -733,16 +790,19 @@
 				E1F69D2A27BE4C3B00C71781 /* WorthSectionView.swift in Sources */,
 				E1129EB527AE6B4800CBEE7F /* DefaultSectionHeaderView.swift in Sources */,
 				E1D3A31E278732F800B03B55 /* AppDelegate.swift in Sources */,
+				E1C087CC2CD7B67A000F384A /* HomeFilterValuableGiveawayService.swift in Sources */,
 				E1EB481B2830FB2700FECF42 /* ChoiceTableViewCell.swift in Sources */,
 				E115B2972A36057500D0C4D4 /* GiveawayViewModelDependency.swift in Sources */,
-				E115B27B2A34294400D0C4D4 /* HomeGiveawayFilterService.swift in Sources */,
+				E1C087BD2CD7B233000F384A /* HomeViewModelProtocol.swift in Sources */,
 				E1F5EC192789D0D200084BC5 /* GiveawayViewController.swift in Sources */,
 				E1D83F3627BB85EF007077B2 /* GiveawayViewModel.swift in Sources */,
+				E1C087C62CD7B62D000F384A /* HomeGiveawayFilterServiceProtocol.swift in Sources */,
 				E1DA778F27B7A9D700BC60E6 /* ImageLoader.swift in Sources */,
 				E1E20EC8278ADDA100A8EDB6 /* UIColor+Ext.swift in Sources */,
 				E149B5972A2C672500A4DEE2 /* LoadingCardCollectionViewCell.swift in Sources */,
 				E198F7CE27A1843600B70F24 /* RemoteDataSourceProtocol.swift in Sources */,
 				E1D3A320278732F800B03B55 /* SceneDelegate.swift in Sources */,
+				E1C087BF2CD7B25E000F384A /* HomeViewModelDelegate.swift in Sources */,
 				E1F575B628229732003A1424 /* HorizontalBoxView.swift in Sources */,
 				E1E9839027B514570048ED94 /* SkeletonTableViewCell.swift in Sources */,
 				E1D6CEF728684A6D00522E1B /* DetailViewModel.swift in Sources */,

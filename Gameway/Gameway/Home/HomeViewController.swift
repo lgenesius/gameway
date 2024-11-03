@@ -25,7 +25,6 @@ class HomeViewController: UIViewController {
             frame: .zero,
             collectionViewLayout: createCompositionalLayout()
         )
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .mainDarkBlue
         collectionView.delegate = self
         collectionView.register(
@@ -41,6 +40,7 @@ class HomeViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: DefaultSectionHeaderView.reuseIdentifier
         )
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
     
@@ -253,32 +253,21 @@ extension HomeViewController: UICollectionViewDelegate {
 
 extension HomeViewController: HomeViewModelDelegate {
     func notifyProcessSections(sections: [HomeLayoutSectionModel]) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self: HomeViewController = self else { return }
-            self.reloadData(sections: sections)
-        }
+        reloadData(sections: sections)
     }
     
     func notifySuccessFetchSections() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self: HomeViewController = self else { return }
-            
-            if self.errorView.superview != nil {
-                self.errorView.removeFromSuperview()
-            }
+        if errorView.superview != nil {
+            errorView.removeFromSuperview()
         }
     }
     
     func notifyFailedFetchSections(error: Error) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self: HomeViewController = self else { return }
-            
-            if self.errorView.superview == nil {
-                self.view.addSubview(self.errorView)
-                self.errorView.addMessage(error.localizedDescription)
-            } else {
-                self.errorView.stopActivityIndicator()
-            }
+        if errorView.superview == nil {
+            view.addSubview(self.errorView)
+            errorView.addMessage(error.localizedDescription)
+        } else {
+            errorView.stopActivityIndicator()
         }
     }
     

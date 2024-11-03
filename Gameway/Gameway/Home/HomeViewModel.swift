@@ -9,22 +9,6 @@ import Foundation
 import Combine
 import UIKit
 
-protocol HomeViewModelProtocol {
-    var delegate: HomeViewModelDelegate? { get set }
-    
-    func onViewModelDidLoad()
-    func onViewModelReloadData()
-    func onViewModelDidSelectItem(at indexPath: IndexPath)
-    func onViewModelReturnSections() -> [HomeLayoutSectionModel]
-}
-
-protocol HomeViewModelDelegate: NSObject {
-    func notifyProcessSections(sections: [HomeLayoutSectionModel])
-    func notifySuccessFetchSections()
-    func notifyFailedFetchSections(error: Error)
-    func notifyNavigateToDetailPage(with viewModel: DetailViewModelProtocol)
-}
-
 final class HomeViewModel {
     
     // MARK: - Properties
@@ -71,8 +55,7 @@ final class HomeViewModel {
             .receive(on: DispatchQueue.main)
             .map { $0 }
             .sink { [weak self] (completion: Subscribers.Completion<Error>) in
-                guard let self: HomeViewModel = self else { return }
-
+                guard let self else { return }
                 switch completion {
                 case .finished:
                     self.delegate?.notifySuccessFetchSections()
@@ -110,35 +93,39 @@ final class HomeViewModel {
     }
     
     private func filterToGetRecentGiveaways(giveaways: [Giveaway]) {
-        let recentGameItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentGiveaways(
-            giveaways,
-            type: DirectGiveawayType.game
-        ).map { CarouselLayoutItemModel(giveaway: $0) }
-        
-        let recentOtherItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentGiveaways(
-            giveaways,
-            type: ConditionalGiveawayType.otherThanGame
-        ).map { CarouselLayoutItemModel(giveaway: $0) }
-        
-        if !recentGameItems.isEmpty {
-            // Only show the first 10 items
-            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
-                items: Array(recentGameItems.prefix(10))
-            )
-            carouselSectionModel.title = "Recent Game Giveaways"
-            carouselSectionModel.subtitle = "Only Games"
-            sections.append(carouselSectionModel)
+        func getRecentGameGiveaways(giveaways: [Giveaway]) {
+            let recentGameItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentGameGiveaways(giveaways).map { CarouselLayoutItemModel(giveaway: $0)
+            }
+            
+            if !recentGameItems.isEmpty {
+                // Only show the first 10 items
+                let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                    items: Array(recentGameItems.prefix(10))
+                )
+                carouselSectionModel.title = "Recent Game Giveaways"
+                carouselSectionModel.subtitle = "Only Games"
+                sections.append(carouselSectionModel)
+            }
         }
         
-        if !recentOtherItems.isEmpty {
-            // Only show the first 10 items
-            let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
-                items: Array(recentOtherItems.prefix(10))
-            )
-            carouselSectionModel.title = "Recent Other Giveaways"
-            carouselSectionModel.subtitle = "Containing DLC, Loots, Early Access and Other"
-            sections.append(carouselSectionModel)
+        func getRecentNonGameGiveaways(giveaways: [Giveaway]) {
+            let recentOtherItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentNonGameGiveaways(giveaways).map {
+                CarouselLayoutItemModel(giveaway: $0)
+            }
+            
+            if !recentOtherItems.isEmpty {
+                // Only show the first 10 items
+                let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                    items: Array(recentOtherItems.prefix(10))
+                )
+                carouselSectionModel.title = "Recent Other Giveaways"
+                carouselSectionModel.subtitle = "Containing DLC, Loots, Early Access and Other"
+                sections.append(carouselSectionModel)
+            }
         }
+        
+        getRecentGameGiveaways(giveaways: giveaways)
+        getRecentNonGameGiveaways(giveaways: giveaways)
     }
     
     private func filterToGetValuableGiveaways(giveaways: [Giveaway]) {
@@ -158,7 +145,7 @@ final class HomeViewModel {
     }
 }
 
-// MARK: - HomeViewModel Protocol
+// MARK: - HomeViewModelProtocol
 
 extension HomeViewModel: HomeViewModelProtocol {
     func onViewModelDidLoad() {

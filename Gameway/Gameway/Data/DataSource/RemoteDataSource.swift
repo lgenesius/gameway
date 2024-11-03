@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 
+// MARK: - APIError Enum
+
 enum APIError: Error, CustomNSError {
     case apiError
     case invalidURL
@@ -35,6 +37,8 @@ enum APIError: Error, CustomNSError {
     }
 }
 
+// MARK: - GameAPI URL
+
 fileprivate struct GameAPI {
     static let baseURL = "https://www.gamerpower.com/api"
     
@@ -56,6 +60,8 @@ fileprivate struct GameAPI {
     }
 }
 
+// MARK: - RemoteDataSource
+
 final class RemoteDataSource: RemoteDataSourceProtocol {
     private let urlSession = URLSession.shared
     
@@ -65,35 +71,24 @@ final class RemoteDataSource: RemoteDataSourceProtocol {
         return Future<[Giveaway], Error> { [weak self] promise in
             guard let self = self else { return }
             
-            guard let url = URL(string: GameAPI.Endpoint.giveaways.urlString) else {
-                promise(.failure(APIError.invalidURL))
-                return
-            }
+            let finalURL: URL
+            let validationResult = getFinalURL(params: params, apiURLString: GameAPI.Endpoint.giveaways.urlString)
             
-            guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                promise(.failure(APIError.invalidURL))
-                return
-            }
-            
-            var queryItems: [URLQueryItem]?
-            if let params = params {
-                queryItems = []
-                queryItems?.append(contentsOf: params.map { URLQueryItem(name: $0.key, value: $0.value) } )
-            }
-            
-            urlComponents.queryItems = queryItems
-            
-            guard let finalURL = urlComponents.url else {
-                promise(.failure(APIError.invalidURL))
+            switch validationResult {
+            case .success(let url):
+                finalURL = url
+            case .failure(let error):
+                promise(.failure(error))
                 return
             }
             
             self.urlSession.dataTaskPublisher(for: finalURL)
                 .retry(1)
-                .mapError { $0 }
                 .tryMap { element -> Data in
-                    guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                        throw URLError(.badServerResponse)
+                    guard let httpResponse = element.response as? HTTPURLResponse,
+                          httpResponse.statusCode == 200
+                    else {
+                        throw APIError.invalidResponse
                     }
                     return element.data
                 }
@@ -113,26 +108,14 @@ final class RemoteDataSource: RemoteDataSourceProtocol {
         return Future<Worth, Error> { [weak self] promise in
             guard let self = self else { return }
             
-            guard let url = URL(string: GameAPI.Endpoint.worth.urlString) else {
-                promise(.failure(APIError.invalidURL))
-                return
-            }
+            let finalURL: URL
+            let validationResult = getFinalURL(params: params, apiURLString: GameAPI.Endpoint.worth.urlString)
             
-            guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                promise(.failure(APIError.invalidURL))
-                return
-            }
-            
-            var queryItems: [URLQueryItem]?
-            if let params = params {
-                queryItems = []
-                queryItems?.append(contentsOf: params.map { URLQueryItem(name: $0.key, value: $0.value) } )
-            }
-            
-            urlComponents.queryItems = queryItems
-            
-            guard let finalURL = urlComponents.url else {
-                promise(.failure(APIError.invalidURL))
+            switch validationResult {
+            case .success(let url):
+                finalURL = url
+            case .failure(let error):
+                promise(.failure(error))
                 return
             }
             
@@ -140,8 +123,9 @@ final class RemoteDataSource: RemoteDataSourceProtocol {
                 .retry(1)
                 .mapError { $0 }
                 .tryMap { element -> Data in
-                    guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                        throw URLError(.badServerResponse)
+                    guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200
+                    else {
+                        throw APIError.invalidResponse
                     }
                     return element.data
                 }
@@ -160,33 +144,25 @@ final class RemoteDataSource: RemoteDataSourceProtocol {
     func fetchFilter(params: [String : String]?) -> AnyPublisher<[Giveaway], Error> {
         return Future<[Giveaway], Error> { [weak self] promise in
             guard let self = self else { return }
-            guard let url = URL(string: GameAPI.Endpoint.filter.urlString) else {
-                promise(.failure(APIError.invalidURL))
+            
+            let finalURL: URL
+            let validationResult = getFinalURL(params: params, apiURLString: GameAPI.Endpoint.filter.urlString)
+            
+            switch validationResult {
+            case .success(let url):
+                finalURL = url
+            case .failure(let error):
+                promise(.failure(error))
                 return
             }
             
-            guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                promise(.failure(APIError.invalidURL))
-                return
-            }
-            
-            var queryItems: [URLQueryItem]?
-            if let params = params {
-                queryItems = []
-                queryItems?.append(contentsOf: params.map { URLQueryItem(name: $0.key, value: $0.value) } )
-            }
-            urlComponents.queryItems = queryItems
-            
-            guard let finalURL = urlComponents.url else {
-                promise(.failure(APIError.invalidURL))
-                return
-            }
             self.urlSession.dataTaskPublisher(for: finalURL)
                 .retry(1)
                 .mapError { $0 }
                 .tryMap { element -> Data in
-                    guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                        throw URLError(.badServerResponse)
+                    guard let httpResponse = element.response as? HTTPURLResponse, httpResponse.statusCode == 200
+                    else {
+                        throw APIError.invalidResponse
                     }
                     return element.data
                 }
@@ -205,5 +181,36 @@ final class RemoteDataSource: RemoteDataSourceProtocol {
                 .store(in: &self.anyCancelable)
         }
         .eraseToAnyPublisher()
+    }
+    
+    private func getFinalURL(params: [String : String]?, apiURLString: String) -> Result<URL, APIError> {
+        guard let url = URL(string: apiURLString)
+        else {
+            return .failure(APIError.invalidURL)
+        }
+        
+        guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        else {
+            return .failure(APIError.invalidURL)
+        }
+        
+        // Add request to the query if any
+        var queryItems: [URLQueryItem]?
+        if let params {
+            queryItems = []
+            queryItems?.append(
+                contentsOf: params.map {
+                    URLQueryItem(name: $0.key, value: $0.value)
+                }
+            )
+        }
+        urlComponents.queryItems = queryItems
+        
+        guard let finalURL = urlComponents.url
+        else {
+            return .failure(APIError.invalidURL)
+        }
+        
+        return .success(finalURL)
     }
 }
