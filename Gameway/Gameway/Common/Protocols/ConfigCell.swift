@@ -6,10 +6,3 @@
 //
 
 import Foundation
-
-protocol ConfigCell {
-    associatedtype Request
-    
-    static var identifier: String { get }
-    func configure(with item: Request?)
-}

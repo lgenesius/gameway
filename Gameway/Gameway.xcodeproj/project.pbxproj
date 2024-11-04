@@ -10,7 +10,7 @@
 		E1129EB527AE6B4800CBEE7F /* DefaultSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1129EB427AE6B4800CBEE7F /* DefaultSectionHeaderView.swift */; };
 		E115B2752A34264600D0C4D4 /* HomeViewModelDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2742A34264600D0C4D4 /* HomeViewModelDependency.swift */; };
 		E115B2782A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2772A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift */; };
-		E115B27E2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B27D2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift */; };
+		E115B27E2A34546300D0C4D4 /* HomeLayoutSectionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B27D2A34546300D0C4D4 /* HomeLayoutSectionProvider.swift */; };
 		E115B2842A3457CD00D0C4D4 /* CarouselLayoutSectionInterfaceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2832A3457CD00D0C4D4 /* CarouselLayoutSectionInterfaceConfig.swift */; };
 		E115B2872A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2862A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift */; };
 		E115B2892A34665100D0C4D4 /* LoadingLayoutSectionInterfaceConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E115B2882A34665100D0C4D4 /* LoadingLayoutSectionInterfaceConfig.swift */; };
@@ -103,7 +103,7 @@
 		E1129EB427AE6B4800CBEE7F /* DefaultSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSectionHeaderView.swift; sourceTree = "<group>"; };
 		E115B2742A34264600D0C4D4 /* HomeViewModelDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelDependency.swift; sourceTree = "<group>"; };
 		E115B2772A34283500D0C4D4 /* HomeGiveawayFilterProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGiveawayFilterProvider.swift; sourceTree = "<group>"; };
-		E115B27D2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionLayoutSectionProvider.swift; sourceTree = "<group>"; };
+		E115B27D2A34546300D0C4D4 /* HomeLayoutSectionProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLayoutSectionProvider.swift; sourceTree = "<group>"; };
 		E115B2832A3457CD00D0C4D4 /* CarouselLayoutSectionInterfaceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselLayoutSectionInterfaceConfig.swift; sourceTree = "<group>"; };
 		E115B2862A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSectionInterfaceConfigProtocol.swift; sourceTree = "<group>"; };
 		E115B2882A34665100D0C4D4 /* LoadingLayoutSectionInterfaceConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingLayoutSectionInterfaceConfig.swift; sourceTree = "<group>"; };
@@ -219,7 +219,7 @@
 				E115B2902A34A09900D0C4D4 /* Loading */,
 				E115B28B2A34A05900D0C4D4 /* Carousel */,
 				E115B2862A345D4100D0C4D4 /* LayoutSectionInterfaceConfigProtocol.swift */,
-				E115B27D2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift */,
+				E115B27D2A34546300D0C4D4 /* HomeLayoutSectionProvider.swift */,
 			);
 			path = LayoutSectionComponents;
 			sourceTree = "<group>";
@@ -819,7 +819,7 @@
 				E198F7D727A189D900B70F24 /* ViewControllerFactoryProtocol.swift in Sources */,
 				E1D3A35727873DDF00B03B55 /* TabBarViewController.swift in Sources */,
 				E1CD439627BA28F200DCD7BA /* ImageCache.swift in Sources */,
-				E115B27E2A34546300D0C4D4 /* HomeCollectionLayoutSectionProvider.swift in Sources */,
+				E115B27E2A34546300D0C4D4 /* HomeLayoutSectionProvider.swift in Sources */,
 				E1ED898827B8E7070078A47C /* GiveawayImageView.swift in Sources */,
 				E1E09C8C282F9DC5006C3F94 /* UIView+Ext.swift in Sources */,
 				E1E9839227B51A7D0048ED94 /* SkeletonLoader.swift in Sources */,

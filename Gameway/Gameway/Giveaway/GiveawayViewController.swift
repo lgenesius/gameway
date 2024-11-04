@@ -148,7 +148,6 @@ extension GiveawayViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         } else {
             let cell: SkeletonTableViewCell = tableView.dequeueReusableCell(withIdentifier: SkeletonTableViewCell.identifier, for: indexPath) as! SkeletonTableViewCell
-            cell.configure(with: nil)
             return cell
         }
     }

@@ -56,13 +56,13 @@ class HomeViewController: UIViewController {
         return dataSource
     }()
     
-    private let collectionLayoutProvider: HomeCollectionLayoutSectionProviderProtocol
+    private let collectionLayoutProvider: HomeLayoutSectionProviderProtocol
     
     // MARK: - Initialization
     
     init(
         viewModel homeViewModel: HomeViewModelProtocol,
-        collectionLayoutProvider: HomeCollectionLayoutSectionProviderProtocol = HomeCollectionLayoutSectionProvider()
+        collectionLayoutProvider: HomeLayoutSectionProviderProtocol = HomeLayoutSectionProvider()
     ) {
         self.homeViewModel = homeViewModel
         self.collectionLayoutProvider = collectionLayoutProvider
@@ -110,8 +110,8 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController {
     private func getLoadingCellRegistration() -> LoadingCellRegistration {
-        return LoadingCellRegistration { (cell, indexPath, itemModel) in
-            cell.configure(with: itemModel)
+        return LoadingCellRegistration { (_, _, _) in
+            // No impl
         }
     }
     

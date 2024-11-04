@@ -11,6 +11,7 @@ final class ImageLoader {
     static let shared = ImageLoader()
     
     private var cache: ImageCacheType
+    
     private lazy var backgroundQueue: OperationQueue = {
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 5
@@ -33,7 +34,7 @@ final class ImageLoader {
                 self.cache[url] = image
             })
             .subscribe(on: backgroundQueue)
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LoadingCardCollectionViewCell: UICollectionViewCell, ConfigCell {
+final class LoadingCardCollectionViewCell: UICollectionViewCell {
     typealias Request = LoadingLayoutItemModel
     static var identifier: String = "LoadingCardCollectionViewCell"
     
@@ -87,9 +87,5 @@ final class LoadingCardCollectionViewCell: UICollectionViewCell, ConfigCell {
             verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0),
             verticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16.0)
         ])
-    }
-    
-    func configure(with item: LoadingLayoutItemModel?) {
-        
     }
 }

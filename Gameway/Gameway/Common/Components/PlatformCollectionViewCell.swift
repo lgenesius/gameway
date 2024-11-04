@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PlatformCollectionViewCell: UICollectionViewCell, ConfigCell {
+class PlatformCollectionViewCell: UICollectionViewCell {
     typealias Request = String
     
     static var identifier: String = "PlatformCollectionViewCell"
@@ -37,12 +37,8 @@ class PlatformCollectionViewCell: UICollectionViewCell, ConfigCell {
         fatalError()
     }
     
-    func configure(with item: String?) {
+    func configure(with text: String) {
         self.backgroundColor = .mainYellow
-        guard let text = item else {
-            return
-        }
-
         titleLabel.text = text
         titleLabel.sizeToFit()
     }

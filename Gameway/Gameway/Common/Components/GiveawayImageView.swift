@@ -12,10 +12,10 @@ class GiveawayImageView: UIImageView {
     
     private var cancellable: AnyCancellable?
     
-    private var activityIndicator: UIActivityIndicatorView = {
+    private lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = .white
+        activityIndicator.color = .black
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
         return activityIndicator
@@ -23,35 +23,27 @@ class GiveawayImageView: UIImageView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        set()
+        setupViews()
     }
     
     init() {
         super.init(image: nil)
-        set()
+        setupViews()
+    }
+    
+    deinit {
+        cancellable?.cancel()
+        cancellable = nil
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func set() {
-        self.layer.cornerRadius = 8.0
-        self.clipsToBounds = true
-        self.contentMode = .scaleToFill
-        self.backgroundColor = .mainDarkBlue
-        
-        self.addSubview(activityIndicator)
-        
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor)
-        ])
-    }
-    
     func showLoadingImage() {
+        addActivityIndicatorIfNeeded()
         activityIndicator.startAnimating()
-        self.image = UIImage(named: "placeholder-image")
+        image = UIImage(named: "placeholder-image")
     }
     
     func stopLoadingImage() {
@@ -59,23 +51,41 @@ class GiveawayImageView: UIImageView {
         activityIndicator.removeFromSuperview()
     }
     
-    func setImage(with urlString: String) {
-        if activityIndicator.superview != nil {
-            stopLoadingImage()
-        }
+    func resetImage() {
+        cancellable?.cancel()
+        cancellable = nil
         
+        stopLoadingImage()
+        image = nil
+    }
+    
+    func setImage(with urlString: String) {
+        showLoadingImage()
         if let url = URL(string: urlString) {
             cancellable = ImageLoader.shared.loadImage(from: url)
-                .sink(receiveValue: { [unowned self] image in
-                    guard let image = image else { return }
-                    
-                    self.image = image
+                .sink(receiveValue: { [unowned self] resultImage in
+                    stopLoadingImage()
+                    image = resultImage
                 })
+        }
+        else {
+            stopLoadingImage()
         }
     }
     
-    deinit {
-        cancellable?.cancel()
-        cancellable = nil
+    private func addActivityIndicatorIfNeeded() {
+        guard activityIndicator.superview == nil else { return }
+        addSubview(activityIndicator)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+    }
+    
+    private func setupViews() {
+        layer.cornerRadius = 8.0
+        clipsToBounds = true
+        contentMode = .scaleToFill
+        backgroundColor = .mainDarkBlue
     }
 }

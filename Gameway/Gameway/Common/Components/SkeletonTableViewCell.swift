@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SkeletonTableViewCell: UITableViewCell, ConfigCell {
+class SkeletonTableViewCell: UITableViewCell {
     typealias Request = Any
     
     static var identifier: String = "SkeletonTableViewCell"
@@ -86,10 +86,6 @@ class SkeletonTableViewCell: UITableViewCell, ConfigCell {
             verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16.0),
             verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16.0)
         ])
-    }
-    
-    func configure(with item: Any?) {
-        
     }
 }
 

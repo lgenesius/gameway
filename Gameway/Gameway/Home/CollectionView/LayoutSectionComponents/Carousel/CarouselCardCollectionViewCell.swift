@@ -8,11 +8,24 @@
 import Combine
 import UIKit
 
-final class CarouselCardCollectionViewCell: UICollectionViewCell, ConfigCell {
+final class CarouselCardCollectionViewCell: UICollectionViewCell {
     typealias Request = CarouselLayoutItemModel
     static var identifier: String = "CarouselCardCollectionViewCell"
     
-    private lazy var imageView: GiveawayImageView = GiveawayImageView()
+    private lazy var mainVerticalStackView: UIStackView = {
+        let stackView: UIStackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private var imageViewHeightConstraint: NSLayoutConstraint?
+    private lazy var imageView: GiveawayImageView = {
+        let imageView: GiveawayImageView = GiveawayImageView()
+        imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        return imageView
+    }()
     
     private lazy var titleLabel: UILabel = {
         let label: UILabel = UILabel()
@@ -21,10 +34,28 @@ final class CarouselCardCollectionViewCell: UICollectionViewCell, ConfigCell {
         return label
     }()
     
+    private lazy var priceHorizontalStackView: UIStackView = {
+        let stackView: UIStackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = 10
+        return stackView
+    }()
+    
     private lazy var worthLabel: UILabel = {
         let label: UILabel = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .darkGray
+        
+        // Implement strikethrough
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: " ")
+        attributeString.addAttribute(
+            NSAttributedString.Key.strikethroughStyle,
+            value: 1,
+            range: NSRange(location: 0, length: attributeString.length)
+        )
+        label.attributedText = attributeString
+        
         return label
     }()
     
@@ -34,6 +65,13 @@ final class CarouselCardCollectionViewCell: UICollectionViewCell, ConfigCell {
         label.font = UIFont.preferredFont(forTextStyle: .headline)
         label.textColor = .mainYellow
         return label
+    }()
+    
+    private lazy var bottomHorizontalStackView: UIStackView = {
+        let stackView: UIStackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        return stackView
     }()
     
     private lazy var expireLabel: UILabel = {
@@ -47,77 +85,39 @@ final class CarouselCardCollectionViewCell: UICollectionViewCell, ConfigCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: " ")
-        attributeString.addAttribute(
-            NSAttributedString.Key.strikethroughStyle,
-            value: 1,
-            range: NSRange(location: 0, length: attributeString.length)
-        )
-        worthLabel.attributedText = attributeString
-        
-        let priceHorizontalStackView: UIStackView = UIStackView(
-            arrangedSubviews: [freeLabel, worthLabel]
-        )
-        priceHorizontalStackView.axis = .horizontal
-        priceHorizontalStackView.distribution = .fill
-        priceHorizontalStackView.spacing = 10
-        
-        let horizontalStackView: UIStackView = UIStackView(
-            arrangedSubviews: [priceHorizontalStackView, expireLabel]
-        )
-        horizontalStackView.axis = .horizontal
-        horizontalStackView.distribution = .equalSpacing
-        
-        let verticalStackView: UIStackView = UIStackView(
-            arrangedSubviews: [imageView, titleLabel, horizontalStackView]
-        )
-        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
-        verticalStackView.axis = .vertical
-        verticalStackView.alignment = .leading
-        verticalStackView.spacing = 10
-        contentView.addSubview(verticalStackView)
-        
-        NSLayoutConstraint.activate([
-            horizontalStackView.widthAnchor.constraint(equalToConstant: contentView.bounds.width),
-            
-            imageView.widthAnchor.constraint(equalToConstant: contentView.frame.width),
-            
-            verticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            verticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            verticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            verticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-        ])
-        
-        
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError()
     }
     
-    func configure(with item: CarouselLayoutItemModel?) {
-        guard let item: CarouselLayoutItemModel = item else { return }
-        
-        imageView.image = nil
-        imageView.setImage(with: item.giveaway.thumbnail)
-        
-        titleLabel.text = item.giveaway.title
-        
-        if item.giveaway.worth != "N/A" {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.resetImage()
+    }
+    
+    func configure(with item: CarouselLayoutItemModel) {
+        configureTitleLabel(text: item.giveaway.title)
+        configureWorthLabel(worth: item.giveaway.worth)
+        configureExpireText(endDate: item.giveaway.endDate)
+        configureImageView(imageURLString: item.giveaway.thumbnail)
+    }
+    
+    private func configureTitleLabel(text: String) {
+        titleLabel.text = text
+    }
+    
+    private func configureWorthLabel(worth: String) {
+        if worth != "N/A" {
             worthLabel.textColor = .darkGray
-            worthLabel.text = item.giveaway.worth
+            worthLabel.text = worth
         }
         else {
             //To fix cell conditional bug
             worthLabel.textColor = .mainDarkBlue
             worthLabel.text = "N/A"
         }
-        
-        configureExpireText(endDate: item.giveaway.endDate)
-        
-        let imageSize: CGFloat = contentView.frame.height - (20 + worthLabel.intrinsicContentSize.height + titleLabel.intrinsicContentSize.height)
-        imageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
     }
     
     private func configureExpireText(endDate giveawayEndDate: String) {
@@ -149,18 +149,29 @@ final class CarouselCardCollectionViewCell: UICollectionViewCell, ConfigCell {
         }
     }
     
-    private func getImage(_ urlString: String) {
-        imageView.showLoadingImage()
-        if let url: URL = URL(string: urlString) {
-            cancellable = ImageLoader.shared.loadImage(from: url)
-                .sink(receiveValue: { [unowned self] image in
-                    self.imageView.stopLoadingImage()
-                    guard let image: UIImage = image else { return }
-                    
-                    self.imageView.image = image
-                })
-        } else {
-            self.imageView.stopLoadingImage()
-        }
+    private func configureImageView(imageURLString: String) {
+        imageView.setImage(with: imageURLString)
+    }
+    
+    private func setupViews() {
+        priceHorizontalStackView.addArrangedSubview(freeLabel)
+        priceHorizontalStackView.addArrangedSubview(worthLabel)
+        
+        bottomHorizontalStackView.addArrangedSubview(priceHorizontalStackView)
+        bottomHorizontalStackView.addArrangedSubview(expireLabel)
+        
+        mainVerticalStackView.addArrangedSubview(imageView)
+        
+        mainVerticalStackView.addArrangedSubview(titleLabel)
+        mainVerticalStackView.addArrangedSubview(bottomHorizontalStackView)
+        
+        contentView.addSubview(mainVerticalStackView)
+        
+        NSLayoutConstraint.activate([
+            mainVerticalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            mainVerticalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            mainVerticalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            mainVerticalStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+        ])
     }
 }

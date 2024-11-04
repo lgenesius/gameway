@@ -8,7 +8,7 @@
 import Combine
 import UIKit
 
-class GiveawayTableViewCell: UITableViewCell, ConfigCell {
+class GiveawayTableViewCell: UITableViewCell {
     typealias Request = Giveaway
     
     static var identifier: String = "GiveawayTableViewCell"
@@ -144,8 +144,7 @@ class GiveawayTableViewCell: UITableViewCell, ConfigCell {
         fatalError()
     }
     
-    func configure(with item: Giveaway?) {
-        guard let giveaway = item else { return }
+    func configure(with giveaway: Giveaway) {
         self.backgroundColor = .mainDarkBlue
         contentView.backgroundColor = .mainDarkBlue
         

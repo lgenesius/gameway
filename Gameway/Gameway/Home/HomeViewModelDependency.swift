@@ -10,15 +10,12 @@ import Foundation
 final class HomeViewModelDependency {
     let remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol
     let giveawaysFilterProvider: HomeGiveawayFilterProviderProtocol
-    let layoutSectionProvider: HomeCollectionLayoutSectionProviderProtocol
     
     init(
         remoteDataSourceRepository: RemoteDataSourceRepositoryProtocol = RemoteDataSourceRepository(dataSource: RemoteDataSource()),
-        giveawaysFilterProvider: HomeGiveawayFilterProviderProtocol = HomeGiveawayFilterProvider(),
-        layoutSectionProvider: HomeCollectionLayoutSectionProviderProtocol = HomeCollectionLayoutSectionProvider()
+        giveawaysFilterProvider: HomeGiveawayFilterProviderProtocol = HomeGiveawayFilterProvider()
     ) {
         self.remoteDataSourceRepository = remoteDataSourceRepository
         self.giveawaysFilterProvider = giveawaysFilterProvider
-        self.layoutSectionProvider = layoutSectionProvider
     }
 }

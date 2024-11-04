@@ -16,7 +16,7 @@ enum HomeCollectionLayoutSectionType {
     case loading
 }
 
-protocol HomeCollectionLayoutSectionProviderProtocol {
+protocol HomeLayoutSectionProviderProtocol {
     
     /// Provide the collection layout section according to the type in the parameter and also will be provided with section header type if needed.
     /// - Parameters:
@@ -29,7 +29,7 @@ protocol HomeCollectionLayoutSectionProviderProtocol {
     ) -> NSCollectionLayoutSection
 }
 
-final class HomeCollectionLayoutSectionProvider: HomeCollectionLayoutSectionProviderProtocol {
+final class HomeLayoutSectionProvider: HomeLayoutSectionProviderProtocol {
     
     func provideCollectionLayoutSection(
         type: HomeCollectionLayoutSectionType,
