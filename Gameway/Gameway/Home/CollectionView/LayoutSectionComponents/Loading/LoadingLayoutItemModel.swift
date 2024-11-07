@@ -7,6 +7,4 @@
 
 import Foundation
 
-final class LoadingLayoutItemModel: HomeLayoutItemModel {
-    
-}
+final class LoadingLayoutItemModel: HomeLayoutItemModel { }

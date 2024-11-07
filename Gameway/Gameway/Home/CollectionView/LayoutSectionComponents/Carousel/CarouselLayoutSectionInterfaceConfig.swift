@@ -18,7 +18,7 @@ final class CarouselLayoutSectionInterfaceConfig: LayoutSectionInterfaceConfigPr
             top: 0,
             leading: 0,
             bottom: 0,
-            trailing: 10
+            trailing: 16
         )
         
         let layoutGroupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(

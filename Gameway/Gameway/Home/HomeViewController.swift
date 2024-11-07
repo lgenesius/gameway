@@ -7,14 +7,14 @@
 
 import UIKit
 
+// MARK: - Typealias
+
+private typealias LoadingCellRegistration = UICollectionView.CellRegistration<LoadingCardCollectionViewCell, LoadingLayoutItemModel>
+private typealias CarouselCellRegistration = UICollectionView.CellRegistration<CarouselCardCollectionViewCell, CarouselLayoutItemModel>
+private typealias HomeDiffableDataSource = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>
+private typealias HomeDiffableSupplementaryViewProvider = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>.SupplementaryViewProvider
+
 class HomeViewController: UIViewController {
-    
-    // MARK: - Typealias
-    
-    typealias LoadingCellRegistration = UICollectionView.CellRegistration<LoadingCardCollectionViewCell, LoadingLayoutItemModel>
-    typealias CarouselCellRegistration = UICollectionView.CellRegistration<CarouselCardCollectionViewCell, CarouselLayoutItemModel>
-    typealias HomeDiffableDataSource = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>
-    typealias HomeDiffableSupplementaryViewProvider = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>.SupplementaryViewProvider
     
     // MARK: - Properties
     
@@ -27,6 +27,12 @@ class HomeViewController: UIViewController {
         )
         collectionView.backgroundColor = .mainDarkBlue
         collectionView.delegate = self
+        collectionView.contentInset = .init(
+            top: 16.0,
+            left: .zero,
+            bottom: 16.0,
+            right: .zero
+        )
         collectionView.register(
             CarouselCardCollectionViewCell.self,
             forCellWithReuseIdentifier: CarouselCardCollectionViewCell.identifier
@@ -177,7 +183,7 @@ extension HomeViewController {
         }
     }
     
-    private func reloadData(sections: [HomeLayoutSectionModel]) {
+    private func reloadData(sections: [HomeLayoutSectionModel], animated: Bool) {
         var snapshot = NSDiffableDataSourceSnapshot<HomeLayoutSectionModel, HomeLayoutItemModel>()
         snapshot.appendSections(sections)
         
@@ -185,7 +191,7 @@ extension HomeViewController {
             snapshot.appendItems(section.items, toSection: section)
         }
         
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot, animatingDifferences: animated)
     }
 }
 
@@ -252,14 +258,12 @@ extension HomeViewController: UICollectionViewDelegate {
 // MARK: - HomeViewModel Delegate
 
 extension HomeViewController: HomeViewModelDelegate {
-    func notifyProcessSections(sections: [HomeLayoutSectionModel]) {
-        reloadData(sections: sections)
+    func notifyProcessSections(sections: [HomeLayoutSectionModel], animated: Bool) {
+        reloadData(sections: sections, animated: animated)
     }
     
     func notifySuccessFetchSections() {
-        if errorView.superview != nil {
-            errorView.removeFromSuperview()
-        }
+        errorView.removeFromSuperview()
     }
     
     func notifyFailedFetchSections(error: Error) {

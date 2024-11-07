@@ -44,7 +44,7 @@ final class HomeViewModel {
         ])
         sections.append(loadingSectionModel)
         
-        delegate?.notifyProcessSections(sections: sections)
+        delegate?.notifyProcessSections(sections: sections, animated: true)
     }
     
     // MARK: - Fetch Giveaways
@@ -60,6 +60,8 @@ final class HomeViewModel {
                 case .finished:
                     self.delegate?.notifySuccessFetchSections()
                 case .failure(let error):
+                    self.sections = []
+                    self.delegate?.notifyProcessSections(sections: self.sections, animated: false)
                     self.delegate?.notifyFailedFetchSections(error: error)
                 }
             } receiveValue: { [weak self] giveaways in
@@ -68,8 +70,7 @@ final class HomeViewModel {
                 self.filterToGetSoonExpiredGiveaways(giveaways: giveaways)
                 self.filterToGetRecentGiveaways(giveaways: giveaways)
                 self.filterToGetValuableGiveaways(giveaways: giveaways)
-
-                self.delegate?.notifyProcessSections(sections: self.sections)
+                self.delegate?.notifyProcessSections(sections: self.sections, animated: true)
             }
             .store(in: &anyCancellable)
     }

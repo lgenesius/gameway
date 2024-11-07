@@ -94,8 +94,14 @@ final class RemoteDataSource: RemoteDataSourceProtocol {
                 }
                 .decode(type: [Giveaway].self, decoder: JSONDecoder())
                 .receive(on: DispatchQueue.main)
-                .sink { _ in
-                    
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        // The success promise has sent when triggered receiveValue completion.
+                        break
+                    case .failure(let error):
+                        promise(.failure(error))
+                    }
                 } receiveValue: { giveaways in
                     promise(.success(giveaways))
                 }

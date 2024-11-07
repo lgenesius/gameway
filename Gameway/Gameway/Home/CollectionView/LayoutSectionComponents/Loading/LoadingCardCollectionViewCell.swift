@@ -11,21 +11,6 @@ final class LoadingCardCollectionViewCell: UICollectionViewCell {
     typealias Request = LoadingLayoutItemModel
     static var identifier: String = "LoadingCardCollectionViewCell"
     
-    private let paddingLeading: CGFloat = 10
-    
-    private let sectionTitleGradient: CAGradientLayer = CAGradientLayer()
-    private let sectionSubtitleGradient: CAGradientLayer = CAGradientLayer()
-    private let itemImageViewGradient: CAGradientLayer = CAGradientLayer()
-    private let titleGradient: CAGradientLayer = CAGradientLayer()
-    private let freeGradient: CAGradientLayer = CAGradientLayer()
-    private let worthGradient: CAGradientLayer = CAGradientLayer()
-    
-    private let sectionTitleView: UIView = UIView()
-    private let sectionSubtitleView: UIView = UIView()
-    private let theImageView: UIView = UIView()
-    private let titleView: UIView = UIView()
-    private let worthView: UIView = UIView()
-    
     private let sectionTitleSkeletonView: SkeletonView = SkeletonView()
     private let sectionSubtitleSkeletonView: SkeletonView = SkeletonView()
     private let contentImageSkeletonView: SkeletonView = SkeletonView()
@@ -64,6 +49,8 @@ final class LoadingCardCollectionViewCell: UICollectionViewCell {
         contentTitleSkeletonView.translatesAutoresizingMaskIntoConstraints = false
         contentWorthSkeletonView.translatesAutoresizingMaskIntoConstraints = false
         
+        contentImageSkeletonView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        
         contentView.addSubview(verticalStackView)
         
         NSLayoutConstraint.activate([
@@ -74,7 +61,6 @@ final class LoadingCardCollectionViewCell: UICollectionViewCell {
             sectionSubtitleSkeletonView.heightAnchor.constraint(equalToConstant: 18.0),
             
             contentImageSkeletonView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
-            contentImageSkeletonView.heightAnchor.constraint(equalToConstant: 250.0),
             
             contentTitleSkeletonView.widthAnchor.constraint(equalTo: verticalStackView.widthAnchor),
             contentTitleSkeletonView.heightAnchor.constraint(equalToConstant: 24.0),

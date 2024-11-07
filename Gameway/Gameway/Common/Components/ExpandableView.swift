@@ -97,6 +97,8 @@ final class ExpandableView: UIView {
         
         contextTitleLabel.setContentHuggingPriority(contextShowLabel.contentHuggingPriority(for: .horizontal) - 1, for: .horizontal)
         contextShowLabel.setContentCompressionResistancePriority(contextTitleLabel.contentCompressionResistancePriority(for: .horizontal) + 1, for: .horizontal)
+        
+        contentView.alpha = 0.0
     }
     
     @objc private func contextViewTapped(_ tapGesture: UITapGestureRecognizer) {
@@ -106,8 +108,9 @@ final class ExpandableView: UIView {
     }
     
     func animateView(isExpanded: Bool) {
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) { [weak self] in
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) { [weak self] in
             self?.contentView.subviews.forEach { $0.isHidden = !isExpanded }
+            self?.contentView.alpha = isExpanded ? 1.0 : 0.0
             self?.contentView.isHidden = !isExpanded
         } completion: { [weak self] _  in
             UIView.animate(withDuration: 0.1) {

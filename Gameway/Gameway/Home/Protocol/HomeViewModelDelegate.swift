@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HomeViewModelDelegate: NSObject {
-    func notifyProcessSections(sections: [HomeLayoutSectionModel])
+    func notifyProcessSections(sections: [HomeLayoutSectionModel], animated: Bool)
     func notifySuccessFetchSections()
     func notifyFailedFetchSections(error: Error)
     func notifyNavigateToDetailPage(with viewModel: DetailViewModelProtocol)
