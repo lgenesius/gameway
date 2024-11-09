@@ -8,9 +8,6 @@
 import UIKit
 
 final class LoadingCardCollectionViewCell: UICollectionViewCell {
-    typealias Request = LoadingLayoutItemModel
-    static var identifier: String = "LoadingCardCollectionViewCell"
-    
     private let sectionTitleSkeletonView: SkeletonView = SkeletonView()
     private let sectionSubtitleSkeletonView: SkeletonView = SkeletonView()
     private let contentImageSkeletonView: SkeletonView = SkeletonView()

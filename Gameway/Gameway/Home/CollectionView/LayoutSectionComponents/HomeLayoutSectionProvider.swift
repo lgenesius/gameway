@@ -13,6 +13,7 @@ enum HomeCollectionLayoutSectionHeaderType {
 
 enum HomeCollectionLayoutSectionType {
     case carousel
+    case borderBox
     case loading
 }
 
@@ -40,6 +41,8 @@ final class HomeLayoutSectionProvider: HomeLayoutSectionProviderProtocol {
         switch type {
         case .carousel:
             layoutSection = CarouselLayoutSectionInterfaceConfig().getLayoutSection()
+        case .borderBox:
+            layoutSection = BorderBoxLayoutSectionInterfaceConfig().getLayoutSection()
         case .loading:
             layoutSection = LoadingLayoutSectionInterfaceConfig().getLayoutSection()
         }

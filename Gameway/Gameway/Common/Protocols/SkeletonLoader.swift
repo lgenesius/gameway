@@ -1,5 +1,5 @@
 //
-//  SkeletonLoader.swift
+//  SkeletonLoaderProtocol.swift
 //  Gameway
 //
 //  Created by Luis Genesius on 10/02/22.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-protocol SkeletonLoader {}
+protocol SkeletonLoaderProtocol {}
 
-extension SkeletonLoader {
+extension SkeletonLoaderProtocol {
     func makeAnimationGroup(previousGroup: CAAnimationGroup?) -> CAAnimationGroup {
         let animDuration: CFTimeInterval = 0.5
         

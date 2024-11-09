@@ -95,12 +95,12 @@ final class HomeViewModel {
     
     private func filterToGetRecentGiveaways(giveaways: [Giveaway]) {
         func getRecentGameGiveaways(giveaways: [Giveaway]) {
-            let recentGameItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentGameGiveaways(giveaways).map { CarouselLayoutItemModel(giveaway: $0)
+            let recentGameItems: [BorderBoxLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentGameGiveaways(giveaways).map { BorderBoxLayoutItemModel(giveaway: $0)
             }
             
             if !recentGameItems.isEmpty {
                 // Only show the first 10 items
-                let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                let carouselSectionModel: BorderBoxLayoutSectionModel = BorderBoxLayoutSectionModel(
                     items: Array(recentGameItems.prefix(10))
                 )
                 carouselSectionModel.title = "Recent Game Giveaways"
@@ -110,13 +110,13 @@ final class HomeViewModel {
         }
         
         func getRecentNonGameGiveaways(giveaways: [Giveaway]) {
-            let recentOtherItems: [CarouselLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentNonGameGiveaways(giveaways).map {
-                CarouselLayoutItemModel(giveaway: $0)
+            let recentOtherItems: [BorderBoxLayoutItemModel] = dependency.giveawaysFilterProvider.filterToGetRecentNonGameGiveaways(giveaways).map {
+                BorderBoxLayoutItemModel(giveaway: $0)
             }
             
             if !recentOtherItems.isEmpty {
                 // Only show the first 10 items
-                let carouselSectionModel: CarouselLayoutSectionModel = CarouselLayoutSectionModel(
+                let carouselSectionModel: BorderBoxLayoutSectionModel = BorderBoxLayoutSectionModel(
                     items: Array(recentOtherItems.prefix(10))
                 )
                 carouselSectionModel.title = "Recent Other Giveaways"
@@ -167,6 +167,13 @@ extension HomeViewModel: HomeViewModelProtocol {
             let carouselItem: CarouselLayoutItemModel = carouselSection.carouselItems[indexPath.row]
             
             let detailVM: DetailViewModelProtocol = DetailViewModel(giveaway: carouselItem.giveaway)
+            delegate?.notifyNavigateToDetailPage(with: detailVM)
+        }
+        else if let borderBoxSection: BorderBoxLayoutSectionModel = section as? BorderBoxLayoutSectionModel {
+            guard indexPath.row < borderBoxSection.borderBoxItems.count else { return }
+            let borderBoxItem: BorderBoxLayoutItemModel = borderBoxSection.borderBoxItems[indexPath.row]
+            
+            let detailVM: DetailViewModelProtocol = DetailViewModel(giveaway: borderBoxItem.giveaway)
             delegate?.notifyNavigateToDetailPage(with: detailVM)
         }
     }

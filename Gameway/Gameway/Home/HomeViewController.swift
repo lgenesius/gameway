@@ -11,6 +11,7 @@ import UIKit
 
 private typealias LoadingCellRegistration = UICollectionView.CellRegistration<LoadingCardCollectionViewCell, LoadingLayoutItemModel>
 private typealias CarouselCellRegistration = UICollectionView.CellRegistration<CarouselCardCollectionViewCell, CarouselLayoutItemModel>
+private typealias BorderBoxCellRegistration = UICollectionView.CellRegistration<BorderBoxCollectionViewCell, BorderBoxLayoutItemModel>
 private typealias HomeDiffableDataSource = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>
 private typealias HomeDiffableSupplementaryViewProvider = UICollectionViewDiffableDataSource<HomeLayoutSectionModel, HomeLayoutItemModel>.SupplementaryViewProvider
 
@@ -35,16 +36,20 @@ class HomeViewController: UIViewController {
         )
         collectionView.register(
             CarouselCardCollectionViewCell.self,
-            forCellWithReuseIdentifier: CarouselCardCollectionViewCell.identifier
+            forCellWithReuseIdentifier: String(describing: CarouselCardCollectionViewCell.self)
+        )
+        collectionView.register(
+            BorderBoxCollectionViewCell.self,
+            forCellWithReuseIdentifier: String(describing: BorderBoxCollectionViewCell.self)
         )
         collectionView.register(
             LoadingCardCollectionViewCell.self,
-            forCellWithReuseIdentifier: LoadingCardCollectionViewCell.identifier
+            forCellWithReuseIdentifier: String(describing: LoadingCardCollectionViewCell.self)
         )
         collectionView.register(
             DefaultSectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: DefaultSectionHeaderView.reuseIdentifier
+            withReuseIdentifier: String(describing: DefaultSectionHeaderView.self)
         )
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
@@ -122,7 +127,13 @@ extension HomeViewController {
     }
     
     private func getCarouselCellRegistration() -> CarouselCellRegistration {
-        return CarouselCellRegistration { (cell, indexPath, itemModel) in
+        return CarouselCellRegistration { (cell, _, itemModel) in
+            cell.configure(with: itemModel)
+        }
+    }
+    
+    private func getBorderBoxCellRegistration() -> BorderBoxCellRegistration {
+        return BorderBoxCellRegistration { cell, _, itemModel in
             cell.configure(with: itemModel)
         }
     }
@@ -130,6 +141,7 @@ extension HomeViewController {
     private func createDiffableDataSource() -> HomeDiffableDataSource {
         let loadingCellRegistration: LoadingCellRegistration = getLoadingCellRegistration()
         let carouselCellRegistration: CarouselCellRegistration = getCarouselCellRegistration()
+        let borderBoxCellRegistration: BorderBoxCellRegistration = getBorderBoxCellRegistration()
         
         return HomeDiffableDataSource(
             collectionView: collectionView,
@@ -153,6 +165,14 @@ extension HomeViewController {
                         using: carouselCellRegistration,
                         for: indexPath,
                         item: carouselItem
+                    )
+                }
+                else if sections[indexPath.section] is BorderBoxLayoutSectionModel,
+                        let borderBoxItem: BorderBoxLayoutItemModel = item as? BorderBoxLayoutItemModel {
+                    return collectionView.dequeueConfiguredReusableCell(
+                        using: borderBoxCellRegistration,
+                        for: indexPath,
+                        item: borderBoxItem
                     )
                 }
                 else {
@@ -233,6 +253,10 @@ extension HomeViewController {
         
         if sections[sectionIndex] is CarouselLayoutSectionModel {
             layoutSectionType = .carousel
+            sectionHeaderType = .default
+        }
+        else if sections[sectionIndex] is BorderBoxLayoutSectionModel {
+            layoutSectionType = .borderBox
             sectionHeaderType = .default
         }
         else {

@@ -89,4 +89,4 @@ class SkeletonTableViewCell: UITableViewCell {
     }
 }
 
-extension SkeletonTableViewCell: SkeletonLoader {}
+extension SkeletonTableViewCell: SkeletonLoaderProtocol {}

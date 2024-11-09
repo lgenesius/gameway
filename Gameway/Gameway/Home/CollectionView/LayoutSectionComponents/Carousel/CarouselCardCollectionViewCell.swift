@@ -9,9 +9,6 @@ import Combine
 import UIKit
 
 final class CarouselCardCollectionViewCell: UICollectionViewCell {
-    typealias Request = CarouselLayoutItemModel
-    static var identifier: String = "CarouselCardCollectionViewCell"
-    
     private lazy var mainVerticalStackView: UIStackView = {
         let stackView: UIStackView = UIStackView()
         stackView.axis = .vertical
@@ -24,6 +21,7 @@ final class CarouselCardCollectionViewCell: UICollectionViewCell {
     private lazy var imageView: GiveawayImageView = {
         let imageView: GiveawayImageView = GiveawayImageView()
         imageView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         return imageView
     }()
     

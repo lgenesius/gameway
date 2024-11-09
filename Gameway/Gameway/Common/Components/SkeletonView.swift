@@ -41,4 +41,4 @@ class SkeletonView: UIView {
     }
 }
 
-extension SkeletonView: SkeletonLoader {}
+extension SkeletonView: SkeletonLoaderProtocol {}
